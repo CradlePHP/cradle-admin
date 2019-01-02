@@ -873,7 +873,6 @@ select.form-control {
 -----------------------------*/
 .file-field {
     border: 1px solid #CCCCCC;
-    margin-top: 20px;
 }
 
 .file-field .file-field-preview {
