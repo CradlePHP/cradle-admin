@@ -436,7 +436,7 @@ jQuery(function($) {
 
             //TEMPLATES
             var tagTemplate = '<div class="tag"><input type="text" class="tag-input'
-            + ' text-field" name="' + name + '[]" placeholder="Tag" value="" />'
+            + ' text-field system-form-control" name="' + name + '[]" placeholder="Tag" value="" />'
             + '<a class="remove" href="javascript:void(0)"><i class="fa fa-times">'
             + '</i></a></div>';
 
@@ -535,7 +535,7 @@ jQuery(function($) {
                 + '<i class="fas fa-arrow-up"></i></a></div><div class="input-group-prepend">'
                 + '<a class="input-group-text text-orange move-down" href="javascript:void(0)">'
                 + '<i class="fas fa-arrow-down"></i></a></div>'
-                + '<input class="text-field form-control" type="text" name="'
+                + '<input class="text-field form-control system-form-control" type="text" name="'
                 + name + '[]" value="" /><div class="input-group-append">'
                 + '<a class="input-group-text text-danger remove" '
                 + 'href="javascript:void(0)">'
@@ -602,7 +602,7 @@ jQuery(function($) {
                 + '<i class="fas fa-arrow-up"></i></a></div><div class="input-group-prepend">'
                 + '<a class="input-group-text text-orange move-down" href="javascript:void(0)">'
                 + '<i class="fas fa-arrow-down"></i></a></div>'
-                + '<textarea class="text-field form-control" name="'
+                + '<textarea class="text-field form-control system-form-control" name="'
                 + name + '[]"></textarea><div class="input-group-append">'
                 + '<a class="input-group-text text-danger remove" '
                 + 'href="javascript:void(0)">'
@@ -675,7 +675,7 @@ jQuery(function($) {
                 + '<i class="fas fa-arrow-up"></i></a>'
                 + '<a class="btn btn-orange move-down" href="javascript:void(0)">'
                 + '<i class="fas fa-arrow-down"></i></a></div>'
-                + '<textarea data-do="wysiwyg" class="text-field form-control" name="'
+                + '<textarea data-do="wysiwyg" class="text-field form-control system-form-control" name="'
                 + name + '[]"></textarea></div>';
 
             //INITITALIZERS
@@ -745,9 +745,9 @@ jQuery(function($) {
 
             //TEMPLATES
             var template ='<div class="field-row input-group mb-3">'
-                + '<input class="meta-input key form-control" type="text" placeholder="Key" />'
-                + '<textarea class="meta-input value form-control" placeholder="Value" rows="1"></textarea>'
-                + '<input type="hidden" name="" value=""/>'
+                + '<input class="meta-input key form-control system-form-control" type="text" placeholder="Key" />'
+                + '<textarea class="meta-input value form-control system-form-control" placeholder="Value" rows="1"></textarea>'
+                + '<input class="system-form-control" type="hidden" name="" value=""/>'
                 + '<div class="input-group-append">'
                 + '<a class="input-group-text text-danger remove" '
                 + 'href="javascript:void(0)">'
@@ -816,7 +816,7 @@ jQuery(function($) {
                 + '</i></a></td></tr>';
 
             var templateRow = '<td><input class="input-column '
-                + 'form-control" type="text" /></td>';
+                + 'form-control system-form-control" type="text" /></td>';
 
             //INITITALIZERS
             var init = function(row) {
@@ -914,7 +914,7 @@ jQuery(function($) {
                         + '<td class="file-field-preview">{PREVIEW}</td>'
                         + '<td class="file-field-name">'
                             + '{FILENAME}'
-                            + '<input name="{NAME}" type="hidden" value="{DATA}" />'
+                            + '<input class="system-form-control system-file-input" name="{NAME}" type="hidden" value="{DATA}" />'
                         + '</td>'
                         + '{ACTIONS}'
                         + '</tr>'
@@ -1118,15 +1118,15 @@ jQuery(function($) {
                 + '<a class="btn btn-light" data-wysihtml-command="insertSpeech"><i class="fas fa-comments"></i></a> '
                 + '<a class="btn btn-inverse" data-wysihtml-action="change_view"><i class="fas fa-code"></i></a> '
                 + '<div class="wysiwyg-dialog" data-wysihtml-dialog="createLink" style="display: none;">'
-                    + '<input class="form-control" data-wysihtml-dialog-field="href" placeholder="http://" />'
-                    + '<input class="form-control mb-2" data-wysihtml-dialog-field="title" placeholder="Title" />'
+                    + '<input class="form-control system-form-control" data-wysihtml-dialog-field="href" placeholder="http://" />'
+                    + '<input class="form-control system-form-control mb-2" data-wysihtml-dialog-field="title" placeholder="Title" />'
                     + '<a class="btn btn-primary" data-wysihtml-dialog-action="save" href="javascript:void(0)">OK</a>'
                     + '<a class="btn btn-danger" data-wysihtml-dialog-action="cancel" href="javascript:void(0)">Cancel</a>'
                 + '</div>'
                 + '<div class="wysiwyg-dialog" data-wysihtml-dialog="insertImage" style="display: none;">'
-                    + '<input class="form-control" data-wysihtml-dialog-field="src" placeholder="http://">'
-                    + '<input class="form-control" data-wysihtml-dialog-field="alt" placeholder="alt">'
-                    + '<select class="form-control mb-2" data-wysihtml-dialog-field="className">'
+                    + '<input class="form-control system-form-control" data-wysihtml-dialog-field="src" placeholder="http://">'
+                    + '<input class="form-control system-form-control" data-wysihtml-dialog-field="alt" placeholder="alt">'
+                    + '<select class="form-control system-form-control mb-2" data-wysihtml-dialog-field="className">'
                         + '<option value="">None</option>'
                         + '<option value="float-left">Left</option>'
                         + '<option value="float-right">Right</option>'
@@ -1174,6 +1174,7 @@ jQuery(function($) {
 
                     var container = $('<section>')
                         .addClass('form-control')
+                        .addClass('system-form-control')
                         .addClass('code-editor-container');
 
                     if(width) {
@@ -1710,14 +1711,12 @@ jQuery(function($) {
             var fieldset = target.data('fieldset');
             //whether to show the add button
             var multiple = target.data('multiple');
-            //singular name
-            var singular = target.data('singular');
-            //plural name
-            var plural = target.data('plural');
-
+            //label name
+            var label = target.data('label');
             //get the template
-            var template = $('script#fieldset-template-' + fieldset).html();
-            var container = target.children('div.fieldset-rows');
+            var template = target.children('div.template-fieldset-row')
+                .remove()
+                .html();
 
             //INITITALIZERS
             var init = function(row) {
@@ -1725,29 +1724,43 @@ jQuery(function($) {
                     .children('div.box-head')
                     .find('a.fieldset-remove')
                     .click(function() {
-                        var name = $(
-                            $(this)
-                            .parents('fieldset[data-name]')
-                            .get()
-                            .reverse()
-                            .shift()
-                        ).data('name');
+                        //we only need to change the
+                        //elements after the one removed
+                        var rows = row.nextAll('div.fieldset-row');
 
-                        var container = $('fieldset[data-name="' + name + '"]');
-
-                        // Remove the target
+                        // Now remove the target
                         row.remove();
 
-                        // Get all the inputs
-                        var inputs = container.find('[name]');
-                        // Re-index
-                        reindex(inputs, true);
+                        rows.each(function() {
+                            //update the label, it's easy! :D
+                            var labelTemplate = $(this).parent().attr('data-label');
+                            var rows = $(this)
+                                .parents('div.fieldset-row[data-multiple]')
+                                .get()
+                                .reverse();
 
-                        $('div.fieldset-row').each(function() {
+                            rows.forEach(function(row, i) {
+                                labelTemplate = labelTemplate.replace(
+                                    new RegExp('{INDEX_' + i + '}', 'g'),
+                                    $(row).index() + 1
+                                );
+                            });
+
+                            labelTemplate = labelTemplate.replace(
+                                new RegExp('{INDEX_' + rows.length + '}', 'g'),
+                                $(this).index() + 1
+                            );
+
                             $(this)
                                 .children('div.box-head')
                                 .find('h3.fieldset-label')
-                                .html(getLabel(this));
+                                .html(labelTemplate);
+
+                            //next update the fields, it's hard... :(
+                            // Get all the inputs
+                            var fields = $('div.system-form-field', this);
+                            // Re-index
+                            reindex(fields, true);
                         });
                     });
 
@@ -1755,55 +1768,61 @@ jQuery(function($) {
             };
 
             //append meta template
-            $('a.fieldset-add', target).click(function() {
-                var fieldsets = $(this)
-                    .parents('fieldset[data-name]')
+            target.children('a.fieldset-add').click(function() { 
+                var indexes = {};
+                var rows = $(this)
+                    .parents('div.fieldset-row[data-multiple]')
                     .get()
                     .reverse();
-
-                //root name
-                var root = [];
-                var label = [];
-                var index = 0;
-                fieldsets.forEach(function(row) {
-                    var name = $(row).data('name');
-                    var singular = $(row).data('singular');
-
-                    index = $(row)
-                        .children('div.fieldset-rows')
-                        .children('div.fieldset-row')
-                        .length;
-
-                    if ((root.length + 1) < fieldsets.length) {
-                        index --;
-                    }
-
-                    root.push($(row).data('name'));
-                    root.push(index);
-
-                    label.push([singular, index + 1].join(' '));
+ 
+                rows.forEach(function(row, i) {
+                    indexes['{INDEX_' + i + '}'] = $(row).index();
                 });
 
-                root = root.join('][').replace('][', '[') + ']';
+                indexes['{INDEX_' + rows.length + '}'] = $(this).siblings('div.fieldset-row').length;
 
-                //replace all root template
-                var row = $(template
-                    .replace(new RegExp('{ROOT}', 'g'), root)
-                    .replace(new RegExp('{LABEL}', 'g'), label.join(' - '))
-                );
+                var row = $(template);
+                $('.system-form-control', row).each(function() {
+                    var name = $(this).attr('name');
+                    for(var index in indexes) {
+                        name = name.replace(index, indexes[index]);
+                    }
+
+                    $(this).attr('name', name);
+                });
+
+                //consider file fields
+                $('.file-field', row).each(function() {
+                    var name = $(this).attr('data-name');
+                    for(var index in indexes) {
+                        name = name.replace(index, indexes[index]);
+                    }
+
+                    $(this).attr('data-name', name);
+                });
+
+                var labelTemplate = label;
+                for(var index in indexes) {
+                    labelTemplate = labelTemplate.replace(index, indexes[index] + 1);
+                }
+
+                $('h3.fieldset-label', row).html(labelTemplate);
 
                 //insert and activate scripts
-                container.append(row);
+                $(this).before(row);
 
                 init(row);
             });
 
             //INITIALIZE
-            $(target).children('div.fieldset-rows').children('div.fieldset-row').each(function() {
-                init($(this));
-            });
+            $(target)
+                .children('div.fieldset-row')
+                .each(function() {
+                    init($(this));
+                });
 
-            var reindex = function(inputs, filter) {
+            var reindex = function(fields, filter) {
+                var inputs = $('.system-form-control', fields);
                 // Get the input names
                 var names = {};
                 $.each(inputs, function(index, element) {
@@ -1825,11 +1844,11 @@ jQuery(function($) {
                 var filters = [];
 
                 // Filter?
-                if (filter) {
-                    $('[data-name]').map(function(index, element) {
-                        filters.push($(element).data('name'));
-                    });
-                }
+                // if (filter) {
+                //     $('[data-name]').map(function(index, element) {
+                //         filters.push($(element).data('name'));
+                //     });
+                // }
 
                 // Re-index names
                 var reindexed = arrange(names, filters);
@@ -1852,6 +1871,12 @@ jQuery(function($) {
                         if (name === parts[1]) {
                             // Replace it with the re-indexed name
                             $(element).attr('name', parts[0]);
+
+                            // Case for Filelist/File Fields
+                            if ($(element).hasClass('system-file-input')) {
+                                var container = $(element).parentsUntil('div.system-form-field').last();
+                                container.attr('data-name', parts[0].replace('[]', ''));
+                            }
                         }
                     });
                 }
@@ -1943,27 +1968,6 @@ jQuery(function($) {
                 }
 
                 return string.join('&');
-            };
-
-            var getLabel = function(row) {
-                var rows = $(row)
-                    .parents('div.fieldset-row')
-                    .get()
-                    .reverse();
-
-                rows.push($(row).get(0));
-
-                var label = [];
-                rows.forEach(function(row) {
-                    var index = $(row).index();
-                    var singular = $(row)
-                        .parents('fieldset[data-do="fieldset"]')
-                        .attr('data-singular');
-
-                    label.push(singular + ' ' + (index + 1));
-                });
-
-                return label.join(' - ');
             };
         });
     })();
@@ -2610,13 +2614,13 @@ jQuery(function($) {
                 '<li class="config-builder-item" data-level="{LEVEL}">'
                     + '<div class="config-builder-input input-group">'
                         + '<input '
-                            + 'class="form-control" '
+                            + 'class="form-control system-form-control" '
                             + 'data-name="key" '
                             + 'placeholder="Config Key" '
                             + 'type="text" '
                         + '/>'
                         + '<input '
-                            + 'class="form-control" '
+                            + 'class="form-control system-form-control" '
                             + 'data-name="value" '
                             + 'placeholder="Config Value" '
                             + 'type="text" '
