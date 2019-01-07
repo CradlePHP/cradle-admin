@@ -48,10 +48,6 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <i class="fas fa-bars fa-fw text-secondary"></i>
-                                    <a href="/admin/menu">{{_ 'Modify Menu'}}</a>
-                                </li>
-                                <li>
                                     <i class="fas fa-key fa-fw text-secondary"></i>
                                     <a href="/admin/role/search">
                                         {{_ 'Set Roles and Permissions'}}
@@ -87,7 +83,7 @@
                 <div class="box-body row box-padding">
                     {{#each schemas}}
                         <div class="col-md-6">
-                            <span class="counter font-weight-bold text-secondary">{{number_format_short records 1}}</span>                                
+                            <span class="counter font-weight-bold text-secondary">{{number_format_short records 1}}</span>
                             <a href="{{path}}">
                                 {{label}}
                             </a>
