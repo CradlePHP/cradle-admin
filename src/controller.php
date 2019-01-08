@@ -88,8 +88,22 @@ $this->get('/admin/dashboard', function ($request, $response) {
 
         // on each record
         foreach($records as $record) {
-            if (isset($schemas[$record['table_name']])) {
-                $schemas[$record['table_name']]['records'] = $record['table_rows'];
+            $name = null;
+            $rows = null;
+
+            //mysql 5.8
+            if (isset($record['TABLE_NAME'])) {
+                $name = $record['TABLE_NAME'];
+                $rows = $record['TABLE_ROWS'];
+            
+            //mysql <= 5.6
+            } else {
+                $name = $record['table_name'];
+                $rows = $record['table_rows'];
+            }
+
+            if (isset($schemas[$name])) {
+                $schemas[$name]['records'] = $rows;
             }
         }
     }
