@@ -21,6 +21,8 @@
     },
     "require": {
         "cradlephp/framework": "2.*",
-        "cradlephp/handlebars": "1.*"
+        "cradlephp/handlebars": "1.*",
+        "cradlephp/cradle-csrf": "0.*",
+        "cradlephp/cradle-captcha": "0.*"
     }
 }

@@ -117,7 +117,26 @@ $this->get('/admin/dashboard', function ($request, $response) {
     //----------------------------//
     // 2. Render Template
     $class = sprintf('page-admin-dashboard page-admin');
-    $body = cradle('cradlephp/cradle-admin')->template('dashboard', $data);
+
+    $template = __DIR__ . '/template';
+    if (is_dir($response->getPage('template_root'))) {
+        $template = $response->getPage('template_root');
+    }
+
+    $partials = __DIR__ . '/template';
+    if (is_dir($response->getPage('partials_root'))) {
+        $partials = $response->getPage('partials_root');
+    }
+
+    $body = $this
+        ->package('cradlephp/cradle-system')
+        ->template(
+            'dashboard',
+            $data,
+            [],
+            $template,
+            $partials
+        );
 
     //set content
     $response
@@ -144,7 +163,26 @@ $this->get('/admin/template/:action', function ($request, $response) {
     //----------------------------//
     // 2. Render Template
     $class = sprintf('page-admin-template-%s page-admin', $action);
-    $body = cradle('cradlephp/cradle-admin')->template('template/' . $action, $data);
+
+    $template = __DIR__ . '/template';
+    if (is_dir($response->getPage('template_root'))) {
+        $template = $response->getPage('template_root');
+    }
+
+    $partials = __DIR__ . '/template';
+    if (is_dir($response->getPage('partials_root'))) {
+        $partials = $response->getPage('partials_root');
+    }
+
+    $body = $this
+        ->package('cradlephp/cradle-system')
+        ->template(
+            'template/' . $action,
+            $data,
+            [],
+            $template,
+            $partials
+        );
 
     //set content
     $response
@@ -250,10 +288,29 @@ $this->get('/admin/configuration', function ($request, $response) {
     // 3. Render Template
     $class = 'page-admin-configuration-search page-admin';
     $data['title'] = $this->package('global')->translate('System Configuration');
-    $body = $this->package('cradlephp/cradle-admin')->template('configuration', $data, [
-        'configuration_item',
-        'configuration_input'
-    ]);
+
+    $template = __DIR__ . '/template';
+    if (is_dir($response->getPage('template_root'))) {
+        $template = $response->getPage('template_root');
+    }
+
+    $partials = __DIR__ . '/template';
+    if (is_dir($response->getPage('partials_root'))) {
+        $partials = $response->getPage('partials_root');
+    }
+
+    $body = $this
+        ->package('cradlephp/cradle-system')
+        ->template(
+            'configuration',
+            $data,
+            [
+                'configuration_item',
+                'configuration_input'
+            ],
+            $template,
+            $partials
+        );
 
     //set content
     $response
@@ -551,9 +608,25 @@ $this->get('/admin/system/model/:schema/calendar', function ($request, $response
         $data['schema']['name']
     );
 
+    $template = __DIR__ . '/template';
+    if (is_dir($response->getPage('template_root'))) {
+        $template = $response->getPage('template_root');
+    }
+
+    $partials = __DIR__ . '/template';
+    if (is_dir($response->getPage('partials_root'))) {
+        $partials = $response->getPage('partials_root');
+    }
+
     $body = $this
-        ->package('cradlephp/cradle-admin')
-        ->template('calendar', $data);
+        ->package('cradlephp/cradle-system')
+        ->template(
+            'calendar',
+            $data,
+            [],
+            $template,
+            $partials
+        );
 
     // set content
     $response
@@ -857,15 +930,27 @@ $this->get('/admin/system/model/:schema/pipeline', function ($request, $response
         $request->getStage('schema')
     );
 
+    $template = __DIR__ . '/template';
+    if (is_dir($response->getPage('template_root'))) {
+        $template = $response->getPage('template_root');
+    }
+
+    $partials = __DIR__ . '/template';
+    if (is_dir($response->getPage('partials_root'))) {
+        $partials = $response->getPage('partials_root');
+    }
+
     $body = $this
-        ->package('cradlephp/cradle-admin')
+        ->package('cradlephp/cradle-system')
         ->template(
             'pipeline',
             $data,
             [
                 'pipeline_form',
                 'pipeline_filters'
-            ]
+            ],
+            $template,
+            $partials
         );
 
     // Set Content
