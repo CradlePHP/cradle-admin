@@ -22,10 +22,5 @@
     "require": {
         "cradlephp/framework": "2.*",
         "cradlephp/handlebars": "1.*"
-    },
-    "autoload": {
-        "psr-4": {
-            "Cradle\\Package\\System\\": "src/"
-        }
     }
 }

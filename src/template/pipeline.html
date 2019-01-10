@@ -1,0 +1,101 @@
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="/admin">
+                <i class="fas fa-home"></i> {{_ 'Admin'}}
+            </a>
+        </li>
+        <li class="breadcrumb-item">
+            <a href="/admin/system/model/{{schema.name}}/search">
+                <i class="{{schema.icon}}"></i> {{schema.plural}}
+            </a>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">
+            <i class="fas fa-calendar-alt"></i> {{_ 'Pipeline'}}
+        </li>
+    </ol>
+</nav>
+
+<div class="main-padding">
+    <h3 class="main-title">{{title}}</h3>
+    <div class="box search-filters">
+        <div class="box-head box-default">
+            <h3 class="box-title">{{_ 'Filters'}}</h3>
+        </div>
+        <form method="get">
+            <div class="box-body box-padding">
+                <div class="form-group">
+                    <label for="q">{{_ 'Search'}}</label>
+                    <input
+                        class="form-control"
+                        name="q"
+                        placeholder="Enter Search {{schema.plural}}"
+                        type="search"
+                        value="{{q}}"
+                    />
+                </div>
+
+                {{#if schema.filterable.length}}
+                    {{> pipeline_form}}
+                {{else}}
+                    {{#if filterable_relations.length}}
+                        {{> pipeline_form}}
+                    {{/if}}
+                {{/if}}
+            </div>
+            <div class="box-foot box-light">
+                <div class="box-left">
+                    <button class="btn btn-danger" type="reset">{{_ 'Reset'}}</button>
+                </div>
+                <div class="box-right">
+                    <button class="btn btn-primary">{{_ 'Search'}}</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="row board-container">
+        <div class="col-md">
+            <div class="pipeline-board">
+                {{#each stages}}
+                    <div
+                        class="column"
+                        data-do="board"
+                        data-admin="{{../admin}}"
+                        data-ajax-pull="{{../ajax.pull}}"
+                        data-ajax-update="{{../ajax.update}}"
+                        data-currency="{{../currency}}"
+                        data-stage="{{key}}"
+                        data-model={{../schema.name}}
+                        data-field={{../show}}
+                        data-total="{{../total}}"
+                        data-range-1="{{../range.0}}"
+                        data-range-2="{{../range.1}}"
+                        data-order="{{../order}}"
+                        data-card-detail="{{../detail}}"
+                        data-card-title="{{../schema.suggestion}}"
+                        data-card-date="{{../date}}"
+                        data-primary="{{../schema.primary}}"
+                        {{#each ../relations}}
+                            data-relations-name-{{@index}}="{{name}}"
+                            data-relations-title-{{@index}}="{{entitlement}}"
+                            data-relations-primary-{{@index}}="{{primary}}"
+                        {{/each}}
+                    >
+                        <div class="stage">
+                            <div class="stage-label">
+                                <span class="stage-name">{{value}}</span>
+                                <span class="badge badge-pill badge-dark"></span>
+                            </div>
+                            <div class="total-range-container"></div>
+                        </div>
+
+                        <hr class="m-0"/>
+                        <div class="draggable-wrapper">
+                            <ul class="board-stage"></ul>
+                        </div>
+                    </div>
+                {{/each}}
+            </div>
+        </div>
+    </div>
+</div>

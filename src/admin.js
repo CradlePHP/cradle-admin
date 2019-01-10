@@ -1768,13 +1768,13 @@ jQuery(function($) {
             };
 
             //append meta template
-            target.children('a.fieldset-add').click(function() { 
+            target.children('a.fieldset-add').click(function() {
                 var indexes = {};
                 var rows = $(this)
                     .parents('div.fieldset-row[data-multiple]')
                     .get()
                     .reverse();
- 
+
                 rows.forEach(function(row, i) {
                     indexes['{INDEX_' + i + '}'] = $(row).index();
                 });
@@ -2010,13 +2010,13 @@ jQuery(function($) {
                 var position = Math.ceil(
                     e.pageX - $(this).parent().offset().left
                 );
-                
+
                 //small threshold to be able to reset to 0
                 if (index === 0 && position < 8) {
                     range = 0;
                     return fill(0);
                 }
-                
+
                 //half step?
                 if (position <= half) {
                     range = index + .5;
@@ -2166,10 +2166,16 @@ jQuery(function($) {
                         window.location.href = link + '/' + eventData.id;
                     },
                     eventRender: function(eventData, $el) {
-                        var content = 'start: ' + eventData.start.format('LLL');
+                        //var content = eventData.start.format('LLL');
 
+                        var content = eventData.start.format('hh:mma');
                         if (eventData.end) {
-                            content += ' end: ' + eventData.end.format('LLL')
+                            //see: http://momentjs.com/docs/#/parsing/string-format/
+                            content = eventData.start.format('LLL') + ' - ' + eventData.end.format('LLL');
+                            //if on the same day
+                            if (eventData.start.format('LL') === eventData.end.format('LL')) {
+                                content = eventData.start.format('hh:mma') + ' - ' + eventData.end.format('hh:mma');
+                            }
                         }
 
                         $el.popover({
