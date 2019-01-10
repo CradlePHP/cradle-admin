@@ -1970,6 +1970,103 @@ jQuery(function($) {
                 return string.join('&');
             };
         });
+
+        /**
+         * Star Rating Field Init
+         */
+        $(window).on('stars-field-init', function(e, target) {
+            target = $(target);
+
+            var input = target.find('input.system-form-control');
+            var max = target.data('max');
+            //cache rows
+            var rows = target.find('.star');
+            var range = 0, stop = 0;
+
+            //INITIALIZER
+            var init = function() {
+                rows
+                .each(function() {
+                    var icon = $(this).find('i');
+                    icon.on('mousemove', hover.bind(icon, icon.outerWidth()));
+                    icon.on('click', function() {
+                        //not sure why .val is not working :(
+                        input.attr('value', range);
+                    });
+                });
+
+                //reset if didn't select
+                target.on('mouseleave', function() {
+                    range = 0, stop = 0;
+                    fill(input.val());
+                });
+            };
+
+            //on hover determine steps
+            var hover = function(width, e) {
+                var index = $(this).parent().index();
+                //determine whether it's half step
+                var half = Math.ceil(width / 2);
+                var position = Math.ceil(
+                    e.pageX - $(this).parent().offset().left
+                );
+                
+                //small threshold to be able to reset to 0
+                if (index === 0 && position < 8) {
+                    range = 0;
+                    return fill(0);
+                }
+                
+                //half step?
+                if (position <= half) {
+                    range = index + .5;
+
+                //whole step?
+                } else {
+                    range = index + 1;
+                }
+
+                //do not rerender if value
+                //doesn't change
+                if (stop === range) {
+                    return;
+                }
+
+                //set stop threshold
+                fill(range);
+                stop = range;
+            };
+
+            //fill the stars
+            var fill = function(range) {
+                //determine whether it's a full or half step
+                var half = range.toString().indexOf('.5') > 0;
+                range = Math.round(range);
+
+                //fill in each rows
+                rows.each(function(index) {
+                    var star = $(this).find('i');
+
+                    //half step?
+                    if (index === range - 1 && half) {
+                        star.attr('class', 'fas fa-star-half-alt text-warning');
+                        return;
+                    }
+
+                    //whole step?
+                    if (index < range) {
+                        star.attr('class', 'fas fa-star text-warning');
+
+                    //empty step?
+                    } else {
+                        star.attr('class', 'far fa-star');
+                    }
+                });
+            };
+
+            //INITIALIZE
+            init();
+        });
     })();
 
     /**

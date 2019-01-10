@@ -873,6 +873,24 @@ select.form-control {
     color: #BBB888;
 }
 
+/* Field - Stars
+-----------------------------*/
+.stars-field {
+    cursor: pointer;
+    display: inline-block;
+}
+
+.stars-field .star {
+    height: 30px;
+    text-align: center;
+    width: 30px;
+}
+.stars-field .star i {
+    color: #666;
+    font-size: 25px;
+    vertical-align: middle;
+}
+
 /* Field - File Field
 -----------------------------*/
 .file-field {
