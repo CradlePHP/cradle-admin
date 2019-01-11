@@ -27,7 +27,7 @@ $this->on('admin-render-page', function ($request, $response) {
 
     $response->addMeta('path', $path);
 
-    $content = $this->package('cradlephp/cradle-admin')->template(
+    $content = $this->package('cradlephp/cradle-system')->template(
         '_page',
         [
             'page' => $response->getPage(),
@@ -39,7 +39,9 @@ $this->on('admin-render-page', function ($request, $response) {
             'head',
             'foot',
             'side'
-        ]
+        ],
+        __DIR__ . '/template',
+        __DIR__ . '/template'
     );
 
     $response->setContent($content);
