@@ -1098,7 +1098,6 @@ select.form-control {
     background: #ffe493;
 }
 
-
 /* Field - Icon
 -----------------------------*/
 .icon-field {
@@ -1356,6 +1355,13 @@ select.form-control {
     color: #BEBEC5;
     line-height: 20px;
     text-shadow: 0 1px 0 #FFFFFF;
+}
+
+/* UI - Table Modal
+------------------------------*/
+.table-modal .modal-dialog {
+    max-width: none !important;
+    margin: 50px;
 }
 
 /* UI - Menu Builder

@@ -426,7 +426,7 @@ $this->post('/admin/configuration', function ($request, $response) {
     $this->package('global')->flash('Configuration was updated', 'success');
 
     // redirect back
-    return $this->package('global')->redirect(
+    $this->package('global')->redirect(
         '/admin/configuration?type=' . $request->getStage('type')
     );
 });
@@ -487,13 +487,8 @@ $this->get('/admin/system/model/:schema/calendar', function ($request, $response
     //this form and it's because of an error
     if ($response->isError()) {
         //pass the error messages to the template
-        $this
-            ->package('global')
-            ->flash($response->getMessage(), 'error');
-
-        return $this
-            ->package('global')
-            ->redirect($redirect);
+        $this->package('global')->flash($response->getMessage(), 'error');
+        return $this->package('global')->redirect($redirect);
     }
 
     //also pass the schema to the template
@@ -502,17 +497,9 @@ $this->get('/admin/system/model/:schema/calendar', function ($request, $response
     //check what to show
     if (!isset($data['show']) || !$data['show']) {
         //flash an error message and redirect
-        $error = $this
-            ->package('global')
-            ->translate('Please specify what to plot.');
-
-        $this
-            ->package('global')
-            ->flash($error, 'error');
-
-        return $this
-            ->package('global')
-            ->redirect($redirect);
+        $message = 'Please specify what to plot.';
+        $this->package('global')->flash($message, 'error');
+        return $this->package('global')->redirect($redirect);
     }
 
     $data['show'] = explode(',', $data['show']);
@@ -523,17 +510,14 @@ $this->get('/admin/system/model/:schema/calendar', function ($request, $response
             continue;
         }
 
-        $error = $this
+        //we normally don't need to translate if we are flashing a message
+        //but in this case we want to insert the translation pattern
+        $message = $this
             ->package('global')
             ->translate('%s is not a date field', $column);
 
-        $this
-            ->package('global')
-            ->flash($error, 'error');
-
-        return $this
-            ->package('global')
-            ->redirect($redirect);
+        $this->package('global')->flash($message, 'error');
+        return $this->package('global')->redirect($redirect);
     }
 
     //----------------------------//
@@ -710,29 +694,16 @@ $this->get('/admin/system/model/:schema/pipeline', function ($request, $response
     // this form and it's because of an error
     if ($response->isError()) {
         //pass the error messages to the template
-        $this
-            ->package('global')
-            ->flash($response->getMessage(), 'error');
-
-        return $this
-            ->package('global')
-            ->redirect($redirect);
+        $this->package('global')->flash($response->getMessage(), 'error');
+        return $this->package('global')->redirect($redirect);
     }
 
     // check what to show
     if (!isset($data['show']) || !$data['show']) {
         // flash an error message and redirect
-        $error = $this
-            ->package('global')
-            ->translate('Please specify what to plot.');
-
-        $this
-            ->package('global')
-            ->flash($error, 'error');
-
-        return $this
-            ->package('global')
-            ->redirect($redirect);
+        $message = 'Please specify what to plot.';
+        $this->package('global')->flash($message, 'error');
+        return $this->package('global')->redirect($redirect);
     }
 
     // minimize long array chain
@@ -743,17 +714,17 @@ $this->get('/admin/system/model/:schema/pipeline', function ($request, $response
     if (!isset($fields[$data['show']])
         || !in_array($fields[$data['show']]['field']['type'], $allowed)
     ) {
-        $error = $this
+        //we normally don't need to translate if we are flashing a message
+        //but in this case we want to insert the translation pattern
+        $message = $this
             ->package('global')
-            ->translate('%s is not a select/radio field', $data['show']);
+            ->translate(
+                '%s is not a select/radio field',
+                $data['show']
+            );
 
-        $this
-            ->package('global')
-            ->flash($error, 'error');
-
-        return $this
-            ->package('global')
-            ->redirect($redirect);
+        $this->package('global')->flash($message, 'error');
+        return $this->package('global')->redirect($redirect);
     }
 
     // pipeline stages
@@ -764,17 +735,14 @@ $this->get('/admin/system/model/:schema/pipeline', function ($request, $response
         && (!isset($fields[$data['date']])
             || !in_array($fields[$data['date']]['field']['type'], $dates))
     ) {
-        $error = $this
+        //we normally don't need to translate if we are flashing a message
+        //but in this case we want to insert the translation pattern
+        $message = $this
             ->package('global')
             ->translate('%s is not a type of date field', $data['date']);
 
-        $this
-            ->package('global')
-            ->flash($error, 'error');
-
-        return $this
-            ->package('global')
-            ->redirect($redirect);
+        $this->package('global')->flash($message, 'error');
+        return $this->package('global')->redirect($redirect);
     }
 
     // initialize the stageHeader keys into null
@@ -806,18 +774,17 @@ $this->get('/admin/system/model/:schema/pipeline', function ($request, $response
                 continue;
             }
 
-            // flash error message
-            $error = $this
+            //we normally don't need to translate if we are flashing a message
+            //but in this case we want to insert the translation pattern
+            $message = $this
                 ->package('global')
-                ->translate('%s is not a number type field', $field);
+                ->translate(
+                    '%s is not a number type field',
+                    $field
+                );
 
-            $this
-                ->package('global')
-                ->flash($error, 'error');
-
-            return $this
-                ->package('global')
-                ->redirect($redirect);
+            $this->package('global')->flash($message, 'error');
+            return $this->package('global')->redirect($redirect);
         }
     }
 
@@ -826,17 +793,16 @@ $this->get('/admin/system/model/:schema/pipeline', function ($request, $response
         || !in_array($fields[$data['total']]['field']['type'], $rangeFieldTypes))
     ) {
         // flash error message
-        $error = $this
+        $message = $this
             ->package('global')
-            ->translate('%s is not a number type field', $data['total']);
+            ->translate(
+                '%s is not a number type field',
+                $data['total']
+            );
 
-        $this
-            ->package('global')
-            ->flash($error, 'error');
+        $this->package('global')->flash($message, 'error');
 
-        return $this
-            ->package('global')
-            ->redirect($redirect);
+        return $this->package('global')->redirect($redirect);
     }
 
     if (isset($data['relations'])) {
@@ -909,8 +875,7 @@ $this->get('/admin/system/model/:schema/pipeline', function ($request, $response
         }
 
         if ($unrelated || $one) {
-            $response
-                ->setFlash($message, 'error');
+            $response->setFlash($message, 'error');
         }
     }
 

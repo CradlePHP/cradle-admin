@@ -1792,7 +1792,7 @@ jQuery(function($) {
                 });
 
                 //consider file fields
-                $('.file-field', row).each(function() {
+                $('[data-name]', row).each(function() {
                     var name = $(this).attr('data-name');
                     for(var index in indexes) {
                         name = name.replace(index, indexes[index]);
