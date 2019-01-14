@@ -20,9 +20,9 @@
         "satooshi/php-coveralls": "2.0.0"
     },
     "require": {
-        "cradlephp/framework": "~2.2.0",
-        "cradlephp/handlebars": "~1.0.3",
-        "cradlephp/cradle-csrf": "~0.0.4",
-        "cradlephp/cradle-captcha": "~0.0.5"
+        "cradlephp/framework": "2.*",
+        "cradlephp/handlebars": "1.*",
+        "cradlephp/cradle-csrf": "0.*",
+        "cradlephp/cradle-captcha": "0.*"
     }
 }
