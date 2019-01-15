@@ -22,6 +22,6 @@
     "require": {
         "cradlephp/framework": "~2.2.0",
         "cradlephp/cradle-csrf": "~2.2.0",
-        "cradlephp/handlebars": "~1.0.3"
+        "cradlephp/handlebars": "~2.2.0"
     }
 }
