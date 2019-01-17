@@ -331,9 +331,6 @@ $this->get('/admin/configuration', function ($request, $response) {
 $this->post('/admin/configuration', function ($request, $response) {
     //----------------------------//
     // 1. Security Checks
-    //only for admin
-    $this->package('global')->requireLogin('admin');
-
     //----------------------------//
     // 2. Prepare Data
 
