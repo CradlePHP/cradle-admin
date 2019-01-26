@@ -1978,7 +1978,7 @@ jQuery(function($) {
             target = $(target);
 
             var input = target.find('input.system-form-control');
-            var max = target.data('max');
+
             //cache rows
             var rows = target.find('.star');
             var range = 0, stop = 0;
