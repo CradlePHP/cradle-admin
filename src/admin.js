@@ -2703,6 +2703,54 @@ jQuery(function($) {
         });
 
         /**
+         * Carousel
+         */
+        $(window).on('carousel-init', function(e, target) {
+            target = $(target);
+
+            var width = target.data('width');
+
+            if (width) {
+                if (typeof width === 'number') {
+                    width += 'px';
+                } else if (width.indexOf('%') === -1 && width.indexOf('px') === -1) {
+                    width += 'px';
+                }
+
+                target.css('width', width);
+            }
+
+            var height = target.data('height');
+            if (height) {
+                if (typeof height === 'number') {
+                    height += 'px';
+                } else if (height.indexOf('%') === -1 && height.indexOf('px') === -1) {
+                    height += 'px';
+                }
+
+                $('img', target).css('height', height);
+            }
+
+            var config = {
+                interval: target.data('interval') || 5000,
+                keyboard: target.data('interval') || true,
+                pause: target.data('pause') || 'hover',
+                ride: target.data('ride') || true,
+                wrap: target.data('wrap') || true
+            };
+
+            target.carousel(config);
+
+            $('a.carousel-control-prev', target).click(function() {
+                target.carousel('prev');
+            });
+
+            $('a.carousel-control-next', target).click(function() {
+                target.carousel('next');
+            });
+        });
+
+        /**
          * Package Page UI
          */
         $(window).on('package-move-up-click', function(e, trigger) {
