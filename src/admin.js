@@ -1380,6 +1380,30 @@ jQuery(function($) {
         });
 
         /**
+         * Countries Dropdown
+         */
+        $(window).on('country-dropdown-init', function(e, target) {
+            $.require(
+                [
+                    '/json/countries.json',
+                    'components/select2/dist/css/select2.min.css',
+                    'components/select2/dist/js/select2.full.min.js'
+                ],
+                function(countries) {
+                    //populate
+                    countries.forEach(function(country) {
+                        $('<option>')
+                            .attr('value', country.abbreviation)
+                            .text(country.country)
+                            .appendTo(target);
+                    });
+
+                    $(target).select2();
+                }
+            );
+        });
+
+        /**
          * Multirange
          */
         $(window).on('multirange-field-init', function(e, target) {

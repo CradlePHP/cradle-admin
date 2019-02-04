@@ -11,6 +11,24 @@ use Cradle\Package\System\Schema;
 use Cradle\Package\System\Schema\Service;
 
 /**
+ * Render the JSON files we have
+ *
+ * @param Request $request
+ * @param Response $response
+ */
+$this->get('/json/:name.json', function ($request, $response) {
+    $name = $request->getStage('name');
+    $file = sprintf('%s/json/%s.json', __DIR__, $name);
+
+    if (!file_exists($file)) {
+        return;
+    }
+
+    $response->addHeader('Content-Type', 'text/json');
+    $response->setContent(file_get_contents($file));
+});
+
+/**
  * Render Admin JS
  *
  * @param Request $request
