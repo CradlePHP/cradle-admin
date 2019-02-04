@@ -914,7 +914,7 @@ jQuery(function($) {
                         + '<td class="file-field-preview">{PREVIEW}</td>'
                         + '<td class="file-field-name">'
                             + '{FILENAME}'
-                            + '<input class="system-form-control system-file-input" name="{NAME}" type="hidden" value="{DATA}" />'
+                            + '<input class="system-form-control system-file-input form-control" name="{NAME}" type="hidden" value="{DATA}" placeholder="eg. http://website.com/image.jpg" />'
                         + '</td>'
                         + '{ACTIONS}'
                         + '</tr>'
@@ -954,6 +954,68 @@ jQuery(function($) {
 
                 $('button.file-field-upload', container).click(function(e) {
                     file.click();
+                });
+
+                $('button.file-field-link', container).click(function(e) {
+                    var path = name + '[]';
+                    var actions = template.actions;
+
+                    if(!multiple) {
+                        $('tr', body).each(function() {
+                            if($(this).hasClass('file-field-none')) {
+                                return;
+                            }
+
+                            $(this).remove();
+                        });
+
+                        actions = '';
+                        path = name;
+                    }
+
+                    noresults.hide();
+
+                    var preview = template.previewFile.replace('{EXTENSION}', '???');
+
+                    var row = $(
+                        template.row
+                            .replace('{PREVIEW}', preview)
+                            .replace('{FILENAME}', '')
+                            .replace('{NAME}', path)
+                            .replace('{DATA}', '')
+                            .replace('{ACTIONS}', actions)
+                    ).appendTo(body);
+
+                    listen(row, body);
+
+                    $('input.system-file-input', row)
+                        .attr('type', 'text')
+                        .blur(function() {
+                            var url = $(this).val();
+                            var extension = '???';
+                            if (url.indexOf('.') !== -1) {
+                                extension = url.split('.').pop();
+                            }
+
+                            var preview = template.previewFile.replace('{EXTENSION}', extension);
+
+                            //if it's an image
+                            if (
+                                [
+                                    'jpg',
+                                    'jpeg',
+                                    'pjpeg',
+                                    'svg',
+                                    'png',
+                                    'ico',
+                                    'gif'
+                                ].indexOf(extension) !== -1
+                            ) {
+                                preview = template.previewImage.replace('{DATA}', url);
+                            }
+
+                            $('td.file-field-preview', row).html(preview);
+                        });
                 });
 
                 var listen = function(row, body) {
