@@ -577,6 +577,11 @@ $this->get('/admin/system/model/:schema/calendar', function ($request, $response
     // or has value to be flexible just in case the user
     // doesn't want a breadcrumb
     if (!isset($data['breadcrumb'])) {
+        $link = sprintf(
+            '/admin/system/model/%s/search',
+            $data['schema']['name']
+        );
+
         $data['breadcrumb'] = [
             [
                 'icon' => 'fas fa-home',
@@ -585,7 +590,7 @@ $this->get('/admin/system/model/:schema/calendar', function ($request, $response
             ],
             [
                 'icon' => $data['schema']['icon'],
-                'link' => $data['schema']['redirect_uri'],
+                'link' => $link,
                 'page' => $data['schema']['plural']
             ],
             [
