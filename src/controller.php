@@ -11,6 +11,24 @@ use Cradle\Package\System\Schema;
 use Cradle\Package\System\Schema\Service;
 
 /**
+ * Render the JSON files we have
+ *
+ * @param Request $request
+ * @param Response $response
+ */
+$this->get('/json/:name.json', function ($request, $response) {
+    $name = $request->getStage('name');
+    $file = sprintf('%s/json/%s.json', __DIR__, $name);
+
+    if (!file_exists($file)) {
+        return;
+    }
+
+    $response->addHeader('Content-Type', 'text/json');
+    $response->setContent(file_get_contents($file));
+});
+
+/**
  * Render Admin JS
  *
  * @param Request $request
@@ -559,6 +577,11 @@ $this->get('/admin/system/model/:schema/calendar', function ($request, $response
     // or has value to be flexible just in case the user
     // doesn't want a breadcrumb
     if (!isset($data['breadcrumb'])) {
+        $link = sprintf(
+            '/admin/system/model/%s/search',
+            $data['schema']['name']
+        );
+
         $data['breadcrumb'] = [
             [
                 'icon' => 'fas fa-home',
@@ -567,7 +590,7 @@ $this->get('/admin/system/model/:schema/calendar', function ($request, $response
             ],
             [
                 'icon' => $data['schema']['icon'],
-                'link' => $data['schema']['redirect_uri'],
+                'link' => $link,
                 'page' => $data['schema']['plural']
             ],
             [

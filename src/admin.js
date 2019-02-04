@@ -914,7 +914,7 @@ jQuery(function($) {
                         + '<td class="file-field-preview">{PREVIEW}</td>'
                         + '<td class="file-field-name">'
                             + '{FILENAME}'
-                            + '<input class="system-form-control system-file-input" name="{NAME}" type="hidden" value="{DATA}" />'
+                            + '<input class="system-form-control system-file-input form-control" name="{NAME}" type="hidden" value="{DATA}" placeholder="eg. http://website.com/image.jpg" />'
                         + '</td>'
                         + '{ACTIONS}'
                         + '</tr>'
@@ -954,6 +954,68 @@ jQuery(function($) {
 
                 $('button.file-field-upload', container).click(function(e) {
                     file.click();
+                });
+
+                $('button.file-field-link', container).click(function(e) {
+                    var path = name + '[]';
+                    var actions = template.actions;
+
+                    if(!multiple) {
+                        $('tr', body).each(function() {
+                            if($(this).hasClass('file-field-none')) {
+                                return;
+                            }
+
+                            $(this).remove();
+                        });
+
+                        actions = '';
+                        path = name;
+                    }
+
+                    noresults.hide();
+
+                    var preview = template.previewFile.replace('{EXTENSION}', '???');
+
+                    var row = $(
+                        template.row
+                            .replace('{PREVIEW}', preview)
+                            .replace('{FILENAME}', '')
+                            .replace('{NAME}', path)
+                            .replace('{DATA}', '')
+                            .replace('{ACTIONS}', actions)
+                    ).appendTo(body);
+
+                    listen(row, body);
+
+                    $('input.system-file-input', row)
+                        .attr('type', 'text')
+                        .blur(function() {
+                            var url = $(this).val();
+                            var extension = '???';
+                            if (url.indexOf('.') !== -1) {
+                                extension = url.split('.').pop();
+                            }
+
+                            var preview = template.previewFile.replace('{EXTENSION}', extension);
+
+                            //if it's an image
+                            if (
+                                [
+                                    'jpg',
+                                    'jpeg',
+                                    'pjpeg',
+                                    'svg',
+                                    'png',
+                                    'ico',
+                                    'gif'
+                                ].indexOf(extension) !== -1
+                            ) {
+                                preview = template.previewImage.replace('{DATA}', url);
+                            }
+
+                            $('td.file-field-preview', row).html(preview);
+                        });
                 });
 
                 var listen = function(row, body) {
@@ -1312,6 +1374,30 @@ jQuery(function($) {
                     'components/select2/dist/js/select2.full.min.js'
                 ],
                 function() {
+                    $(target).select2();
+                }
+            );
+        });
+
+        /**
+         * Countries Dropdown
+         */
+        $(window).on('country-dropdown-init', function(e, target) {
+            $.require(
+                [
+                    '/json/countries.json',
+                    'components/select2/dist/css/select2.min.css',
+                    'components/select2/dist/js/select2.full.min.js'
+                ],
+                function(countries) {
+                    //populate
+                    countries.forEach(function(country) {
+                        $('<option>')
+                            .attr('value', country.abbreviation)
+                            .text(country.country)
+                            .appendTo(target);
+                    });
+
                     $(target).select2();
                 }
             );
@@ -2614,6 +2700,54 @@ jQuery(function($) {
                     populateBoard(0);
                 }
             );
+        });
+
+        /**
+         * Carousel
+         */
+        $(window).on('carousel-init', function(e, target) {
+            target = $(target);
+
+            var width = target.data('width');
+
+            if (width) {
+                if (typeof width === 'number') {
+                    width += 'px';
+                } else if (width.indexOf('%') === -1 && width.indexOf('px') === -1) {
+                    width += 'px';
+                }
+
+                target.css('width', width);
+            }
+
+            var height = target.data('height');
+            if (height) {
+                if (typeof height === 'number') {
+                    height += 'px';
+                } else if (height.indexOf('%') === -1 && height.indexOf('px') === -1) {
+                    height += 'px';
+                }
+
+                $('img', target).css('height', height);
+            }
+
+            var config = {
+                interval: target.data('interval') || 5000,
+                keyboard: target.data('interval') || true,
+                pause: target.data('pause') || 'hover',
+                ride: target.data('ride') || true,
+                wrap: target.data('wrap') || true
+            };
+
+            target.carousel(config);
+
+            $('a.carousel-control-prev', target).click(function() {
+                target.carousel('prev');
+            });
+
+            $('a.carousel-control-next', target).click(function() {
+                target.carousel('next');
+            });
         });
 
         /**
