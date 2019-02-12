@@ -69,6 +69,7 @@ $this->get('/admin', function ($request, $response) {
 $this->get('/admin/dashboard', function ($request, $response) {
     //----------------------------//
     // 1. Prepare body
+    $global = $this->package('global');
     $data = $request->getStage();
 
     // pull top 5 recent activities
@@ -101,7 +102,7 @@ $this->get('/admin/dashboard', function ($request, $response) {
         }
 
         // get the database name
-        $database = $this->package('global')->config('services', 'sql-main')['name'];
+        $database = $global->config('services', 'sql-main')['name'];
 
         // get the record count
         $records = Service::get('sql')->getSchemaTableRecordCount($database);
@@ -130,7 +131,7 @@ $this->get('/admin/dashboard', function ($request, $response) {
 
     // set schemas to data
     $data['schemas'] = $schemas;
-    $data['title'] = $this->package('global')->translate('Admin Dashboard');
+    $data['title'] = $global->translate('Admin Dashboard');
 
     //----------------------------//
     // 2. Render Template
@@ -223,6 +224,7 @@ $this->get('/admin/configuration', function ($request, $response) {
     // 1. Security Checks
     //----------------------------//
     // 2. Prepare Data
+    $global = $this->package('global');
 
     // default type
     if (!$request->hasStage('type')) {
@@ -234,8 +236,8 @@ $this->get('/admin/configuration', function ($request, $response) {
 
     // valid type ?
     if (!in_array($request->getStage('type'), $valid)) {
-        $this->package('global')->flash('Please select a valid configuration', 'error');
-        return $this->package('global')->redirect('/admin/configuration');
+        $global->flash('Please select a valid configuration', 'error');
+        return $global->redirect('/admin/configuration');
     }
 
     // get the file type
@@ -244,19 +246,19 @@ $this->get('/admin/configuration', function ($request, $response) {
     // switch between config to load
     switch($file) {
         case 'general' :
-            $data['item'] = $this->package('global')->config('settings');
+            $data['item'] = $global->config('settings');
             break;
 
         case 'deploy' :
-            $data['item'] = $this->package('global')->config('deploy');
+            $data['item'] = $global->config('deploy');
             break;
 
         case 'service' :
-            $data['item'] = $this->package('global')->config('services');
+            $data['item'] = $global->config('services');
             break;
 
         case 'test' :
-            $data['item'] = $this->package('global')->config('test');
+            $data['item'] = $global->config('test');
             break;
 
         default :
@@ -305,7 +307,7 @@ $this->get('/admin/configuration', function ($request, $response) {
     //----------------------------//
     // 3. Render Template
     $class = 'page-admin-configuration-search page-admin';
-    $data['title'] = $this->package('global')->translate('System Configuration');
+    $data['title'] = $global->translate('System Configuration');
 
     $template = __DIR__ . '/template';
     if (is_dir($response->getPage('template_root'))) {
@@ -429,19 +431,21 @@ $this->post('/admin/configuration', function ($request, $response) {
         return $paired;
     };
 
-    // pair data
     $data = $pair($request->getPost('item'));
+
+    // pair data
+    $global = $this->package('global');
 
     // if file is set
     if ($file) {
         // export config
-        $this->package('global')->config($file, $data);
+        $global->config($file, $data);
     }
 
-    $this->package('global')->flash('Configuration was updated', 'success');
+    $global->flash('Configuration was updated', 'success');
 
     // redirect back
-    $this->package('global')->redirect(
+    $global->redirect(
         '/admin/configuration?type=' . $request->getStage('type')
     );
 });
@@ -455,6 +459,7 @@ $this->post('/admin/configuration', function ($request, $response) {
 $this->get('/admin/system/model/:schema/calendar', function ($request, $response) {
     //----------------------------//
     // 1. Prepare Data
+    $global = $this->package('global');
     $data = $request->getStage();
 
     // set redirect
@@ -491,9 +496,7 @@ $this->get('/admin/system/model/:schema/calendar', function ($request, $response
     try {
         $data['schema'] = Schema::i($request->getStage('schema'))->getAll();
     } catch (\Exception $e) {
-        $message = $this
-            ->package('global')
-            ->translate($e->getMessage());
+        $message = $global->translate($e->getMessage());
 
         $response->setError(true, $message);
     }
@@ -502,8 +505,8 @@ $this->get('/admin/system/model/:schema/calendar', function ($request, $response
     //this form and it's because of an error
     if ($response->isError()) {
         //pass the error messages to the template
-        $this->package('global')->flash($response->getMessage(), 'error');
-        return $this->package('global')->redirect($redirect);
+        $global->flash($response->getMessage(), 'error');
+        return $global->redirect($redirect);
     }
 
     //also pass the schema to the template
@@ -513,8 +516,8 @@ $this->get('/admin/system/model/:schema/calendar', function ($request, $response
     if (!isset($data['show']) || !$data['show']) {
         //flash an error message and redirect
         $message = 'Please specify what to plot.';
-        $this->package('global')->flash($message, 'error');
-        return $this->package('global')->redirect($redirect);
+        $global->flash($message, 'error');
+        return $global->redirect($redirect);
     }
 
     $data['show'] = explode(',', $data['show']);
@@ -527,12 +530,10 @@ $this->get('/admin/system/model/:schema/calendar', function ($request, $response
 
         //we normally don't need to translate if we are flashing a message
         //but in this case we want to insert the translation pattern
-        $message = $this
-            ->package('global')
-            ->translate('%s is not a date field', $column);
+        $message = $global->translate('%s is not a date field', $column);
 
-        $this->package('global')->flash($message, 'error');
-        return $this->package('global')->redirect($redirect);
+        $global->flash($message, 'error');
+        return $global->redirect($redirect);
     }
 
     //----------------------------//
@@ -603,9 +604,7 @@ $this->get('/admin/system/model/:schema/calendar', function ($request, $response
 
     //----------------------------//
     // 4. Render Template
-    $data['title'] = $this
-        ->package('global')
-        ->translate('%s Calendar', $data['schema']['plural']);
+    $data['title'] = $global->translate('%s Calendar', $data['schema']['plural']);
 
     $class = sprintf(
         'page-admin-%s-calendar page-admin-calendar page-admin',
@@ -656,6 +655,7 @@ $this->get('/admin/system/model/:schema/calendar', function ($request, $response
 $this->get('/admin/system/model/:schema/pipeline', function ($request, $response) {
     //----------------------------//
     // 1. Prepare Data
+    $global = $this->package('global');
     $data = $request->getStage();
     // set redirect
     $redirect = sprintf(
@@ -702,9 +702,7 @@ $this->get('/admin/system/model/:schema/pipeline', function ($request, $response
     try {
         $data['schema'] = Schema::i($request->getStage('schema'))->getAll();
     } catch (\Exception $e) {
-        $message = $this
-            ->package('global')
-            ->translate($e->getMessage());
+        $message = $global->translate($e->getMessage());
 
         $redirect = '/admin/system/schema/search';
         $response->setError(true, $message);
@@ -714,16 +712,16 @@ $this->get('/admin/system/model/:schema/pipeline', function ($request, $response
     // this form and it's because of an error
     if ($response->isError()) {
         //pass the error messages to the template
-        $this->package('global')->flash($response->getMessage(), 'error');
-        return $this->package('global')->redirect($redirect);
+        $global->flash($response->getMessage(), 'error');
+        return $global->redirect($redirect);
     }
 
     // check what to show
     if (!isset($data['show']) || !$data['show']) {
         // flash an error message and redirect
         $message = 'Please specify what to plot.';
-        $this->package('global')->flash($message, 'error');
-        return $this->package('global')->redirect($redirect);
+        $global->flash($message, 'error');
+        return $global->redirect($redirect);
     }
 
     // minimize long array chain
@@ -736,15 +734,13 @@ $this->get('/admin/system/model/:schema/pipeline', function ($request, $response
     ) {
         //we normally don't need to translate if we are flashing a message
         //but in this case we want to insert the translation pattern
-        $message = $this
-            ->package('global')
-            ->translate(
-                '%s is not a select/radio field',
-                $data['show']
-            );
+        $message = $global->translate(
+            '%s is not a select/radio field',
+            $data['show']
+        );
 
-        $this->package('global')->flash($message, 'error');
-        return $this->package('global')->redirect($redirect);
+        $global->flash($message, 'error');
+        return $global->redirect($redirect);
     }
 
     // pipeline stages
@@ -757,12 +753,13 @@ $this->get('/admin/system/model/:schema/pipeline', function ($request, $response
     ) {
         //we normally don't need to translate if we are flashing a message
         //but in this case we want to insert the translation pattern
-        $message = $this
-            ->package('global')
-            ->translate('%s is not a type of date field', $data['date']);
+        $message = $global->translate(
+            '%s is not a type of date field',
+            $data['date']
+        );
 
-        $this->package('global')->flash($message, 'error');
-        return $this->package('global')->redirect($redirect);
+        $global->flash($message, 'error');
+        return $global->redirect($redirect);
     }
 
     // initialize the stageHeader keys into null
@@ -796,15 +793,13 @@ $this->get('/admin/system/model/:schema/pipeline', function ($request, $response
 
             //we normally don't need to translate if we are flashing a message
             //but in this case we want to insert the translation pattern
-            $message = $this
-                ->package('global')
-                ->translate(
-                    '%s is not a number type field',
-                    $field
-                );
+            $message = $global->translate(
+                '%s is not a number type field',
+                $field
+            );
 
-            $this->package('global')->flash($message, 'error');
-            return $this->package('global')->redirect($redirect);
+            $global->flash($message, 'error');
+            return $global->redirect($redirect);
         }
     }
 
@@ -813,16 +808,13 @@ $this->get('/admin/system/model/:schema/pipeline', function ($request, $response
         || !in_array($fields[$data['total']]['field']['type'], $rangeFieldTypes))
     ) {
         // flash error message
-        $message = $this
-            ->package('global')
-            ->translate(
-                '%s is not a number type field',
-                $data['total']
-            );
+        $message = $global->translate(
+            '%s is not a number type field',
+            $data['total']
+        );
 
-        $this->package('global')->flash($message, 'error');
-
-        return $this->package('global')->redirect($redirect);
+        $global->flash($message, 'error');
+        return $global->redirect($redirect);
     }
 
     if (isset($data['relations'])) {
@@ -873,12 +865,11 @@ $this->get('/admin/system/model/:schema/pipeline', function ($request, $response
 
         $message = '';
         if ($unrelated) {
-            $message .= $this
-                ->package('global')
-                ->translate(
-                    '%s has no relation with %s',
-                    $data['schema']['name'],
-                    implode(', ', $unrelated));
+            $message .= $global->translate(
+                '%s has no relation with %s',
+                $data['schema']['name'],
+                implode(', ', $unrelated)
+            );
         }
 
         if ($unrelated && $one) {
@@ -886,12 +877,11 @@ $this->get('/admin/system/model/:schema/pipeline', function ($request, $response
         }
 
         if ($one) {
-            $message .= $this
-                ->package('global')
-                ->translate(
-                    '%s doesn\'t have a 1:1 relation with %s',
-                    implode(', ', $one),
-                    $data['schema']['name']);
+            $message .= $global->translate(
+                '%s doesn\'t have a 1:1 relation with %s',
+                implode(', ', $one),
+                $data['schema']['name']
+            );
         }
 
         if ($unrelated || $one) {
@@ -904,11 +894,10 @@ $this->get('/admin/system/model/:schema/pipeline', function ($request, $response
     }
 
     $data['schema']['filterable'] = array_values($data['schema']['filterable']);
+
     //----------------------------//
     // 3. Render Template
-    $data['title'] = $this
-        ->package('global')
-        ->translate('%s Pipeline', $data['schema']['singular']);
+    $data['title'] = $global->translate('%s Pipeline', $data['schema']['singular']);
 
     $class = sprintf(
         'page-admin-%s-pipeline page-admin',
