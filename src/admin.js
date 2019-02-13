@@ -241,6 +241,17 @@ jQuery(function($) {
                 })
                 .click();
         });
+
+        /**
+         * Confirm UI
+         */
+        $(window).on('confirm-click', function(e, trigger) {
+            if (!window.confirm('Are you sure you want to remove?')) {
+                e.preventDefault();
+                e.stopPropagation();
+                return false;
+            }
+        });
     })();
 
     /**
