@@ -1209,7 +1209,7 @@ jQuery(function($) {
                 + '</div>'
             + '</div>';
 
-            require.load(
+            $.require.load(
                 [
                     'components/wysihtml/dist/minified/wysihtml.min.js',
                     'components/wysihtml/dist/minified/wysihtml.all-commands.min.js',
@@ -1236,7 +1236,7 @@ jQuery(function($) {
          * Code Editor - Ace
          */
         $(window).on('code-editor-init', function(e, target) {
-            require.load(
+            $.require.load(
                 'components/ace-editor-builds/src/ace.js',
                 function() {
                     target = $(target).addClass('ace-textarea').hide();
@@ -1281,7 +1281,7 @@ jQuery(function($) {
          * Markdown Editor -
          */
         $(window).on('markdown-editor-init', function(e, target) {
-            require.load(
+            $.require.load(
                 [
                     'components/bootstrap-markdown-editor-4/dist/css/bootstrap-markdown-editor.min.css',
                     'components/ace-editor-builds/src/ace.js',
@@ -2175,7 +2175,7 @@ jQuery(function($) {
          */
         $(window).on('prettify-init', function(e, target) {
             var loaded = false;
-            require.load(
+            $.require.load(
                 'components/google-code-prettify/src/prettify.js',
                 function() {
                     if(!loaded) {
