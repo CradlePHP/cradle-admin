@@ -1,13 +1,13 @@
-jQuery(function($) {
+jQuery(function ($) {
     /**
      * Report Related Scripts
      */
-    (function() {
+    (function () {
         /**
          * Report Chart Page UI
          */
-        $(window).on('report-init', function(e, target) {
-            var onAcquire = function() {
+        $(window).on('report-init', function (e, target) {
+            var onAcquire = function () {
                 var chartType = $(target).data('chart');
                 var chartLabel = $(target).data('label');
                 var dataset = $(target).data('dataset');
@@ -36,39 +36,39 @@ jQuery(function($) {
 
                // TODO: Find a way to add chart options,
                // like colors, borderColors etc
-               var data = {
-                   datasets: [
+                var data = {
+                    datasets: [
                        {
-                           data: dataset,
-                           backgroundColor: [
+                            data: dataset,
+                            backgroundColor: [
                                'rgba(54, 162, 235, 0.2)',
                                'rgba(255, 99, 132, 0.2)',
                                'rgba(255, 206, 86, 0.2)',
                                'rgba(75, 192, 192, 0.2)',
                                'rgba(153, 102, 255, 0.2)',
                                'rgba(255, 159, 64, 0.2)'
-                           ],
-                           borderColor: [
+                            ],
+                            borderColor: [
                                'rgba(54, 162, 235, 1)',
                                'rgba(255,99,132,1)',
                                'rgba(255, 206, 86, 1)',
                                'rgba(75, 192, 192, 1)',
                                'rgba(153, 102, 255, 1)',
                                'rgba(255, 159, 64, 1)'
-                           ],
-                           borderWidth: 1,
-                           fill: fill
-                       }
-                  ]
-              };
+                            ],
+                            borderWidth: 1,
+                            fill: fill
+                    }
+                    ]
+                };
 
-              if (chartType == 'pie' || chartType == 'doughnut') {
-                  data.labels = chartLabel;
-              } else {
-                  data.datasets[0].label = chartLabel;
-              }
+                if (chartType == 'pie' || chartType == 'doughnut') {
+                    data.labels = chartLabel;
+                } else {
+                    data.datasets[0].label = chartLabel;
+                }
 
-               var myChart = new Chart($(target), {
+                var myChart = new Chart($(target), {
                     type: chartType,
                     data: data,
                     options: options
@@ -86,7 +86,7 @@ jQuery(function($) {
          * Show appropriate additional fields according to
          * what chart type was choosen by the user
          */
-        $(window).on('show-report-fields-init', function(e, target) {
+        $(window).on('show-report-fields-init', function (e, target) {
             var chart = $(target).val();
             var fields = $('#' + chart + '-fields').html();
             $('#additional-fields-wrapper').html('');
@@ -105,7 +105,7 @@ jQuery(function($) {
             $('#additional-fields-wrapper .form-group').doon();
         });
 
-        $(window).on('show-report-fields-change', function(e, target) {
+        $(window).on('show-report-fields-change', function (e, target) {
             var chart = $(target).val();
             var fields = $('#' + chart + '-fields').html();
             $('#additional-fields-wrapper').html('');
@@ -128,7 +128,7 @@ jQuery(function($) {
          * Show appropriate additional fields according to
          * what report type was choosen by the user
          */
-        $(window).on('show-table-fields-change', function(e, target) {
+        $(window).on('show-table-fields-change', function (e, target) {
             var display = $(target).val();
             var metafield = $($(target).parents('.form-select')).data('name') + '[value]';
 
@@ -154,7 +154,7 @@ jQuery(function($) {
                 $(target).parents('.form-group').doon();
             }
         });
-        $(window).on('show-table-fields-init', function(e, target) {
+        $(window).on('show-table-fields-init', function (e, target) {
             var display = $(target).val();
             var metafield = $($(target).parents('.form-select')).data('name') + '[value]';
             var schema = $('.suggestion-value-report_schema').val();
@@ -174,7 +174,7 @@ jQuery(function($) {
             }
         });
 
-        $(window).on('circular-chart-table-fields-init', function(e, target) {
+        $(window).on('circular-chart-table-fields-init', function (e, target) {
             var metafield = $(target).data('name');
             var schema = $('.suggestion-value-report_schema').val();
             if (!schema) {
@@ -194,11 +194,11 @@ jQuery(function($) {
         /**
         * Do tasks that are for multiple dataset specific
         */
-        $(document).on('change', 'input[name="report_meta[multiple]"]', function() {
+        $(document).on('change', 'input[name="report_meta[multiple]"]', function () {
             var ismultiple = $(this).is(':checked');
             // first, disable other options that should
             // only be available for multiple datasets
-            $('option[multiple]').each(function() {
+            $('option[multiple]').each(function () {
                 if (!ismultiple) {
                     $(this).attr('disabled', 'disabled');
                 } else {
@@ -210,7 +210,7 @@ jQuery(function($) {
          /**
           *
           */
-         $(window).on('update-detail-url-change', function(e, target) {
+         $(window).on('update-detail-url-change', function (e, target) {
              var schema = $('input[name="report_schema"]').val();
              $('select[name="report_chart"]').trigger('change');
          });
@@ -218,12 +218,12 @@ jQuery(function($) {
     /**
      * General Search
      */
-    (function() {
+    (function () {
         /**
          * Search filter more less toggle
          */
-        $(window).on('search-filter-toggle-click', function(e, target) {
-            if($('i', target).hasClass('fa-caret-down')) {
+        $(window).on('search-filter-toggle-click', function (e, target) {
+            if ($('i', target).hasClass('fa-caret-down')) {
                 $('i', target)
                     .removeClass('fa-caret-down')
                     .addClass('fa-caret-up');
@@ -239,21 +239,21 @@ jQuery(function($) {
         /**
          * Search table check all
          */
-        $(window).on('table-checkall-init', function(e, trigger) {
+        $(window).on('table-checkall-init', function (e, trigger) {
             var target = $(trigger).parents('table').eq(0);
 
-            $(trigger).click(function() {
-                if($(trigger).prop('checked')) {
+            $(trigger).click(function () {
+                if ($(trigger).prop('checked')) {
                     $('td input[type="checkbox"]', target).prop('checked', true);
                 } else {
                     $('td input[type="checkbox"]', target).prop('checked', false);
                 }
             });
 
-            $('td input[type="checkbox"]', target).click(function() {
+            $('td input[type="checkbox"]', target).click(function () {
                 var allChecked = true;
-                $('td input[type="checkbox"]', target).each(function() {
-                    if(!$(this).prop('checked')) {
+                $('td input[type="checkbox"]', target).each(function () {
+                    if (!$(this).prop('checked')) {
                         allChecked = false;
                     }
                 });
@@ -265,7 +265,7 @@ jQuery(function($) {
         /**
          * Show unread history logs
          */
-        $(window).on('history-init', function(e, trigger) {
+        $(window).on('history-init', function (e, trigger) {
             var target = $(trigger);
             var url = target.attr('data-init-url');
 
@@ -273,11 +273,11 @@ jQuery(function($) {
                 return;
             }
 
-            $.get(url, function(response) {
+            $.get(url, function (response) {
                 //process data
                 try {
                     response = JSON.parse(response);
-                } catch(e) {
+                } catch (e) {
                     //fix for echos and print_r
                     response = {
                         error: false,
@@ -290,21 +290,20 @@ jQuery(function($) {
                 }
 
                 //if there's no results
-                if(typeof response.results === 'undefined') {
+                if (typeof response.results === 'undefined') {
                     return;
                 }
 
                 var rows = response.results.rows;
 
-                rows.forEach(function(log, key) {
+                rows.forEach(function (log, key) {
                     $('div.dropdown-menu #logs').append('<a class="dropdown-item" href="#">' +
                             '<img class="rounded-circle" src="/images/default-avatar.png" />' +
                             '<span class="notification-info">' +
                                 '<span class="notification-message">' + log.history_activity + '</span>' +
                                 '<em class="notification-time">' + log.ago + '</em>' +
                             '</span>' +
-                        '</a>'
-                    );
+                        '</a>');
 
                     if (key == 4) {
                         $('div.dropdown-menu #logs').addClass('scroll');
@@ -316,8 +315,7 @@ jQuery(function($) {
                             '<span class="notification-info">' +
                                 '<span class="notification-message">No New History</span>' +
                             '</span>' +
-                        '</a>'
-                    );
+                        '</a>');
 
                     //add class
                     $('.notification-info').addClass('no-notification');
@@ -334,15 +332,15 @@ jQuery(function($) {
         /**
          * Search table check all
          */
-        $(window).on('history-click', function(e, trigger) {
+        $(window).on('history-click', function (e, trigger) {
             var target = $(trigger);
             var url = target.attr('data-url');
 
-            $.get(url, function(response) {
+            $.get(url, function (response) {
                 //process data
                 try {
                     response = JSON.parse(response);
-                } catch(e) {
+                } catch (e) {
                     //fix for echos and print_r
                     response = {
                         error: false,
@@ -363,10 +361,10 @@ jQuery(function($) {
         /**
          * Importer init
          */
-        $(window).on('import-init', function(e, trigger) {
+        $(window).on('import-init', function (e, trigger) {
             $(trigger).toggleClass('disabled');
 
-            $.require('components/papaparse/papaparse.min.js', function() {
+            $.require('components/papaparse/papaparse.min.js', function () {
                 $(trigger).toggleClass('disabled');
             });
         });
@@ -374,7 +372,7 @@ jQuery(function($) {
         /**
          * Importer tool
          */
-        $(window).on('import-click', function(e, trigger) {
+        $(window).on('import-click', function (e, trigger) {
             var url = $(trigger).attr('data-url');
             var progress = $(trigger).attr('data-progress');
             var complete = $(trigger).attr('data-complete');
@@ -399,7 +397,7 @@ jQuery(function($) {
                         'text/tab-separated-values'
                     ].join(',')
                 )
-                .change(function() {
+                .change(function () {
                     var message = '<div>'+progress+'</div>';
                     var notifier = $.notify(message, 'info', 0);
 
@@ -407,12 +405,12 @@ jQuery(function($) {
                         config: {
                             header: true,
                             skipEmptyLines: true,
-                            complete: function(results, file) {
-                                $.post(url, JSON.stringify(results.data), function(response) {
+                            complete: function (results, file) {
+                                $.post(url, JSON.stringify(results.data), function (response) {
                                     //process data
                                     try {
                                         response = JSON.parse(response);
-                                    } catch(e) {
+                                    } catch (e) {
                                         //fix for echos and print_r
                                         response = {
                                             error: false,
@@ -423,11 +421,11 @@ jQuery(function($) {
                                     if (response.error) {
                                         var message = response.message;
 
-                                        response.errors.forEach(function(error) {
+                                        response.errors.forEach(function (error) {
                                             message += '<br />' + error;
                                         });
 
-                                        notifier.fadeOut('fast', function() {
+                                        notifier.fadeOut('fast', function () {
                                             notifier.remove();
                                         });
 
@@ -437,19 +435,19 @@ jQuery(function($) {
                                             complete = response.message;
                                         }
 
-                                        notifier.fadeOut('fast', function() {
+                                        notifier.fadeOut('fast', function () {
                                             notifier.remove();
                                         });
 
                                         $.notify(complete, 'success');
 
-                                        setTimeout(function() {
+                                        setTimeout(function () {
                                             window.location.reload();
                                         }, 1000);
                                     }
                                 });
                             },
-                            error: function(error, file, input, reason) {
+                            error: function (error, file, input, reason) {
                                 $.notify(error.message, 'error');
                             }
                         }
@@ -461,7 +459,7 @@ jQuery(function($) {
         /**
          * Confirm UI
          */
-        $(window).on('confirm-click', function(e, trigger) {
+        $(window).on('confirm-click', function (e, trigger) {
             if (!window.confirm('Are you sure you want to remove?')) {
                 e.preventDefault();
                 e.stopPropagation();
@@ -473,11 +471,11 @@ jQuery(function($) {
     /**
      * General Forms
      */
-    (function() {
+    (function () {
         /**
          * Reset button on form page
          */
-        $('form button[type="reset"]').click(function(e) {
+        $('form button[type="reset"]').click(function (e) {
             e.preventDefault();
             form = $(this).parents('form').get(0);
 
@@ -490,8 +488,8 @@ jQuery(function($) {
         /**
          * Suggestion Field
          */
-        $(window).on('suggestion-field-init', function(e, target) {
-            $.require('components/handlebars/dist/handlebars.js', function() {
+        $(window).on('suggestion-field-init', function (e, target) {
+            $.require('components/handlebars/dist/handlebars.js', function () {
                 target = $(target);
 
                 var container = $('<ul>').appendTo(target);
@@ -506,7 +504,7 @@ jQuery(function($) {
                     url = target.attr('data-url'),
                     template = '<li class="suggestion-item">{VALUE}</li>';
 
-                if(!targetLabel || !targetValue || !url || !value) {
+                if (!targetLabel || !targetValue || !url || !value) {
                     return;
                 }
 
@@ -517,7 +515,7 @@ jQuery(function($) {
                 targetLabel = $(targetLabel);
                 targetValue = $(targetValue);
 
-                var loadSuggestions = function(list, callback) {
+                var loadSuggestions = function (list, callback) {
                     container.html('');
 
                     if (typeof list === 'undefined') {
@@ -525,7 +523,7 @@ jQuery(function($) {
                         return;
                     }
 
-                    list.forEach(function(item) {
+                    list.forEach(function (item) {
                         var label = '';
                         //if there is a format, yay.
                         if (format) {
@@ -533,7 +531,7 @@ jQuery(function($) {
                         //otherwise best guess?
                         } else {
                             for (var key in item) {
-                                if(
+                                if (
                                     //if it is not a string
                                     typeof item[key] !== 'string'
                                     //it's a string but is like a number
@@ -550,7 +548,7 @@ jQuery(function($) {
                         }
 
                         //if still no label
-                        if(!label.length) {
+                        if (!label.length) {
                             //just get the first one, i guess.
                             for (var key in item) {
                                 label = item[key];
@@ -561,7 +559,7 @@ jQuery(function($) {
                         item = { label: label, value: item[value] };
                         var row = template.replace('{VALUE}', item.label);
 
-                        row = $(row).click(function() {
+                        row = $(row).click(function () {
                             callback(item);
                             target.addClass('d-none');
                         });
@@ -569,7 +567,7 @@ jQuery(function($) {
                         container.append(row);
                     });
 
-                    if(list.length) {
+                    if (list.length) {
                         target.removeClass('d-none');
                     } else {
                         target.addClass('d-none');
@@ -577,26 +575,26 @@ jQuery(function($) {
                 };
 
                 targetLabel
-                    .keypress(function(e) {
+                    .keypress(function (e) {
                         //if enter
-                        if(e.keyCode == 13 && prevent) {
+                        if (e.keyCode == 13 && prevent) {
                             e.preventDefault();
                         }
                     })
-                    .keydown(function(e) {
+                    .keydown(function (e) {
                         //if backspace
-                        if(e.keyCode == 8) {
+                        if (e.keyCode == 8) {
                             //undo the value
                             targetValue.val('');
                         }
 
                         prevent = false;
-                        if(!target.hasClass('d-none')) {
-                            switch(e.keyCode) {
+                        if (!target.hasClass('d-none')) {
+                            switch (e.keyCode) {
                                 case 40: //down
                                     var next = $('li.hover', target).removeClass('hover').index() + 1;
 
-                                    if(next === $('li', target).length) {
+                                    if (next === $('li', target).length) {
                                         next = 0;
                                     }
 
@@ -606,7 +604,7 @@ jQuery(function($) {
                                 case 38: //up
                                     var prev = $('li.hover', target).removeClass('hover').index() - 1;
 
-                                    if(prev < 0) {
+                                    if (prev < 0) {
                                         prev = $('li', target).length - 1;
                                     }
 
@@ -614,7 +612,7 @@ jQuery(function($) {
 
                                     return;
                                 case 13: //enter
-                                    if($('li.hover', target).length) {
+                                    if ($('li.hover', target).length) {
                                         $('li.hover', target)[0].click();
                                         prevent = true;
                                     }
@@ -625,11 +623,11 @@ jQuery(function($) {
                             }
                         }
 
-                        if(searching) {
+                        if (searching) {
                             return;
                         }
 
-                        setTimeout(function() {
+                        setTimeout(function () {
                             if (targetLabel.val() == '') {
                                 return;
                             }
@@ -638,10 +636,10 @@ jQuery(function($) {
                             $.ajax({
                                 url : url.replace('{QUERY}', targetLabel.val()),
                                 type : 'GET',
-                                success : function(response) {
+                                success : function (response) {
                                     var list = [];
 
-                                    if(typeof response.results !== 'undefined'
+                                    if (typeof response.results !== 'undefined'
                                         && typeof response.results.rows !== 'undefined'
                                         && response.results.rows instanceof Array
                                     ) {
@@ -657,13 +655,13 @@ jQuery(function($) {
                                         list = primary.concat(response.results.fields);
                                     }
 
-                                    loadSuggestions(list, function(item) {
+                                    loadSuggestions(list, function (item) {
                                         targetValue.val(item.value);
                                         targetLabel.val(item.label).trigger('keyup');
                                     });
 
                                     searching = false;
-                                }, error : function() {
+                                }, error : function () {
                                     searching = false;
                                 }
                             });
@@ -675,7 +673,7 @@ jQuery(function($) {
         /**
          * Tag Field
          */
-        $(window).on('tag-field-init', function(e, target) {
+        $(window).on('tag-field-init', function (e, target) {
             target = $(target);
 
             var name = target.attr('data-name');
@@ -686,10 +684,10 @@ jQuery(function($) {
             + '<a class="remove" href="javascript:void(0)"><i class="fa fa-times">'
             + '</i></a></div>';
 
-            var addResize = function(filter) {
+            var addResize = function (filter) {
                 var input = $('input[type=text]', filter);
 
-                input.keyup(function() {
+                input.keyup(function () {
                     var value = input.val() || input.attr('placeholder');
 
                     var test = $('<span>').append(value).css({
@@ -700,7 +698,7 @@ jQuery(function($) {
 
                     var width = test.width() + 10;
 
-                    if((width + 40) > target.width()) {
+                    if ((width + 40) > target.width()) {
                         width = target.width() - 40;
                     }
 
@@ -709,8 +707,8 @@ jQuery(function($) {
                 }).trigger('keyup');
             };
 
-            var addRemove = function(filter) {
-                $('a.remove', filter).click(function() {
+            var addRemove = function (filter) {
+                $('a.remove', filter).click(function () {
                     var val = $('input', filter).val();
 
                     $(this).parent().remove();
@@ -718,37 +716,37 @@ jQuery(function($) {
             };
 
             //INITITALIZERS
-            var initTag = function(filter) {
+            var initTag = function (filter) {
                 addRemove(filter);
                 addResize(filter);
 
-                $('input', filter).blur(function() {
+                $('input', filter).blur(function () {
                     //if no value
-                    if(!$(this).val() || !$(this).val().length) {
+                    if (!$(this).val() || !$(this).val().length) {
                         //remove it
                         $(this).next().click();
                     }
 
                     var count = 0;
                     var currentTagValue = $(this).val();
-                    $('div.tag input', target).each(function() {
-                        if(currentTagValue === $(this).val()) {
+                    $('div.tag input', target).each(function () {
+                        if (currentTagValue === $(this).val()) {
                             count++;
                         }
                     });
 
-                    if(count > 1) {
+                    if (count > 1) {
                         $(this).parent().remove();
                     }
                 });
             };
 
             //EVENTS
-            target.click(function(e) {
-                if($(e.target).hasClass('tag-field')) {
+            target.click(function (e) {
+                if ($(e.target).hasClass('tag-field')) {
                     var last = $('div.tag:last', this);
 
-                    if(!last.length || $('input', last).val()) {
+                    if (!last.length || $('input', last).val()) {
                         last = $(tagTemplate);
                         target.append(last);
 
@@ -760,7 +758,7 @@ jQuery(function($) {
             });
 
             //INITIALIZE
-            $('div.tag', target).each(function() {
+            $('div.tag', target).each(function () {
                 initTag($(this));
             });
         });
@@ -768,7 +766,7 @@ jQuery(function($) {
         /**
          * Texts Field
          */
-        $(window).on('textlist-field-init', function(e, target) {
+        $(window).on('textlist-field-init', function (e, target) {
             target = $(target);
 
             var name = target.attr('data-name');
@@ -788,35 +786,35 @@ jQuery(function($) {
                 + '<i class="fas fa-times"></i></a></div></div>';
 
             //INITITALIZERS
-            var initTag = function(filter) {
-                $('a.remove', filter).click(function() {
+            var initTag = function (filter) {
+                $('a.remove', filter).click(function () {
                     filter.remove();
                 });
 
-                $('a.move-up', filter).click(function() {
+                $('a.move-up', filter).click(function () {
                     var prev = filter.prev();
 
-                    if(prev.length && prev.hasClass('field-row')) {
+                    if (prev.length && prev.hasClass('field-row')) {
                         prev.before(filter);
                     }
                 });
 
-                $('a.move-down', filter).click(function() {
+                $('a.move-down', filter).click(function () {
                     var next = filter.next();
 
-                    if(next.length && next.hasClass('field-row')) {
+                    if (next.length && next.hasClass('field-row')) {
                         next.after(filter);
                     }
                 });
             };
 
             //append meta template
-            $('a.field-add', target).click(function() {
+            $('a.field-add', target).click(function () {
                 var key = $('div.field-row', target).length;
                 $(this).before(template);
                 var item = $(this).prev();
 
-                if(placeholder) {
+                if (placeholder) {
                     $('input.text-field', item).attr('placeholder', placeholder);
                 }
 
@@ -826,7 +824,7 @@ jQuery(function($) {
             });
 
             //INITIALIZE
-            $('div.field-row', target).each(function() {
+            $('div.field-row', target).each(function () {
                 initTag($(this));
             });
         });
@@ -834,7 +832,7 @@ jQuery(function($) {
         /**
          * Textareas Field
          */
-        $(window).on('textarealist-field-init', function(e, target) {
+        $(window).on('textarealist-field-init', function (e, target) {
             target = $(target);
 
             var name = target.attr('data-name');
@@ -855,39 +853,39 @@ jQuery(function($) {
                 + '<i class="fas fa-times"></i></a></div></div>';
 
             //INITITALIZERS
-            var initTag = function(filter) {
-                $('a.remove', filter).click(function() {
+            var initTag = function (filter) {
+                $('a.remove', filter).click(function () {
                     filter.remove();
                 });
 
-                $('a.move-up', filter).click(function() {
+                $('a.move-up', filter).click(function () {
                     var prev = filter.prev();
 
-                    if(prev.length && prev.hasClass('field-row')) {
+                    if (prev.length && prev.hasClass('field-row')) {
                         prev.before(filter);
                     }
                 });
 
-                $('a.move-down', filter).click(function() {
+                $('a.move-down', filter).click(function () {
                     var next = filter.next();
 
-                    if(next.length && next.hasClass('field-row')) {
+                    if (next.length && next.hasClass('field-row')) {
                         next.after(filter);
                     }
                 });
             };
 
             //append meta template
-            $('a.field-add', target).click(function() {
+            $('a.field-add', target).click(function () {
                 var key = $('div.field-row', target).length;
                 $(this).before(template);
                 var item = $(this).prev();
 
-                if(placeholder) {
+                if (placeholder) {
                     $('textarea.text-field', item).attr('placeholder', placeholder);
                 }
 
-                if(rows) {
+                if (rows) {
                     $('textarea.text-field', item).attr('rows', rows);
                 }
 
@@ -897,7 +895,7 @@ jQuery(function($) {
             });
 
             //INITIALIZE
-            $('div.field-row', target).each(function() {
+            $('div.field-row', target).each(function () {
                 initTag($(this));
             });
         });
@@ -905,7 +903,7 @@ jQuery(function($) {
         /**
          * WYSIWYGs Field
          */
-        $(window).on('wysiwyglist-field-init', function(e, target) {
+        $(window).on('wysiwyglist-field-init', function (e, target) {
             target = $(target);
 
             var name = target.attr('data-name');
@@ -925,16 +923,16 @@ jQuery(function($) {
                 + name + '[]"></textarea></div>';
 
             //INITITALIZERS
-            var initTag = function(filter) {
-                $('a.remove', filter).click(function() {
+            var initTag = function (filter) {
+                $('a.remove', filter).click(function () {
                     console.log(filter[0])
                     filter.remove();
                 });
 
-                $('a.move-up', filter).click(function() {
+                $('a.move-up', filter).click(function () {
                     var prev = filter.prev();
 
-                    if(prev.length && prev.hasClass('field-row')) {
+                    if (prev.length && prev.hasClass('field-row')) {
                         var value1 = $('textarea', filter).data('editor').getValue();
                         var value2 = $('textarea', prev).data('editor').getValue();
 
@@ -943,10 +941,10 @@ jQuery(function($) {
                     }
                 });
 
-                $('a.move-down', filter).click(function() {
+                $('a.move-down', filter).click(function () {
                     var next = filter.next();
 
-                    if(next.length && next.hasClass('field-row')) {
+                    if (next.length && next.hasClass('field-row')) {
                         var value1 = $('textarea', filter).data('editor').getValue();
                         var value2 = $('textarea', next).data('editor').getValue();
 
@@ -957,16 +955,16 @@ jQuery(function($) {
             };
 
             //append meta template
-            $('a.field-add', target).click(function() {
+            $('a.field-add', target).click(function () {
                 var key = $('div.field-row', target).length;
                 $(this).before(template);
                 var item = $(this).prev();
 
-                if(placeholder) {
+                if (placeholder) {
                     $('textarea.text-field', item).attr('placeholder', placeholder);
                 }
 
-                if(rows) {
+                if (rows) {
                     $('textarea.text-field', item).attr('rows', rows);
                 }
 
@@ -978,7 +976,7 @@ jQuery(function($) {
             });
 
             //INITIALIZE
-            $('div.field-row', target).each(function() {
+            $('div.field-row', target).each(function () {
                 initTag($(this));
             });
         });
@@ -986,7 +984,7 @@ jQuery(function($) {
         /**
          * Meta Field
          */
-        $(window).on('meta-field-init', function(e, target) {
+        $(window).on('meta-field-init', function (e, target) {
             target = $(target);
 
             //TEMPLATES
@@ -1000,16 +998,16 @@ jQuery(function($) {
                 + '<i class="fas fa-times"></i></a></div></div>';
 
             //INITITALIZERS
-            var initTag = function(filter) {
+            var initTag = function (filter) {
                 var hidden = filter.find('input[type="hidden"]')
 
-                $('a.remove', filter).click(function() {
+                $('a.remove', filter).click(function () {
                     filter.remove();
                 });
 
-                $('input.meta-input.key', filter).blur(function() {
+                $('input.meta-input.key', filter).blur(function () {
                     //if no value
-                    if(!$(this).val() || !$(this).val().length) {
+                    if (!$(this).val() || !$(this).val().length) {
                         hidden.attr('name', '');
                         return;
                     }
@@ -1017,9 +1015,9 @@ jQuery(function($) {
                     hidden.attr('name', $(target).data('name') + '[' + $(this).val() +']');
                 });
 
-                $('textarea.meta-input.value', filter).blur(function() {
+                $('textarea.meta-input.value', filter).blur(function () {
                     //if no value
-                    if(!$(this).val() || !$(this).val().length) {
+                    if (!$(this).val() || !$(this).val().length) {
                         hidden.attr('value', '');
                         return;
                     }
@@ -1029,7 +1027,7 @@ jQuery(function($) {
             };
 
             //append meta template
-            $('a.field-add', target).click(function() {
+            $('a.field-add', target).click(function () {
                 var key = $('div.field-row', target).length;
                 $(this).before(template);
                 var item = $(this).prev();
@@ -1040,7 +1038,7 @@ jQuery(function($) {
             });
 
             //INITIALIZE
-            $('div.field-row', target).each(function() {
+            $('div.field-row', target).each(function () {
                 initTag($(this));
             });
         });
@@ -1048,7 +1046,7 @@ jQuery(function($) {
         /**
          * Table Field
          */
-        $(window).on('table-field-init', function(e, target) {
+        $(window).on('table-field-init', function (e, target) {
             target = $(target);
 
             //attributes
@@ -1065,11 +1063,11 @@ jQuery(function($) {
                 + 'form-control system-form-control" type="text" /></td>';
 
             //INITITALIZERS
-            var init = function(row) {
-                $('a.row-remove', row).click(function() {
+            var init = function (row) {
+                $('a.row-remove', row).click(function () {
                     row.remove();
 
-                    $('tbody tr', target).each(function(index) {
+                    $('tbody tr', target).each(function (index) {
                         $(this)
                             .data('index', index)
                             .attr('data-index', index);
@@ -1083,13 +1081,13 @@ jQuery(function($) {
             };
 
             //append meta template
-            $('a.row-add', target).click(function() {
+            $('a.row-add', target).click(function () {
                 var index = $('tbody tr', target).length;
                 var row = $(template)
                     .data('index', index)
                     .attr('data-index', index);
 
-                columns.forEach(function(label) {
+                columns.forEach(function (label) {
                     var column = $(templateRow);
 
                     $('input', column)
@@ -1113,7 +1111,7 @@ jQuery(function($) {
             });
 
             //INITIALIZE
-            $('tbody tr', target).each(function() {
+            $('tbody tr', target).each(function () {
                 init($(this));
             });
         });
@@ -1129,8 +1127,8 @@ jQuery(function($) {
          * data-name="post_files"
          * data-multiple="1"
          */
-        $(window).on('file-field-init', function(e, target) {
-            var onAcquire = function(extensions) {
+        $(window).on('file-field-init', function (e, target) {
+            var onAcquire = function (extensions) {
                 var template = {
                     previewFile:
                         '<div class="file-field-preview-container">'
@@ -1188,27 +1186,27 @@ jQuery(function($) {
                 //make a file
                 var file = $('<input type="file" />').hide();
 
-                if(multiple) {
+                if (multiple) {
                     file.attr('multiple', 'multiple');
                 }
 
-                if(accept) {
+                if (accept) {
                     file.attr('accept', accept);
                 }
 
                 foot.append(file);
 
-                $('button.file-field-upload', container).click(function(e) {
+                $('button.file-field-upload', container).click(function (e) {
                     file.click();
                 });
 
-                $('button.file-field-link', container).click(function(e) {
+                $('button.file-field-link', container).click(function (e) {
                     var path = name + '[]';
                     var actions = template.actions;
 
-                    if(!multiple) {
-                        $('tr', body).each(function() {
-                            if($(this).hasClass('file-field-none')) {
+                    if (!multiple) {
+                        $('tr', body).each(function () {
+                            if ($(this).hasClass('file-field-none')) {
                                 return;
                             }
 
@@ -1236,7 +1234,7 @@ jQuery(function($) {
 
                     $('input.system-file-input', row)
                         .attr('type', 'text')
-                        .blur(function() {
+                        .blur(function () {
                             var url = $(this).val();
                             var extension = '???';
                             if (url.indexOf('.') !== -1) {
@@ -1264,44 +1262,44 @@ jQuery(function($) {
                         });
                 });
 
-                var listen = function(row, body) {
-                    $('a.file-field-remove', row).click(function() {
+                var listen = function (row, body) {
+                    $('a.file-field-remove', row).click(function () {
                         row.remove();
-                        if($('tr', body).length < 2) {
+                        if ($('tr', body).length < 2) {
                             noresults.show();
                         }
                     });
 
-                    $('a.file-field-move-up', row).click(function() {
+                    $('a.file-field-move-up', row).click(function () {
                         var prev = row.prev();
 
-                        if(prev.length && !prev.hasClass('file-field-none')) {
+                        if (prev.length && !prev.hasClass('file-field-none')) {
                             prev.before(row);
                         }
                     });
 
-                    $('a.file-field-move-down', row).click(function() {
+                    $('a.file-field-move-down', row).click(function () {
                         var next = row.next();
 
-                        if(next.length) {
+                        if (next.length) {
                             next.after(row);
                         }
                     });
                 };
 
-                var generate = function(file, name, width, height, row) {
+                var generate = function (file, name, width, height, row) {
                     var reader = new FileReader();
                     reader.readAsDataURL(file);
                     reader.onload = function () {
                         var extension = file.name.split('.').pop();
 
-                        if(file.name.indexOf('.') === -1) {
+                        if (file.name.indexOf('.') === -1) {
                             extension = 'unknown';
                         }
 
                         var preview = template.previewFile.replace('{EXTENSION}', extension);
 
-                        if(file.type.indexOf('image/') === 0) {
+                        if (file.type.indexOf('image/') === 0) {
                             preview = template.previewImage.replace('{DATA}', reader.result);
                         }
 
@@ -1317,29 +1315,29 @@ jQuery(function($) {
 
                         listen(row, body);
 
-                        if(file.type.indexOf('image/') === 0 && (width !== 0 || height !== 0)) {
+                        if (file.type.indexOf('image/') === 0 && (width !== 0 || height !== 0)) {
                             //so we can crop
-                            $.cropper(file, width, height, function(data) {
+                            $.cropper(file, width, height, function (data) {
                                 $('div.file-field-preview-container img', row).attr('src', data);
                                 $('input[type="hidden"]', row).val(data);
                             });
                         }
 
                         //add mime type
-                        if(typeof extensions[file.type] !== 'string') {
+                        if (typeof extensions[file.type] !== 'string') {
                             extensions[file.type] = extension;
                         }
                     };
                 };
 
-                file.change(function() {
-                    if(!this.files || !this.files[0]) {
+                file.change(function () {
+                    if (!this.files || !this.files[0]) {
                         return;
                     }
 
-                    if(!multiple) {
-                        $('tr', body).each(function() {
-                            if($(this).hasClass('file-field-none')) {
+                    if (!multiple) {
+                        $('tr', body).each(function () {
+                            if ($(this).hasClass('file-field-none')) {
                                 return;
                             }
 
@@ -1347,9 +1345,9 @@ jQuery(function($) {
                         })
                     }
 
-                    for(var row, path = '', i = 0; i < this.files.length; i++, path = '') {
+                    for (var row, path = '', i = 0; i < this.files.length; i++, path = '') {
                         row = template.row.replace('{ACTIONS}', '');
-                        if(multiple) {
+                        if (multiple) {
                             path = '[]' + path;
                             row = template.row.replace('{ACTIONS}', template.actions);
                         }
@@ -1359,8 +1357,8 @@ jQuery(function($) {
                     }
                 });
 
-                $('tr', body).each(function() {
-                    if($(this).hasClass('file-field-none')) {
+                $('tr', body).each(function () {
+                    if ($(this).hasClass('file-field-none')) {
                         return;
                     }
 
@@ -1377,7 +1375,7 @@ jQuery(function($) {
         /**
          * Direct CDN Upload
          */
-        $(window).on('wysiwyg-init', function(e, target) {
+        $(window).on('wysiwyg-init', function (e, target) {
             var template = '<div class="wysiwyg-toolbar position-relative" style="display: none;">'
                 + '<div class="btn-group">'
                     + '<a class="btn btn-default" data-wysihtml-command="bold" title="CTRL+B"><i class="fas fa-bold"></i></a>'
@@ -1452,7 +1450,7 @@ jQuery(function($) {
                     'components/wysihtml/dist/minified/wysihtml.toolbar.min.js',
                     'components/wysihtml/parser_rules/advanced_unwrap.js'
                 ],
-                function() {
+                function () {
                     var toolbar = $(template);
                     $(target).before(toolbar);
 
@@ -1470,10 +1468,10 @@ jQuery(function($) {
         /**
          * Code Editor - Ace
          */
-        $(window).on('code-editor-init', function(e, target) {
+        $(window).on('code-editor-init', function (e, target) {
             $.require.load(
                 'components/ace-editor-builds/src/ace.js',
-                function() {
+                function () {
                     target = $(target).addClass('ace-textarea').hide();
 
                     var mode = target.attr('data-mode');
@@ -1485,11 +1483,11 @@ jQuery(function($) {
                         .addClass('system-form-control')
                         .addClass('code-editor-container');
 
-                    if(width) {
+                    if (width) {
                         container.width(width);
                     }
 
-                    if(height) {
+                    if (height) {
                         container.height(height);
                     }
 
@@ -1497,7 +1495,7 @@ jQuery(function($) {
 
                     var editor = ace.edit(container[0]);
 
-                    if(mode) {
+                    if (mode) {
                         // set mode
                         editor.getSession().setMode('ace/mode/' + mode);
                     }
@@ -1505,7 +1503,7 @@ jQuery(function($) {
                     // set editor default value
                     editor.setValue(target.val());
 
-                    target.closest('form').submit(function() {
+                    target.closest('form').submit(function () {
                         target.val(editor.getValue());
                     });
                 }
@@ -1515,24 +1513,24 @@ jQuery(function($) {
         /**
          * Markdown Editor -
          */
-        $(window).on('markdown-editor-init', function(e, target) {
+        $(window).on('markdown-editor-init', function (e, target) {
             $.require.load(
                 [
                     'components/bootstrap-markdown-editor-4/dist/css/bootstrap-markdown-editor.min.css',
                     'components/ace-editor-builds/src/ace.js',
                     'components/bootstrap-markdown-editor-4/dist/js/bootstrap-markdown-editor.min.js'
                 ],
-                function() {
+                function () {
                     target = $(target);
 
                     var width = target.attr('data-height') || 0;
                     var height = target.attr('data-height') || 500;
 
-                    if(width) {
+                    if (width) {
                         target.width(width);
                     }
 
-                    if(height) {
+                    if (height) {
                         target.height(height);
                     }
 
@@ -1544,10 +1542,10 @@ jQuery(function($) {
         /**
          * Generate Slug
          */
-        $(window).on('slugger-init', function(e, target) {
+        $(window).on('slugger-init', function (e, target) {
             var source = $(target).attr('data-source');
 
-            if(!source || !source.length) {
+            if (!source || !source.length) {
                 return;
             }
 
@@ -1555,7 +1553,7 @@ jQuery(function($) {
             var lower = $(target).attr('data-lower');
             var space = $(target).attr('data-space') || '-';
 
-            $(source).keyup(function() {
+            $(source).keyup(function () {
                 var slug = $(this)
                     .val()
                     .toString()
@@ -1569,7 +1567,7 @@ jQuery(function($) {
                 if (upper != 0) {
                     slug = slug.replace(
                         /(^([a-zA-Z\p{M}]))|([ -][a-zA-Z\p{M}])/g,
-                        function(s) {
+                        function (s) {
                             return s.toUpperCase();
                         }
                     );
@@ -1588,10 +1586,10 @@ jQuery(function($) {
         /**
          * Mask
          */
-        $(window).on('mask-field-init', function(e, target) {
+        $(window).on('mask-field-init', function (e, target) {
             $.require(
                 'components/inputmask/dist/min/jquery.inputmask.bundle.min.js',
-                function() {
+                function () {
                     var format = $(target).attr('data-format');
                     $(target).inputmask(format);
                 }
@@ -1601,10 +1599,10 @@ jQuery(function($) {
         /**
          * Mask
          */
-        $(window).on('knob-field-init', function(e, target) {
+        $(window).on('knob-field-init', function (e, target) {
             $.require(
                 'components/jquery-knob/dist/jquery.knob.min.js',
-                function() {
+                function () {
                     $(target).knob();
                 }
             );
@@ -1613,13 +1611,13 @@ jQuery(function($) {
         /**
          * Select
          */
-        $(window).on('select-field-init', function(e, target) {
+        $(window).on('select-field-init', function (e, target) {
             $.require(
                 [
                     'components/select2/dist/css/select2.min.css',
                     'components/select2/dist/js/select2.full.min.js'
                 ],
-                function() {
+                function () {
                     $(target).select2();
                 }
             );
@@ -1628,16 +1626,16 @@ jQuery(function($) {
         /**
          * Countries Dropdown
          */
-        $(window).on('country-dropdown-init', function(e, target) {
+        $(window).on('country-dropdown-init', function (e, target) {
             $.require(
                 [
                     '/json/countries.json',
                     'components/select2/dist/css/select2.min.css',
                     'components/select2/dist/js/select2.full.min.js'
                 ],
-                function(countries) {
+                function (countries) {
                     //populate
-                    countries.forEach(function(country) {
+                    countries.forEach(function (country) {
                         $('<option>')
                             .attr('value', country.abbreviation)
                             .text(country.country)
@@ -1652,13 +1650,13 @@ jQuery(function($) {
         /**
          * Multirange
          */
-        $(window).on('multirange-field-init', function(e, target) {
-            var onAcquire = function() {
+        $(window).on('multirange-field-init', function (e, target) {
+            var onAcquire = function () {
                 target = $(target);
 
                 var params = {};
                 // loop all attributes
-                $.each(target[0].attributes,function(index, attr) {
+                $.each(target[0].attributes,function (index, attr) {
                     // skip if data do and on
                     if (attr.name == 'data-do' || attr.name == 'data-on') {
                         return true;
@@ -1675,7 +1673,7 @@ jQuery(function($) {
                         params[key] = attr.value;
 
                         // if value is boolean
-                        if(attr.value == 'true') {
+                        if (attr.value == 'true') {
                             params[key] = attr.value == 'true' ? true : false;
                         }
                     }
@@ -1697,13 +1695,13 @@ jQuery(function($) {
         /**
          * Date Field
          */
-        $(window).on('date-field-init', function(e, target) {
+        $(window).on('date-field-init', function (e, target) {
             $.require(
                 [
                     'components/flatpickr/dist/flatpickr.min.css',
                     'components/flatpickr/dist/flatpickr.min.js'
                 ],
-                function() {
+                function () {
                     $(target).flatpickr({
                         dateFormat: "Y-m-d",
                     });
@@ -1714,13 +1712,13 @@ jQuery(function($) {
         /**
          * Time Field
          */
-        $(window).on('time-field-init', function(e, target) {
+        $(window).on('time-field-init', function (e, target) {
             $.require(
                 [
                     'components/flatpickr/dist/flatpickr.min.css',
                     'components/flatpickr/dist/flatpickr.min.js'
                 ],
-                function() {
+                function () {
                     $(target).flatpickr({
                         enableTime: true,
                         noCalendar: true,
@@ -1733,13 +1731,13 @@ jQuery(function($) {
         /**
          * DateTime Field
          */
-        $(window).on('datetime-field-init', function(e, target) {
+        $(window).on('datetime-field-init', function (e, target) {
             $.require(
                 [
                     'components/flatpickr/dist/flatpickr.min.css',
                     'components/flatpickr/dist/flatpickr.min.js'
                 ],
-                function() {
+                function () {
                     $(target).flatpickr({
                         enableTime: true,
                         dateFormat: "Y-m-d H:i:S",
@@ -1751,13 +1749,13 @@ jQuery(function($) {
         /**
          * Date Range Field
          */
-        $(window).on('date-range-field-init', function(e, target) {
+        $(window).on('date-range-field-init', function (e, target) {
             $.require(
                 [
                     'components/flatpickr/dist/flatpickr.min.css',
                     'components/flatpickr/dist/flatpickr.min.js'
                 ],
-                function() {
+                function () {
                     $(target).flatpickr({
                         mode: "range",
                         dateFormat: "Y-m-d",
@@ -1769,13 +1767,13 @@ jQuery(function($) {
         /**
          * DateTime Range Field
          */
-        $(window).on('datetime-range-field-init', function(e, target) {
+        $(window).on('datetime-range-field-init', function (e, target) {
             $.require(
                 [
                     'components/flatpickr/dist/flatpickr.min.css',
                     'components/flatpickr/dist/flatpickr.min.js'
                 ],
-                function() {
+                function () {
                     $(target).flatpickr({
                         mode: "range",
                         enableTime: true,
@@ -1788,8 +1786,8 @@ jQuery(function($) {
         /**
          * Icon field
          */
-        $(window).on('icon-field-init', function(e, target) {
-            $.require('cdn/json/icons.json', function(icons) {
+        $(window).on('icon-field-init', function (e, target) {
+            $.require('cdn/json/icons.json', function (icons) {
                 target = $(target);
 
                 var targetLevel = parseInt(target.attr('data-target-parent')) || 0;
@@ -1800,32 +1798,32 @@ jQuery(function($) {
                     .hide();
 
                 var parent = target;
-                for(var i = 0; i < targetLevel; i++) {
+                for (var i = 0; i < targetLevel; i++) {
                     parent = parent.parent();
                 }
 
                 parent.after(suggestion);
 
-                target.click(function() {
+                target.click(function () {
                         suggestion.show();
-                    })
-                    .blur(function() {
-                        setTimeout(function() {
+                })
+                    .blur(function () {
+                        setTimeout(function () {
                             suggestion.hide();
                         }, 100);
                     });
 
-                icons.forEach(function(icon) {
+                icons.forEach(function (icon) {
                     $('<i>')
                         .addClass(icon)
                         .addClass('fa-fw')
                         .appendTo(suggestion)
-                        .click(function() {
+                        .click(function () {
                             var input = target.parent().find('input').eq(0);
                             input.val(this.className.replace(' fa-fw', ''));
 
                             var preview = target.parent().find('i').eq(0);
-                            if(!preview.parent().hasClass('icon-suggestion')) {
+                            if (!preview.parent().hasClass('icon-suggestion')) {
                                 preview[0].className = this.className;
                             }
 
@@ -1841,7 +1839,7 @@ jQuery(function($) {
         /**
          * Model Range Change
          */
-        $(window).on('model-range-change', function(e, target) {
+        $(window).on('model-range-change', function (e, target) {
             var target = $(target);
 
             var form = $('<form>')
@@ -1862,8 +1860,8 @@ jQuery(function($) {
         /**
          * Direct CDN Upload
          */
-        $(window).on('cdn-upload-submit', function(e, target) {
-            $.require('cdn/json/extensions.json', function(extensions) {
+        $(window).on('cdn-upload-submit', function (e, target) {
+            $.require('cdn/json/extensions.json', function (extensions) {
                 //setup cdn configuration
                 var container = $(target);
                 var config = { form: {}, inputs: {} };
@@ -1896,11 +1894,11 @@ jQuery(function($) {
                     completed = 0;
 
                 //hiddens will have base 64
-                $('input[type="hidden"]', target).each(function() {
+                $('input[type="hidden"]', target).each(function () {
                     var hidden = $(this);
                     var data = hidden.val();
                     //check for base 64
-                    if(data.indexOf(';base64,') === -1) {
+                    if (data.indexOf(';base64,') === -1) {
                         return;
                     }
 
@@ -1948,8 +1946,8 @@ jQuery(function($) {
 
                     //prepare the S3 form to upload just this file
                     var form = new FormData();
-                    for(var name in config.inputs) {
-                        if(name === 'key') {
+                    for (var name in config.inputs) {
+                        if (name === 'key') {
                             form.append('key', path);
                             continue;
                         }
@@ -1976,15 +1974,15 @@ jQuery(function($) {
                         // do not proccess data
                         processData: false,
                         // on error
-                        error: function(xhr, status, message) {
-                            notifier.fadeOut('fast', function() {
+                        error: function (xhr, status, message) {
+                            notifier.fadeOut('fast', function () {
                                 notifier.remove();
                             });
 
                             $.notify(message, 'danger');
                         },
                         // on success
-                        success : function() {
+                        success : function () {
                             //now we can reassign hidden value from
                             //base64 to CDN Link
                             hidden.val(config.cdn + '/' + path);
@@ -1999,7 +1997,7 @@ jQuery(function($) {
                                 return;
                             }
 
-                            notifier.fadeOut('fast', function() {
+                            notifier.fadeOut('fast', function () {
                                 notifier.remove();
                             });
 
@@ -2014,7 +2012,7 @@ jQuery(function($) {
                 });
 
                 //if there is nothing to upload
-                if(!total) {
+                if (!total) {
                     //let the form submit as normal
                     return;
                 }
@@ -2035,7 +2033,7 @@ jQuery(function($) {
         /**
          * Fieldset Init
          */
-        $(window).on('fieldset-init', function(e, target) {
+        $(window).on('fieldset-init', function (e, target) {
             var target = $(target);
             //name of the field
             var name = target.data('name');
@@ -2051,11 +2049,11 @@ jQuery(function($) {
                 .html();
 
             //INITITALIZERS
-            var init = function(row) {
+            var init = function (row) {
                 row
                     .children('div.box-head')
                     .find('a.fieldset-remove')
-                    .click(function() {
+                    .click(function () {
                         //we only need to change the
                         //elements after the one removed
                         var rows = row.nextAll('div.fieldset-row');
@@ -2063,7 +2061,7 @@ jQuery(function($) {
                         // Now remove the target
                         row.remove();
 
-                        rows.each(function() {
+                        rows.each(function () {
                             //update the label, it's easy! :D
                             var labelTemplate = $(this).parent().attr('data-label');
                             var rows = $(this)
@@ -2071,7 +2069,7 @@ jQuery(function($) {
                                 .get()
                                 .reverse();
 
-                            rows.forEach(function(row, i) {
+                            rows.forEach(function (row, i) {
                                 labelTemplate = labelTemplate.replace(
                                     new RegExp('{INDEX_' + i + '}', 'g'),
                                     $(row).index() + 1
@@ -2100,23 +2098,23 @@ jQuery(function($) {
             };
 
             //append meta template
-            target.children('a.fieldset-add').click(function() {
+            target.children('a.fieldset-add').click(function () {
                 var indexes = {};
                 var rows = $(this)
                     .parents('div.fieldset-row[data-multiple]')
                     .get()
                     .reverse();
 
-                rows.forEach(function(row, i) {
+                rows.forEach(function (row, i) {
                     indexes['{INDEX_' + i + '}'] = $(row).index();
                 });
 
                 indexes['{INDEX_' + rows.length + '}'] = $(this).siblings('div.fieldset-row').length;
 
                 var row = $(template);
-                $('.system-form-control', row).each(function() {
+                $('.system-form-control', row).each(function () {
                     var name = $(this).attr('name');
-                    for(var index in indexes) {
+                    for (var index in indexes) {
                         name = name.replace(index, indexes[index]);
                     }
 
@@ -2124,9 +2122,9 @@ jQuery(function($) {
                 });
 
                 //consider file fields
-                $('[data-name]', row).each(function() {
+                $('[data-name]', row).each(function () {
                     var name = $(this).attr('data-name');
-                    for(var index in indexes) {
+                    for (var index in indexes) {
                         name = name.replace(index, indexes[index]);
                     }
 
@@ -2134,7 +2132,7 @@ jQuery(function($) {
                 });
 
                 var labelTemplate = label;
-                for(var index in indexes) {
+                for (var index in indexes) {
                     labelTemplate = labelTemplate.replace(index, indexes[index] + 1);
                 }
 
@@ -2149,15 +2147,15 @@ jQuery(function($) {
             //INITIALIZE
             $(target)
                 .children('div.fieldset-row')
-                .each(function() {
+                .each(function () {
                     init($(this));
                 });
 
-            var reindex = function(fields, filter) {
+            var reindex = function (fields, filter) {
                 var inputs = $('.system-form-control', fields);
                 // Get the input names
                 var names = {};
-                $.each(inputs, function(index, element) {
+                $.each(inputs, function (index, element) {
                     // Get the original name
                     var original = $(element).attr('name');
                     // Convert to dot e.g a.b.c
@@ -2190,12 +2188,12 @@ jQuery(function($) {
                 serialized = serialized.split('&');
 
                 // On each serialized pairs
-                for(var i in serialized) {
+                for (var i in serialized) {
                     // Get the parts key & value
                     var parts = serialized[i].split('=');
 
                     // Iterate on each input elements
-                    $.each(inputs, function(index, element) {
+                    $.each(inputs, function (index, element) {
                         // Get the name
                         var name = $(element).attr('name');
 
@@ -2214,7 +2212,7 @@ jQuery(function($) {
                 }
             };
 
-            var arrange = function(object, filters) {
+            var arrange = function (object, filters) {
                 // Re-arranged object
                 var rearranged = {};
                 // Get all the keys
@@ -2223,7 +2221,7 @@ jQuery(function($) {
                 var index = 0;
 
                 // On each keys
-                for(var i in keys) {
+                for (var i in keys) {
                     // Get the current key
                     var key = keys[i];
                     // Get the current value
@@ -2256,15 +2254,15 @@ jQuery(function($) {
                 return rearranged;
             };
 
-            var dotToObject = function(path, value, object) {
+            var dotToObject = function (path, value, object) {
                 // Get the parts
                 var parts = path.split('.'), part;
                 var last = parts.pop();
 
                 // On each part
-                while(part = parts.shift()) {
+                while (part = parts.shift()) {
                     // Create if doesnt exists
-                    if(typeof object[part] != 'object') {
+                    if (typeof object[part] != 'object') {
                         object[part] = {};
                     }
 
@@ -2276,7 +2274,7 @@ jQuery(function($) {
                 object[last] = value;
             };
 
-            var serialize = function(object, prefix) {
+            var serialize = function (object, prefix) {
                 var string = [], property;
 
                 // On each property
@@ -2306,7 +2304,7 @@ jQuery(function($) {
         /**
          * Star Rating Field Init
          */
-        $(window).on('stars-field-init', function(e, target) {
+        $(window).on('stars-field-init', function (e, target) {
             target = $(target);
 
             var input = target.find('input.system-form-control');
@@ -2316,26 +2314,26 @@ jQuery(function($) {
             var range = 0, stop = 0;
 
             //INITIALIZER
-            var init = function() {
+            var init = function () {
                 rows
-                .each(function() {
+                .each(function () {
                     var icon = $(this).find('i');
                     icon.on('mousemove', hover.bind(icon, icon.outerWidth()));
-                    icon.on('click', function() {
+                    icon.on('click', function () {
                         //not sure why .val is not working :(
                         input.attr('value', range);
                     });
                 });
 
                 //reset if didn't select
-                target.on('mouseleave', function() {
+                target.on('mouseleave', function () {
                     range = 0, stop = 0;
                     fill(input.val());
                 });
             };
 
             //on hover determine steps
-            var hover = function(width, e) {
+            var hover = function (width, e) {
                 var index = $(this).parent().index();
                 //determine whether it's half step
                 var half = Math.ceil(width / 2);
@@ -2370,13 +2368,13 @@ jQuery(function($) {
             };
 
             //fill the stars
-            var fill = function(range) {
+            var fill = function (range) {
                 //determine whether it's a full or half step
                 var half = range.toString().indexOf('.5') > 0;
                 range = Math.round(range);
 
                 //fill in each rows
-                rows.each(function(index) {
+                rows.each(function (index) {
                     var star = $(this).find('i');
 
                     //half step?
@@ -2404,16 +2402,16 @@ jQuery(function($) {
     /**
      * Other UI
      */
-    (function() {
+    (function () {
         /**
          * Prettyfy
          */
-        $(window).on('prettify-init', function(e, target) {
+        $(window).on('prettify-init', function (e, target) {
             var loaded = false;
             $.require.load(
                 'components/google-code-prettify/src/prettify.js',
-                function() {
-                    if(!loaded) {
+                function () {
+                    if (!loaded) {
                         PR.prettyPrint();
                         loaded = true;
                     }
@@ -2424,8 +2422,8 @@ jQuery(function($) {
         /**
          * Calendar Page UI
          */
-        $(window).on('calendar-init', function(e, target) {
-            var onAcquire = function() {
+        $(window).on('calendar-init', function (e, target) {
+            var onAcquire = function () {
                 var ajax = $(target).data('ajax');
                 var date = $(target).data('date');
                 var view = $(target).data('view');
@@ -2439,14 +2437,14 @@ jQuery(function($) {
                     defaultView: view,
                     height: 750,
                     header: {
-                      left: '',
-                      center: 'title',
-                      right: ''
+                        left: '',
+                        center: 'title',
+                        right: ''
                     },
                     eventTextColor: '#fff',
                     eventLimit: true, // allow "more" link when too many events
                     navLinks: true,
-                    events: function(start, end, timezone, callback) {
+                    events: function (start, end, timezone, callback) {
                         var data = {
                             render: false,
                             span: {}
@@ -2467,10 +2465,10 @@ jQuery(function($) {
                             type: 'GET',
                             dataType: 'json',
                             data: data,
-                            success: function(response) {
+                            success: function (response) {
                                 var events = [];
-                                if(!!response.results.rows) {
-                                    $.map(response.results.rows, function(result) {
+                                if (!!response.results.rows) {
+                                    $.map(response.results.rows, function (result) {
                                         var row = {
                                             id: result[primary],
                                             start: result[eventStart],
@@ -2493,11 +2491,11 @@ jQuery(function($) {
                             }
                         });
                     },
-                    eventClick: function(eventData, jsEvent, view) {
+                    eventClick: function (eventData, jsEvent, view) {
                         // on click redirect to update page
                         window.location.href = link + '/' + eventData.id;
                     },
-                    eventRender: function(eventData, $el) {
+                    eventRender: function (eventData, $el) {
                         //var content = eventData.start.format('LLL');
 
                         var content = eventData.start.format('hh:mma');
@@ -2537,7 +2535,7 @@ jQuery(function($) {
         /**
          * Board Page UI
          */
-        $(window).on('board-init', function(e, target) {
+        $(window).on('board-init', function (e, target) {
             $.require([
                 'components/jquery-sortable/source/js/jquery-sortable-min.js',
                 'components/handlebars/dist/handlebars.js',
@@ -2564,17 +2562,17 @@ jQuery(function($) {
                         'name': [],
                         'title': [],
                         'primary': []
-                    };
+                };
 
                     // set range
-                    if ($target.data('range-1')) {
-                        rangeFields.push($target.data('range-1'));
-                    }
+                if ($target.data('range-1')) {
+                    rangeFields.push($target.data('range-1'));
+                }
 
                     // if there's another column for range, add them
-                    if ($target.data('range-2')) {
-                        rangeFields.push($target.data('range-2'));
-                    }
+                if ($target.data('range-2')) {
+                    rangeFields.push($target.data('range-2'));
+                }
 
                     var columns = $target
                         .parent()
@@ -2582,30 +2580,30 @@ jQuery(function($) {
                         .length;
                     var width = $('.board-container').width()/columns;
 
-                    if (width > 250) {
-                        $target.css('width', width);
-                    }
+                if (width > 250) {
+                    $target.css('width', width);
+                }
 
                     var dataAttributes = $target.data();
-                    for(var name in dataAttributes) {
-                        if(name.indexOf('relationsName-') !== -1) {
-                            relations.name.push(dataAttributes[name]);
-                        }
-
-                        if(name.indexOf('relationsTitle-') !== -1) {
-                            relations.title.push(dataAttributes[name]);
-                        }
-
-                        if(name.indexOf('relationsPrimary-') !== -1) {
-                            relations.primary.push(dataAttributes[name]);
-                        }
+                for (var name in dataAttributes) {
+                    if (name.indexOf('relationsName-') !== -1) {
+                        relations.name.push(dataAttributes[name]);
                     }
+
+                    if (name.indexOf('relationsTitle-') !== -1) {
+                        relations.title.push(dataAttributes[name]);
+                    }
+
+                    if (name.indexOf('relationsPrimary-') !== -1) {
+                        relations.primary.push(dataAttributes[name]);
+                    }
+                }
 
                     $('.board-stage', target).sortable({
                         group: 'nav',
                         nested: false,
                         vertical: false,
-                        onDrop: function(item, container, _super) {
+                        onDrop: function (item, container, _super) {
                             var data = {
                                 id: $(item).data('id'),
                                 stage: field
@@ -2701,13 +2699,13 @@ jQuery(function($) {
                             }
 
                             $.post(update, data)
-                                .done(function(response) {
+                                .done(function (response) {
                                     if (!response.error) {
                                         if (sort) {
                                             // previous stage/status/column
                                             if ($(item).data('stage') != stage) {
                                                 $('.pipeline-board .column[data-stage="'+data.previous_stage+'"]')
-                                                    .find('.card').each(function(index) {
+                                                    .find('.card').each(function (index) {
 
                                                         // we should be ignoring the index
                                                         // less than the old index
@@ -2725,7 +2723,7 @@ jQuery(function($) {
                                             }
 
                                             // new stage/status/column
-                                            $(container.el).find('.card').each(function(index) {
+                                            $(container.el).find('.card').each(function (index) {
                                                 $(this)
                                                     .data('index', index)
                                                     .attr('data-index', index);
@@ -2760,7 +2758,7 @@ jQuery(function($) {
                         }
                     });
 
-                    var populateBoard = function(start, callback) {
+                    var populateBoard = function (start, callback) {
                         var cardTemplate = '<li class="card" data-id="[[card_id]]"'
                             + 'data-stage="[[card_stage]]" data-order="[[card_order]]" '
                             + 'data-index="[[card_index]]">'
@@ -2796,7 +2794,7 @@ jQuery(function($) {
                         }
 
                         $.get(ajax, data)
-                        .done(function(response) {
+                        .done(function (response) {
                             // stage total
                             $(target)
                                 .find('.stage .badge')
@@ -2805,7 +2803,7 @@ jQuery(function($) {
                             if (!!response.results.rows) {
                                 var lists = '';
 
-                                $.map(response.results.rows, function(result, index) {
+                                $.map(response.results.rows, function (result, index) {
                                     var link = detail + '/' + result[primary];
                                     var relative = '';
                                     var name = 'No Title';
@@ -2919,7 +2917,7 @@ jQuery(function($) {
                         loader = $('.board-stage', target).next(),
                         paginator = loader.next();
 
-                    $('.board-stage', target).scroll(function() {
+                    $('.board-stage', target).scroll(function () {
                         //if we are already paginating
                         if (paginating) {
                             return;
@@ -2944,14 +2942,13 @@ jQuery(function($) {
                     });
 
                     populateBoard(0);
-                }
-            );
+            });
         });
 
         /**
          * Carousel
          */
-        $(window).on('carousel-init', function(e, target) {
+        $(window).on('carousel-init', function (e, target) {
             target = $(target);
 
             var width = target.data('width');
@@ -2987,11 +2984,11 @@ jQuery(function($) {
 
             target.carousel(config);
 
-            $('a.carousel-control-prev', target).click(function() {
+            $('a.carousel-control-prev', target).click(function () {
                 target.carousel('prev');
             });
 
-            $('a.carousel-control-next', target).click(function() {
+            $('a.carousel-control-next', target).click(function () {
                 target.carousel('next');
             });
         });
@@ -2999,40 +2996,40 @@ jQuery(function($) {
         /**
          * Package Page UI
          */
-        $(window).on('package-move-up-click', function(e, trigger) {
+        $(window).on('package-move-up-click', function (e, trigger) {
             row = $(trigger).parents('tr');
             var prev = row.prev();
 
-            if(prev.length && !prev.hasClass('file-field-none')) {
+            if (prev.length && !prev.hasClass('file-field-none')) {
                 prev.before(row);
                 var data = [];
 
-                $(trigger).parents('tbody').find('tr').each(function(index, tr) {
+                $(trigger).parents('tbody').find('tr').each(function (index, tr) {
                     data.push($(tr).data('package'));
                 });
 
                 $.post('/admin/package/rearrange', {packages: data})
-                    .done(function(response) {});
+                    .done(function (response) {});
             }
         });
 
         /**
          * Package Page UI
          */
-        $(window).on('package-move-down-click', function(e, trigger) {
+        $(window).on('package-move-down-click', function (e, trigger) {
             row = $(trigger).parents('tr');
             var next = row.next();
 
-            if(next.length) {
+            if (next.length) {
                 next.after(row);
                 var data = [];
 
-                $(trigger).parents('tbody').find('tr').each(function(index, tr) {
+                $(trigger).parents('tbody').find('tr').each(function (index, tr) {
                     data.push($(tr).data('package'));
                 });
 
                 $.post('/admin/package/rearrange', {packages: data})
-                    .done(function(response) {});
+                    .done(function (response) {});
             }
         });
     })();
@@ -3040,16 +3037,16 @@ jQuery(function($) {
     /**
      * Notifier
      */
-    (function() {
-        $(window).on('notify-init', function(e, trigger) {
+    (function () {
+        $(window).on('notify-init', function (e, trigger) {
             var timeout = parseInt($(trigger).attr('data-timeout') || 3000);
 
-            if(!timeout) {
+            if (!timeout) {
                 return;
             }
 
-            setTimeout(function() {
-                $(trigger).fadeOut('fast', function() {
+            setTimeout(function () {
+                $(trigger).fadeOut('fast', function () {
                     $(trigger).remove();
                 });
 
@@ -3057,8 +3054,8 @@ jQuery(function($) {
         });
 
         $.extend({
-            notify: function(message, type, timeout) {
-                if(type === 'danger') {
+            notify: function (message, type, timeout) {
+                if (type === 'danger') {
                     type = 'error';
                 }
 
@@ -3074,12 +3071,12 @@ jQuery(function($) {
     /**
      * Admin Theme Top
      */
-    (function() {
+    (function () {
         $('body.theme-top aside.sidebar div.show').removeClass('show');
-        $('body.theme-top aside.sidebar a[data-toggle="collapse"]').click(function() {
+        $('body.theme-top aside.sidebar a[data-toggle="collapse"]').click(function () {
             var trigger = this;
-            $('body.theme-top aside.sidebar > ul.nav > li.nav-item').each(function() {
-                if($.contains(this, trigger)) {
+            $('body.theme-top aside.sidebar > ul.nav > li.nav-item').each(function () {
+                if ($.contains(this, trigger)) {
                     return;
                 }
 
@@ -3091,8 +3088,8 @@ jQuery(function($) {
     /**
      * Admin Configuration
      */
-    (function() {
-        $(window).on('config-builder-init', function(e, target) {
+    (function () {
+        $(window).on('config-builder-init', function (e, target) {
             var itemTemplate =
                 '<li class="config-builder-item" data-level="{LEVEL}">'
                     + '<div class="config-builder-input input-group">'
@@ -3120,14 +3117,14 @@ jQuery(function($) {
             var depth = $(target).attr('data-depth') || 9;
             var message = $(target).attr('data-error') || 'Some items were empty';
 
-            var reindex = function(list, level, path) {
+            var reindex = function (list, level, path) {
                 path = path || 'item';
                 path += '[{INDEX}]';
-                $(list).children('li.config-builder-item').each(function(i) {
+                $(list).children('li.config-builder-item').each(function (i) {
                     var newPath = path.replace('{INDEX}', i);
-                    $('div.config-builder-input:first', this).find('input').each(function() {
+                    $('div.config-builder-input:first', this).find('input').each(function () {
                         var name = $(this).attr('data-name');
-                        if(!name.length) {
+                        if (!name.length) {
                             return;
                         }
 
@@ -3138,13 +3135,13 @@ jQuery(function($) {
                 });
             };
 
-            var listen = function(item, level) {
+            var listen = function (item, level) {
                 //by default level 1
                 level = level || 1;
                 item = $(item);
 
                 //on button add click
-                $('button.config-builder-action-add:first', item).click(function() {
+                $('button.config-builder-action-add:first', item).click(function () {
                     //make the template
                     var newItem = $(
                         itemTemplate
@@ -3162,7 +3159,7 @@ jQuery(function($) {
                 });
 
                 //on button remove click
-                $('button.config-builder-action-remove:first', item).click(function() {
+                $('button.config-builder-action-remove:first', item).click(function () {
                     $(this).closest('li.config-builder-item').remove();
 
                     //reindex the names
@@ -3172,23 +3169,23 @@ jQuery(function($) {
                 return item;
             };
 
-            var checkForm = function(e) {
+            var checkForm = function (e) {
                 var errors = false;
-                $('input[data-name="key"]', target).each(function() {
-                    if(!$(this).val().trim().length) {
+                $('input[data-name="key"]', target).each(function () {
+                    if (!$(this).val().trim().length) {
                         $(this).parent().addClass('has-error');
                         errors = true;
                     }
                 });
 
-                $('input[data-name="value"]', target).each(function() {
-                    if(!$(this).val().trim().length) {
+                $('input[data-name="value"]', target).each(function () {
+                    if (!$(this).val().trim().length) {
                         $(this).parent().addClass('has-error');
                         errors = true;
                     }
                 });
 
-                if(errors) {
+                if (errors) {
                     $('span.help-text', target).html(message);
                     e.preventDefault();
                     return false;
@@ -3200,11 +3197,11 @@ jQuery(function($) {
                 .submit(checkForm)
                 //find all the current elements
                 .find('li.config-builder-item')
-                .each(function() {
+                .each(function () {
                     listen(this).doon();
                 });
 
-            $.require('components/jquery-sortable/source/js/jquery-sortable-min.js', function() {
+            $.require('components/jquery-sortable/source/js/jquery-sortable-min.js', function () {
                 var root = $('ol.config-builder-list:first');
 
                 root.sortable({
@@ -3212,7 +3209,7 @@ jQuery(function($) {
                         $item.removeClass(container.group.options.draggedClass).removeAttr('style');
                         $('body').removeClass(container.group.options.bodyClass);
 
-                        setTimeout(function() {
+                        setTimeout(function () {
                             reindex(root, 1);
                         }, 10);
                     }
@@ -3222,7 +3219,7 @@ jQuery(function($) {
             });
         });
 
-        $(window).on('config-select-change', function(e, target) {
+        $(window).on('config-select-change', function (e, target) {
             target = $(target);
 
             window.location.search = '?type=' + target.val();
@@ -3232,7 +3229,7 @@ jQuery(function($) {
     /**
      * Initialize
      */
-    (function() {
+    (function () {
         var cdn = $('html').attr('data-cdn') || '';
         // configure require
         require.config({
@@ -3251,7 +3248,7 @@ jQuery(function($) {
                 'components/toastr/build/toastr.min.css',
                 'components/toastr/build/toastr.min.js'
             ],
-            function() {
+            function () {
                 //activate all scripts
                 $(document.body).doon();
             }

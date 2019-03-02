@@ -150,7 +150,7 @@ $this->on('system-model-pipeline-update', function ($request, $response) {
         $results = $this->method('system-model-update', $request, $response);
 
         // if there's an error
-        if($response->isError()) {
+        if ($response->isError()) {
             return;
         }
     }
@@ -220,18 +220,18 @@ $this->on('prepare-report-chart', function ($request, $response) {
             switch ($report['report_meta'][$key]['key']) {
                 // if it's sum of the column
                 case 'column-sum':
-                    $column = sprintf('%s_%s', $report['report_schema'] , $report['report_meta'][$key]['value']);
+                    $column = sprintf('%s_%s', $report['report_schema'], $report['report_meta'][$key]['value']);
                     $payload['request']->setStage('sum', $column);
                     break;
 
                 // if it's count of the column
                 case 'column-count':
-                    $column = sprintf('%s_%s', $report['report_schema'] , $report['report_meta'][$key]['value']);
+                    $column = sprintf('%s_%s', $report['report_schema'], $report['report_meta'][$key]['value']);
                     $payload['request']->setStage('count', $column);
                     break;
 
                 case 'column-value':
-                    $column = sprintf('%s_%s', $report['report_schema'] , $report['report_meta'][$key]['value']);
+                    $column = sprintf('%s_%s', $report['report_schema'], $report['report_meta'][$key]['value']);
                     $payload['request']->setStage('group', $column);
                     break;
 
@@ -398,7 +398,7 @@ $this->on('prepare-line-chart', function ($request, $response) {
 
                 // if it's value of the column
                 case 'column-value':
-                    $column = sprintf('%s_%s', $report['report_schema'] , $report['report_meta'][$key]['value']);
+                    $column = sprintf('%s_%s', $report['report_schema'], $report['report_meta'][$key]['value']);
                     $axes[$key][] = $result[$column];
 
                     if (!isset($options[$key]['labels'])) {
@@ -409,7 +409,7 @@ $this->on('prepare-line-chart', function ($request, $response) {
                     break;
 
                 case 'year':
-                    $column = sprintf('%s_%s', $report['report_schema'] , $report['report_meta'][$key]['value']);
+                    $column = sprintf('%s_%s', $report['report_schema'], $report['report_meta'][$key]['value']);
                     $axes[$key][] = $result[$column];
                     $options[$key] = [
                         'type' => 'time',
@@ -420,7 +420,7 @@ $this->on('prepare-line-chart', function ($request, $response) {
                     break;
 
                 case 'month':
-                    $column = sprintf('%s_%s', $report['report_schema'] , $report['report_meta'][$key]['value']);
+                    $column = sprintf('%s_%s', $report['report_schema'], $report['report_meta'][$key]['value']);
                     $axes[$key][] = $result[$column];
                     $options[$key] = [
                         'type' => 'time',
@@ -431,7 +431,7 @@ $this->on('prepare-line-chart', function ($request, $response) {
                     break;
 
                 case 'year-month':
-                    $column = sprintf('%s_%s', $report['report_schema'] , $report['report_meta'][$key]['value']);
+                    $column = sprintf('%s_%s', $report['report_schema'], $report['report_meta'][$key]['value']);
                     $axes[$key][] = $result[$column];
                     $options[$key] = [
                         'type' => 'time',
@@ -465,7 +465,7 @@ $this->on('prepare-line-chart', function ($request, $response) {
  * @param Request $request
  * @param Response $response
  */
-$this->on('prepare-bar-chart', function($request, $response) {
+$this->on('prepare-bar-chart', function ($request, $response) {
     //----------------------------//
     // 1. Get Data
     $data = $request->getStage();
@@ -498,7 +498,7 @@ $this->on('prepare-bar-chart', function($request, $response) {
                     break;
 
                 case 'column-value':
-                    $column = sprintf('%s_%s', $report['report_schema'] , $report['report_meta'][$key]['value']);
+                    $column = sprintf('%s_%s', $report['report_schema'], $report['report_meta'][$key]['value']);
                     $dataset[$resKey][$axisPoint] = $result[$column];
 
                     if (!isset($options[$key]['labels'])) {
@@ -509,7 +509,7 @@ $this->on('prepare-bar-chart', function($request, $response) {
                     break;
 
                 case 'year':
-                    $column = sprintf('%s_%s', $report['report_schema'] , $report['report_meta'][$key]['value']);
+                    $column = sprintf('%s_%s', $report['report_schema'], $report['report_meta'][$key]['value']);
                     $dataset[$resKey][$axisPoint] = $result[$column];
                     $options[$key] = [
                         'type' => 'time',
@@ -520,7 +520,7 @@ $this->on('prepare-bar-chart', function($request, $response) {
                     break;
 
                 case 'month':
-                    $column = sprintf('%s_%s', $report['report_schema'] , $report['report_meta'][$key]['value']);
+                    $column = sprintf('%s_%s', $report['report_schema'], $report['report_meta'][$key]['value']);
                     $dataset[$resKey][$axisPoint] = $result[$column];
                     $options[$key] = [
                         'type' => 'time',
@@ -531,7 +531,7 @@ $this->on('prepare-bar-chart', function($request, $response) {
                     break;
 
                 case 'year-month':
-                    $column = sprintf('%s_%s', $report['report_schema'] , $report['report_meta'][$key]['value']);
+                    $column = sprintf('%s_%s', $report['report_schema'], $report['report_meta'][$key]['value']);
                     $dataset[$resKey][$axisPoint] = $result[$column];
                     $options[$key] = [
                         'type' => 'time',
@@ -564,7 +564,7 @@ $this->on('prepare-bar-chart', function($request, $response) {
  * @param Request $request
  * @param Response $response
  */
-$this->on('prepare-circular-chart', function($request, $response) {
+$this->on('prepare-circular-chart', function ($request, $response) {
     //----------------------------//
     // 1. Get Data
     $data = $request->getStage();
@@ -579,14 +579,13 @@ $this->on('prepare-circular-chart', function($request, $response) {
 
     //----------------------------//
     // 2. Process Data
-    if(isset($schema['suggestion'])) {
+    if (isset($schema['suggestion'])) {
         $handlebars = cradle('global')->handlebars();
         $compiled = $handlebars->compile($schema['suggestion']);
     }
 
     $column = sprintf('%s_%s', $report['report_schema'], $report['report_meta']['base']);
     foreach ($results as $key => $result) {
-
         if (isset($report['report_meta']['base']) && isset($result[$column])) {
             $dataset[] = $result[$column];
         }

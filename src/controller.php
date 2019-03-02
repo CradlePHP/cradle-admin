@@ -89,7 +89,7 @@ $this->get('/admin/dashboard', function ($request, $response) {
 
     // if we have results
     if (!empty($results)) {
-        foreach($results as $schema) {
+        foreach ($results as $schema) {
             $schemas[$schema['name']] = [
                 'name' => $schema['name'],
                 'label' => ucwords($schema['name']),
@@ -108,7 +108,7 @@ $this->get('/admin/dashboard', function ($request, $response) {
         $records = Service::get('sql')->getSchemaTableRecordCount($database);
 
         // on each record
-        foreach($records as $record) {
+        foreach ($records as $record) {
             $name = null;
             $rows = null;
 
@@ -244,24 +244,24 @@ $this->get('/admin/configuration', function ($request, $response) {
     $file = $request->getStage('type');
 
     // switch between config to load
-    switch($file) {
-        case 'general' :
+    switch ($file) {
+        case 'general':
             $data['item'] = $global->config('settings');
             break;
 
-        case 'deploy' :
+        case 'deploy':
             $data['item'] = $global->config('deploy');
             break;
 
-        case 'service' :
+        case 'service':
             $data['item'] = $global->config('services');
             break;
 
-        case 'test' :
+        case 'test':
             $data['item'] = $global->config('test');
             break;
 
-        default :
+        default:
             $data['item'] = [];
     }
 
@@ -277,7 +277,7 @@ $this->get('/admin/configuration', function ($request, $response) {
         $unpaired = [];
 
         // iterate on each configuration
-        foreach($configuration as $key => $value) {
+        foreach ($configuration as $key => $value) {
             // if config is an array
             if (is_array($value)) {
                 // loop through
@@ -378,24 +378,24 @@ $this->post('/admin/configuration', function ($request, $response) {
     $file = $request->getStage('type');
 
     // switch between config to load
-    switch($file) {
-        case 'general' :
+    switch ($file) {
+        case 'general':
             $file = 'settings';
             break;
 
-        case 'deploy' :
+        case 'deploy':
             $file = 'deploy';
             break;
 
-        case 'service' :
+        case 'service':
             $file = 'services';
             break;
 
-        case 'test' :
+        case 'test':
             $file = 'test';
             break;
 
-        default :
+        default:
             $file = null;
     }
 
@@ -409,7 +409,7 @@ $this->post('/admin/configuration', function ($request, $response) {
         $paired = [];
 
         // iterate on each data
-        foreach($data as $key => $value) {
+        foreach ($data as $key => $value) {
             // skip if it doesn't have key
             if (!isset($value['key'])) {
                 continue;
@@ -1013,7 +1013,7 @@ $this->get('/admin/system/model/:schema/pipeline', function ($request, $response
         }
     }
 
-    if (strpos($redirect, '/admin') !== FALSE && strpos($redirect, '/admin') == 0) {
+    if (strpos($redirect, '/admin') !== false && strpos($redirect, '/admin') == 0) {
         $data['admin'] = 1;
     }
 
