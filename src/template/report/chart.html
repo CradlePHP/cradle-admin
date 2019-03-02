@@ -1,0 +1,69 @@
+<style media="screen">
+    .report-chart-wrapper {
+        margin: 0 auto;
+    }
+</style>
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="/admin">
+                <i class="fas fa-home"></i> {{_ 'Admin'}}
+            </a>
+        </li>
+        <li class="breadcrumb-item">
+            <a href="/admin">
+                <i class="fas fa-home"></i> {{_ 'Report'}}
+            </a>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">
+            <i class="fas fa-eye"></i> {{title}}
+        </li>
+    </ol>
+</nav>
+
+<div class="main-padding">
+    <div class="row">
+        <!-- START: FILTERS -->
+        <!-- END: FILTERS -->
+        <!-- START: REPORT CHART -->
+        {{{report report_id}}}
+        <!-- END: REPORT CHART -->
+        <!-- START: REPORT TABLE -->
+        <div class="col-md-12 mt-5">
+            <h2>Recent {{table_label}}</h2>
+            <table class="table table-bordered table-striped">
+                <thead>
+                    {{#each table_head}}
+                        <th>{{@key}}</th>
+                    {{/each}}
+                </thead>
+                <tbody>
+                    {{#each table_data.rows}}
+                        <tr>
+                            {{#each ../table_head}}
+                            <td>
+                                {{#scope ../this this}}
+                                    {{this}}
+                                {{/scope}}
+                            </td>
+                            {{/each}}
+                        </tr>
+                    {{/each}}
+                    {{#unless table_data.rows}}
+                        <tr>
+                            <td colspan="100">No data to show</td>
+                        </tr>
+                    {{/unless}}
+                </tbody>
+            </table>
+            <ul class="pagination float-right">
+                {{#pager table_data.total range}}
+                    <li class="page-item{{#if active}} active{{/if}}">
+                        <a class="page-link" href="?{{href}}">{{page}}</a>
+                    </li>
+                {{/pager}}
+            </ul>
+        </div>
+        <!-- END: REPORT TABLE -->
+    </div>
+</div>

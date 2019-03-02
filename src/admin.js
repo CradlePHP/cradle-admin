@@ -1,5 +1,221 @@
 jQuery(function($) {
     /**
+     * Report Related Scripts
+     */
+    (function() {
+        /**
+         * Report Chart Page UI
+         */
+        $(window).on('report-init', function(e, target) {
+            var onAcquire = function() {
+                var chartType = $(target).data('chart');
+                var chartLabel = $(target).data('label');
+                var dataset = $(target).data('dataset');
+                var fill = false;
+                var labels = [];
+                var options = {
+                    'scales': {}
+                };
+
+                if ($(target).data('x_axis')) {
+                    options.scales.xAxes = [$(target).data('x_axis')];
+                }
+
+                if ($(target).data('y_axis')) {
+                    options.scales.yAxes = [$(target).data('y_axis')];
+                }
+
+                if ($(target).data('fill') != '') {
+                    fill = $(target).data('fill');
+                }
+
+                if ($(target).data('circle') == 'half') {
+                    options.rotation = Math.PI;
+                    options.circumference = Math.PI;
+                }
+
+               // TODO: Find a way to add chart options,
+               // like colors, borderColors etc
+               var data = {
+                   datasets: [
+                       {
+                           data: dataset,
+                           backgroundColor: [
+                               'rgba(54, 162, 235, 0.2)',
+                               'rgba(255, 99, 132, 0.2)',
+                               'rgba(255, 206, 86, 0.2)',
+                               'rgba(75, 192, 192, 0.2)',
+                               'rgba(153, 102, 255, 0.2)',
+                               'rgba(255, 159, 64, 0.2)'
+                           ],
+                           borderColor: [
+                               'rgba(54, 162, 235, 1)',
+                               'rgba(255,99,132,1)',
+                               'rgba(255, 206, 86, 1)',
+                               'rgba(75, 192, 192, 1)',
+                               'rgba(153, 102, 255, 1)',
+                               'rgba(255, 159, 64, 1)'
+                           ],
+                           borderWidth: 1,
+                           fill: fill
+                       }
+                  ]
+              };
+
+              if (chartType == 'pie' || chartType == 'doughnut') {
+                  data.labels = chartLabel;
+              } else {
+                  data.datasets[0].label = chartLabel;
+              }
+
+               var myChart = new Chart($(target), {
+                    type: chartType,
+                    data: data,
+                    options: options
+                });
+            };
+
+            $.require([
+                'components/moment/moment.js',
+                'components/chart.js/dist/Chart.bundle.min.js',
+                'components/handlebars/dist/handlebars.js'
+            ], onAcquire);
+        });
+
+        /**
+         * Show appropriate additional fields according to
+         * what chart type was choosen by the user
+         */
+        $(window).on('show-report-fields-init', function(e, target) {
+            var chart = $(target).val();
+            var fields = $('#' + chart + '-fields').html();
+            $('#additional-fields-wrapper').html('');
+            $('#additional-fields-wrapper').html(fields);
+
+            if (chart == 'bar' || chart == 'line' || chart == 'area') {
+                fields = $('#bar-line-fields').html();
+                $('#additional-fields-wrapper').append(fields);
+            }
+
+            if (chart == 'pie' || chart == 'doughnut') {
+                fields = $('#circular-fields').html();
+                $('#additional-fields-wrapper').append(fields);
+            }
+
+            $('#additional-fields-wrapper .form-group').doon();
+        });
+
+        $(window).on('show-report-fields-change', function(e, target) {
+            var chart = $(target).val();
+            var fields = $('#' + chart + '-fields').html();
+            $('#additional-fields-wrapper').html('');
+            $('#additional-fields-wrapper').html(fields);
+
+            if (chart == 'bar' || chart == 'line' || chart == 'area') {
+                fields = $('#bar-line-fields').html();
+                $('#additional-fields-wrapper').append(fields);
+            }
+
+            if (chart == 'pie' || chart == 'doughnut') {
+                fields = $('#circular-fields').html();
+                $('#additional-fields-wrapper').append(fields);
+            }
+
+            $('#additional-fields-wrapper .form-group').doon();
+        });
+
+        /**
+         * Show appropriate additional fields according to
+         * what report type was choosen by the user
+         */
+        $(window).on('show-table-fields-change', function(e, target) {
+            var display = $(target).val();
+            var metafield = $($(target).parents('.form-select')).data('name') + '[value]';
+
+            var schema = $('.suggestion-value-report_schema').val();
+            if (!schema) {
+                schema = $('input[name="report_schema"]').val();
+            }
+
+            var value = $(target).data('value');
+
+            if (display != 'number') {
+                var axisFields = $('#column-fields').html();
+                axisFields = axisFields.replace(/\{METAFIELD\}/g, metafield);
+                axisFields = axisFields.replace(/\{SCHEMA\}/g, schema);
+                axisFields = axisFields.replace(/\{VALUE\}/g, value);
+
+                if ($(target).parents('.form-group').find('.schema-detail').length) {
+                    $(target).parents('.form-group').find('.schema-detail').remove();
+                }
+
+                $(target).parents('.form-group').append(axisFields);
+
+                $(target).parents('.form-group').doon();
+            }
+        });
+        $(window).on('show-table-fields-init', function(e, target) {
+            var display = $(target).val();
+            var metafield = $($(target).parents('.form-select')).data('name') + '[value]';
+            var schema = $('.suggestion-value-report_schema').val();
+            if (!schema) {
+                schema = $('input[name="report_schema"]').val();
+            }
+
+            var value = $(target).data('value');
+            if (display != 'number') {
+                var axisFields = $('#column-fields').html();
+                axisFields = axisFields.replace(/\{METAFIELD\}/g, metafield);
+                axisFields = axisFields.replace(/\{SCHEMA\}/g, schema);
+                axisFields = axisFields.replace(/\{VALUE\}/g, value);
+
+                $(target).parents('.form-group').append(axisFields);
+                $(target).parents('.form-group').doon();
+            }
+        });
+
+        $(window).on('circular-chart-table-fields-init', function(e, target) {
+            var metafield = $(target).data('name');
+            var schema = $('.suggestion-value-report_schema').val();
+            if (!schema) {
+                schema = $('input[name="report_schema"]').val();
+            }
+
+            var value = $(target).data('value');
+            var axisFields = $('#column-fields').html();
+            axisFields = axisFields.replace(/\{METAFIELD\}/g, metafield);
+            axisFields = axisFields.replace(/\{SCHEMA\}/g, schema);
+            axisFields = axisFields.replace(/\{VALUE\}/g, value);
+
+            $(target).parents('.form-group').append(axisFields);
+            $(target).parents('.form-group').doon();
+        });
+
+        /**
+        * Do tasks that are for multiple dataset specific
+        */
+        $(document).on('change', 'input[name="report_meta[multiple]"]', function() {
+            var ismultiple = $(this).is(':checked');
+            // first, disable other options that should
+            // only be available for multiple datasets
+            $('option[multiple]').each(function() {
+                if (!ismultiple) {
+                    $(this).attr('disabled', 'disabled');
+                } else {
+                    $(this).removeAttr('disabled');
+                }
+            });
+        });
+
+         /**
+          *
+          */
+         $(window).on('update-detail-url-change', function(e, target) {
+             var schema = $('input[name="report_schema"]').val();
+             $('select[name="report_chart"]').trigger('change');
+         });
+    })();
+    /**
      * General Search
      */
     (function() {
@@ -282,15 +498,20 @@ jQuery(function($) {
 
                 var searching = false,
                     prevent = false,
+                    isSchemaDetail = false,
                     value = target.attr('data-value'),
                     format = target.attr('data-format'),
                     targetLabel = target.attr('data-target-label'),
                     targetValue = target.attr('data-target-value'),
-                    url = target.attr('data-url')
+                    url = target.attr('data-url'),
                     template = '<li class="suggestion-item">{VALUE}</li>';
 
                 if(!targetLabel || !targetValue || !url || !value) {
                     return;
+                }
+
+                if (target.data('is-schema-fields')) {
+                    isSchemaDetail = true;
                 }
 
                 targetLabel = $(targetLabel);
@@ -298,6 +519,11 @@ jQuery(function($) {
 
                 var loadSuggestions = function(list, callback) {
                     container.html('');
+
+                    if (typeof list === 'undefined') {
+                        target.addClass('d-none');
+                        return;
+                    }
 
                     list.forEach(function(item) {
                         var label = '';
@@ -420,6 +646,15 @@ jQuery(function($) {
                                         && response.results.rows instanceof Array
                                     ) {
                                         list = response.results.rows;
+                                    }
+
+                                    if (isSchemaDetail) {
+                                        var primary = [{
+                                            label: 'ID',
+                                            name: 'id'
+                                        }];
+
+                                        list = primary.concat(response.results.fields);
                                     }
 
                                     loadSuggestions(list, function(item) {
