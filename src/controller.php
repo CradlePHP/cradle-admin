@@ -89,7 +89,7 @@ $this->get('/admin/dashboard', function ($request, $response) {
 
     // if we have results
     if (!empty($results)) {
-        foreach($results as $schema) {
+        foreach ($results as $schema) {
             $schemas[$schema['name']] = [
                 'name' => $schema['name'],
                 'label' => ucwords($schema['name']),
@@ -108,7 +108,7 @@ $this->get('/admin/dashboard', function ($request, $response) {
         $records = Service::get('sql')->getSchemaTableRecordCount($database);
 
         // on each record
-        foreach($records as $record) {
+        foreach ($records as $record) {
             $name = null;
             $rows = null;
 
@@ -244,24 +244,24 @@ $this->get('/admin/configuration', function ($request, $response) {
     $file = $request->getStage('type');
 
     // switch between config to load
-    switch($file) {
-        case 'general' :
+    switch ($file) {
+        case 'general':
             $data['item'] = $global->config('settings');
             break;
 
-        case 'deploy' :
+        case 'deploy':
             $data['item'] = $global->config('deploy');
             break;
 
-        case 'service' :
+        case 'service':
             $data['item'] = $global->config('services');
             break;
 
-        case 'test' :
+        case 'test':
             $data['item'] = $global->config('test');
             break;
 
-        default :
+        default:
             $data['item'] = [];
     }
 
@@ -277,7 +277,7 @@ $this->get('/admin/configuration', function ($request, $response) {
         $unpaired = [];
 
         // iterate on each configuration
-        foreach($configuration as $key => $value) {
+        foreach ($configuration as $key => $value) {
             // if config is an array
             if (is_array($value)) {
                 // loop through
@@ -378,24 +378,24 @@ $this->post('/admin/configuration', function ($request, $response) {
     $file = $request->getStage('type');
 
     // switch between config to load
-    switch($file) {
-        case 'general' :
+    switch ($file) {
+        case 'general':
             $file = 'settings';
             break;
 
-        case 'deploy' :
+        case 'deploy':
             $file = 'deploy';
             break;
 
-        case 'service' :
+        case 'service':
             $file = 'services';
             break;
 
-        case 'test' :
+        case 'test':
             $file = 'test';
             break;
 
-        default :
+        default:
             $file = null;
     }
 
@@ -409,7 +409,7 @@ $this->post('/admin/configuration', function ($request, $response) {
         $paired = [];
 
         // iterate on each data
-        foreach($data as $key => $value) {
+        foreach ($data as $key => $value) {
             // skip if it doesn't have key
             if (!isset($value['key'])) {
                 continue;
@@ -449,6 +449,130 @@ $this->post('/admin/configuration', function ($request, $response) {
         '/admin/configuration?type=' . $request->getStage('type')
     );
 });
+
+/**
+ * Render the System Model Report Create Page
+ *
+ * @param Request $request
+ * @param Response $response
+ */
+$this->get('/admin/system/model/report/create', function ($request, $response) {
+    //----------------------------//
+    // 1. Prepare body
+    //----------------------------//
+    if (!$response->hasPage('template_root')) {
+        $response->setPage('template_root', __DIR__ . '/template/report');
+    }
+}, 2);
+
+/**
+ * Render the System Model Report Update Page
+ *
+ * @param Request $request
+ * @param Response $response
+ */
+$this->get('/admin/system/model/report/update/:report_id', function ($request, $response) {
+    //----------------------------//
+    // 1. Prepare body
+    //----------------------------//
+    if (!$response->hasPage('template_root')) {
+        $response->setPage('template_root', __DIR__ . '/template/report');
+    }
+}, 2);
+
+/**
+ * Render the System Model Report Chart Page
+ *
+ * @param Request $request
+ * @param Response $response
+ */
+$this->get('/admin/system/model/report/chart/:report_id', function ($request, $response) {
+    //----------------------------//
+    // 1. Get data
+    $global = $this->package('global');
+    $data = $request->getStage();
+    $redirect = '/admin/system/model/report/search';
+
+    // is there a redirect uri?
+    if (isset($data['redirect_uri']) && $data['redirect_uri']) {
+        $redirect = $data['redirect_uri'];
+    }
+
+    // get report detail
+    $request->setStage('schema', 'report');
+    $this->trigger('system-model-detail', $request, $response);
+
+    if ($response->isError()) {
+        $message = 'No report found';
+        $global->flash($message, 'error');
+        return $global->redirect($redirect);
+    }
+
+    $report = $response->getResults();
+
+    //----------------------------//
+    // 1. Prepare Body
+    // set defaults
+    $data['title'] = $report['report_slug'];
+    $data['range'] =  10;
+
+    // we will be pulling recent inserts from this schema
+    $schema = Schema::i($report['report_schema']);
+    $fields = $schema->getAll();
+
+    $payload = $this->makePayload();
+
+    if (isset($data['start'])) {
+        $payload['request']->setStage('start', $data['start']);
+    }
+
+    $payload['request']->setStage('schema', $report['report_schema']);
+    $payload['request']->setStage('order', $fields['primary'], 'DESC');
+    $payload['request']->setStage('range', $data['range']);
+
+    $this->trigger('system-model-search', $payload['request'], $payload['response']);
+
+    // prepare the table data
+    $data['table_label'] = $fields['plural'];
+    $data['table_head'] = [
+        'ID' => $fields['primary']
+    ];
+
+    foreach ($fields['listable'] as $listable) {
+        $label = $fields['fields'][$listable]['label'];
+        $data['table_head'][$label] = $listable;
+    }
+
+    $data['table_data'] = $payload['response']->getResults();
+
+    //----------------------------//
+    // 3. Render Template
+    $class = sprintf('page-admin-report-chart page-admin');
+
+    $template = __DIR__ . '/template';
+    if (is_dir($response->getPage('template_root'))) {
+        $template = $response->getPage('template_root');
+    }
+
+    $body = $this
+        ->package('cradlephp/cradle-system')
+        ->template(
+            'report/chart',
+            $data,
+            [],
+            $template
+        );
+
+    //set content
+    $response
+        ->setPage('title', $data['title'])
+        ->setPage('class', $class)
+        ->setContent($body);
+
+    //render page
+    $this->trigger('admin-render-page', $request, $response);
+}, 2);
+
 
 /**
  * Render the System Model Calendar Page
@@ -889,7 +1013,7 @@ $this->get('/admin/system/model/:schema/pipeline', function ($request, $response
         }
     }
 
-    if (strpos($redirect, '/admin') !== FALSE && strpos($redirect, '/admin') == 0) {
+    if (strpos($redirect, '/admin') !== false && strpos($redirect, '/admin') == 0) {
         $data['admin'] = 1;
     }
 

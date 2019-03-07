@@ -1,0 +1,406 @@
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="/admin">
+                <i class="fas fa-home"></i> {{_ 'Admin'}}
+            </a>
+        </li>
+        {{#if relation.suggestion}}
+            <li class="breadcrumb-item">
+                <a href="../../search">
+                    <i class="{{relation.schema.icon}}"></i> {{relation.schema.plural}}
+                </a>
+            </li>
+            <li class="breadcrumb-item">
+                <a href="../../update/{{scope relation.data relation.schema.primary}}">
+                    {{relation.suggestion}}
+                </a>
+            </li>
+            <li class="breadcrumb-item">
+                <a href="../../{{scope relation.data relation.schema.primary}}/search/{{schema.name}}">
+                    <i class="fas fa-{{schema.icon}}"></i> {{schema.plural}}
+                </a>
+            </li>
+        {{else}}
+            <li class="breadcrumb-item">
+                <a
+                    {{#when action '===' 'create'}}
+                        href="search"
+                    {{else}}
+                        href="../search"
+                    {{/when}}
+                >
+                    <i class="fas fa-{{schema.icon}}"></i> {{schema.plural}}
+                </a>
+            </li>
+        {{/if}}
+        <li class="breadcrumb-item active" aria-current="page">
+            {{#when action '===' 'create'}}
+                <i class="fas fa-plus"></i> {{title}}
+            {{else}}
+                <i class="fas fa-edit"></i> {{title}}
+            {{/when}}
+        </li>
+    </ol>
+</nav>
+
+<div class="main-padding">
+    {{#if relation.suggestion}}
+        <h3 class="main-title">
+            <i class="{{relation.schema.icon}}"></i>
+            {{relation.suggestion}}
+        </h3>
+    {{/if}}
+
+    <form
+        class="box"
+        method="post"
+        {{#if cdn_config}}
+            data-do="cdn-upload"
+            data-on="submit"
+            data-progress="{{_ 'We are uploading your files. Please do not refresh page.'}}"
+            data-complete="{{_ 'Upload Complete'}}"
+            data-enctype="{{cdn_config.form.enctype}}"
+            data-method="{{cdn_config.form.method}}"
+            data-action="{{cdn_config.form.action}}"
+            data-cdn="{{cdn_config.form.action}}"
+            data-acl="{{cdn_config.inputs.acl}}"
+            data-key="{{cdn_config.inputs.key}}"
+            data-credential="{{cdn_config.inputs.X-Amz-Credential}}"
+            data-algorythm="{{cdn_config.inputs.X-Amz-Algorithm}}"
+            data-date="{{cdn_config.inputs.X-Amz-Date}}"
+            data-policy="{{cdn_config.inputs.Policy}}"
+            data-signature="{{cdn_config.inputs.X-Amz-Signature}}"
+        {{/if}}
+    >
+        <div class="box-head box-success">
+            <div class="box-title">
+                {{#when action '===' 'create'}}
+                    <i class="fas fa-plus"></i> {{title}}
+                {{else}}
+                    <i class="fas fa-edit"></i> {{title}}
+                {{/when}}
+            </div>
+        </div>
+
+        <div class="box-body box-padding">
+            {{#relations schema.name 1}}
+                <div class="form-group{{#has ../errors primary2}} has-error{{/has}}">
+                    <label class="control-label">{{singular}}</label>
+                    <div>
+                        <input
+                            autocomplete="off"
+                            class="form-control suggestion-label-{{name}}"
+                            name="{{suggestion_name}}"
+                            placeholder="{{_ 'Enter %s' singular}}"
+                            type="text"
+                            value="{{scope ../item suggestion_name}}"
+                        />
+                        <input
+                            class="suggestion-value-{{name}}"
+                            name="{{primary2}}"
+                            type="hidden"
+                            value="{{scope ../item primary2}}"
+                        />
+                        <div
+                            class="input-suggestion d-none"
+                            data-do="suggestion-field"
+                            data-format="{{suggestion}}"
+                            data-target-label="input.suggestion-label-{{name}}"
+                            data-target-value="input.suggestion-value-{{name}}"
+                            {{#in ../valid_relations name}}
+                                {{#when ../action '===' 'create'}}
+                                    {{#if ../relation.suggestion}}
+                                        data-url="../../../{{name}}/search?q={QUERY}&render=false"
+                                    {{else}}
+                                        data-url="../{{name}}/search?q={QUERY}&render=false"
+                                    {{/if}}
+                                {{else}}
+                                    data-url="../../{{name}}/search?q={QUERY}&render=false"
+                                {{/when}}
+                            {{else}}
+                                data-url="/admin/{{name}}/search?q={QUERY}&render=false"
+                            {{/in}}
+                            data-value="{{primary2}}"
+                        ></div>
+                        {{#has ../errors primary2}}
+                            <span class="help-text">{{scope ../errors primary2}}</span>
+                        {{/has}}
+                    </div>
+                </div>
+            {{/relations}}
+
+            {{#relations schema.name 0}}
+                <div class="form-group{{#has ../errors primary2}} has-error{{/has}}">
+                    <label class="control-label">{{singular}}</label>
+                    <div>
+                        <input
+                            autocomplete="off"
+                            class="form-control suggestion-label-{{name}}"
+                            name="{{suggestion_name}}"
+                            placeholder="{{_ 'Enter %s' singular}}"
+                            type="text"
+                            value="
+                            {{~#has ../item suggestion_name}}
+                                {{~scope ../item suggestion_name}}
+                            {{~else~}}
+                                {{~#has ../item name}}
+                                    {{~#scope ../item name}}
+                                        {{~suggest ../this this}}
+                                    {{~/scope~}}
+                                {{~/has~}}
+                            {{~/has}}"
+                        />
+                        <input
+                            class="suggestion-value-{{name}}"
+                            name="{{primary2}}"
+                            type="hidden"
+                            value="
+                            {{~#has ../item primary2}}
+                                {{~scope ../item primary2}}
+                            {{~else~}}
+                                {{~#has ../item name}}
+                                    {{~#scope ../item name}}
+                                        {{~scope this ../primary2}}
+                                    {{~/scope~}}
+                                {{~/has~}}
+                            {{~/has}}"
+                        />
+                        <div
+                            class="input-suggestion d-none"
+                            data-do="suggestion-field"
+                            data-format="{{suggestion}}"
+                            data-target-label="input.suggestion-label-{{name}}"
+                            data-target-value="input.suggestion-value-{{name}}"
+                            {{#in ../valid_relations name}}
+                                {{#when ../action '===' 'create'}}
+                                    data-url="../{{name}}/search?q={QUERY}&render=false"
+                                {{else}}
+                                    data-url="../../{{name}}/search?q={QUERY}&render=false"
+                                {{/when}}
+                            {{else}}
+                                data-url="/admin/{{name}}/search?q={QUERY}&render=false"
+                            {{/in}}
+                            data-value="{{primary2}}"
+                        ></div>
+                        {{#has ../errors primary2}}
+                            <span class="help-text">{{scope ../errors primary2}}</span>
+                        {{/has}}
+                    </div>
+                </div>
+            {{/relations}}
+
+            {{#format 'field' schema.name item}}
+                {{#each formats}}
+                    {{#when @key '!=' 'report_meta'}}
+                        {{> form_fieldset }}
+                    {{/when}}
+                    {{#when @key '===' 'report_chart'}}
+                        <div id="additional-fields-wrapper"></div>
+                    {{/when}}
+                {{/each}}
+            {{/format}}
+            <div class="form-group mt-2">
+                <label class="control-label">Chart Height</label>
+                <input
+                    class="form-control"
+                    name="report_meta[chart_height]"
+                    type="number"
+                    placeholder="400"
+                    value="{{#if item.report_meta.chart_height}}item.report_meta.chart_height{{else}}400{{/if}}"
+                />
+            </div>
+            <div class="form-group mt-2">
+                <label class="control-label">Chart Width</label>
+                <input
+                    class="form-control"
+                    name="report_meta[chart_width]"
+                    type="number"
+                    placeholder="900"
+                    value="{{#if item.report_meta.chart_width}}item.report_meta.chart_width{{else}}900{{/if}}"
+                />
+            </div>
+            <!-- TODO: Add Ability to have a date filters included -->
+            <!-- <div class="form-group mt-2">
+                <label class="control-label">Allow Date Filters</label>
+                <div class="form-switch system-form-field" data-name="report_meta[allow_date_filters]">
+                    <input class="system-form-control" name="report_meta[allow_date_filters]" type="hidden" value="0">
+                    <label class="switch switch-6">
+                        <input
+                            class="system-form-control"
+                            name="report_meta[allow_date_filters]"
+                            type="checkbox"
+                            value="1"
+                            {{#when item.report_meta.allow_date_filters '==' 1}}checked{{/when}}/>
+                        <span></span>
+                    </label>
+                </div>
+            </div> -->
+        </div>
+        <div class="box-foot box-light">
+            <div class="box-left">
+                <input type="hidden" name="csrf" value="{{csrf}}" />
+                <button type="submit" class="btn btn-primary">{{_ 'Submit'}}</button>
+            </div>
+        </div>
+    </form>
+</div>
+<script type="text/html" id="bar-line-fields">
+    <div class="form-group mt-2">
+        <label class="control-label">Chart Label</label>
+        <input
+            type="text"
+            class="form-control"
+            name="report_meta[chart_label]"
+            value="{{item.report_meta.chart_label}}"
+        />
+    </div>
+    <div class="form-group mt-2">
+        <label class="control-label">X-Axis</label>
+        <div class="form-select system-form-field" data-name="report_meta[x_axis]" data-for="x_axis">
+            <select
+                class="form-control system-form-control"
+                name="report_meta[x_axis][key]"
+                data-do="show-table-fields"
+                data-on="change"
+                data-value="{{item.report_meta.x_axis.value}}"
+            >
+                <option value="year" {{#when item.report_meta.x_axis.key '==' 'year'}}selected{{/when}}>Year</option>
+                <option value="month" {{#when item.report_meta.x_axis.key '==' 'month'}}selected{{/when}}>Month</option>
+                <option value="column-sum" {{#when item.report_meta.x_axis.key '==' 'column-sum'}}selected{{/when}}>Sum of a column</option>
+                <option value="column-count" {{#when item.report_meta.x_axis.key '==' 'column-count'}}selected{{/when}}>Count of a column</option>
+                <option value="column-value" {{#when item.report_meta.x_axis.key '==' 'column-value'}}selected{{/when}}>Value of a column</option>
+            </select>
+        </div>
+    </div>
+    <div class="form-group mt-2">
+        <label class="control-label">Y-Axis</label>
+        <div class="form-select system-form-field" data-name="report_meta[y_axis]" data-for="y_axis">
+            <select
+                class="form-control system-form-control"
+                name="report_meta[y_axis][key]"
+                data-do="show-table-fields"
+                data-on="change"
+                data-value="{{item.report_meta.y_axis.value}}"
+            >
+            <option value="number" {{#when item.report_meta.y_axis.key '==' 'number'}}selected{{/when}}>Number</option>
+            <option value="year" {{#when item.report_meta.y_axis.key '==' 'year'}}selected{{/when}}>Year</option>
+            <option value="month" {{#when item.report_meta.y_axis.key '==' 'month'}}selected{{/when}}>Month</option>
+            <option value="column-sum" {{#when item.report_meta.y_axis.key '==' 'column-sum'}}selected{{/when}}>Sum of a column</option>
+            <option value="column-count" {{#when item.report_meta.y_axis.key '==' 'column-count'}}selected{{/when}}>Count of a column</option>
+            <option value="column-value" {{#when item.report_meta.y_axis.key '==' 'column-value'}}selected{{/when}}>Value of a column</option>
+            </select>
+        </div>
+    </div>
+</script>
+<script type="text/html" id="bar-fields">
+    <div class="form-group mt-2">
+        <label class="control-label">Bar Type</label>
+        <div class="form-select system-form-field" data-name="report_meta[bar_type]">
+            <select class="form-control system-form-control" name="report_meta[bar_type]">
+                <option
+                    value="horizontal"
+                    {{#when item.report_meta.bar_type '==' 'horizontal'}}selected{{/when}}
+                >
+                    Horizontal
+                </option>
+                <option
+                    value="vertical"
+                    {{#when item.report_meta.bar_type '==' 'vertical'}}selected{{/when}}
+                >
+                    Vertical
+                </option>
+            </select>
+        </div>
+    </div>
+</script>
+<script type="text/html" id="line-fields">
+    <div class="form-group mt-2">
+        <label class="control-label">Line Type</label>
+        <div class="form-select system-form-field" data-name="report_meta[line_type]">
+            <select class="form-control system-form-control" name="report_meta[line_type]">
+                <option
+                    value="basic"
+                    {{#when item.report_meta.line_type '==' 'basic'}}selected{{/when}}
+                >
+                    Basic
+                </option>
+                <option
+                    value="stepped"
+                    {{#when item.report_meta.line_type '==' 'stepped'}}selected{{/when}}
+                >
+                    Stepped
+                </option>
+                <option
+                    value="filled"
+                    {{#when item.report_meta.line_type '==' 'filled'}}selected{{/when}}
+                >
+                    Area
+                </option>
+            </select>
+        </div>
+    </div>
+</script>
+<script type="text/html" id="doughnut-fields">
+    <div class="form-group mt-2">
+        <label class="control-label">Doughnut Type</label>
+        <div class="form-select system-form-field" data-name="report_meta[doughnut_type]">
+            <select class="form-control system-form-control" name="report_meta[doughnut_type]">
+                <option value="full">Full</option>
+                <option value="half">Semi Circle/Half</option>
+            </select>
+        </div>
+    </div>
+</script>
+<script type="text/html" id="circular-fields">
+    <div class="form-group">
+        <div
+            data-do="circular-chart-table-fields"
+            data-name="report_meta[base]"
+            data-value="{{item.report_meta.base}}"
+        ></div>
+    </div>
+</script>
+<div class="pie-fields">
+    <div class=""></div>
+</div>
+<script type="text/html" id="filter-fields">
+    // <div class="form-group mt-2">
+    //     <label class="control-label">Circle Type</label>
+    //     <div class="form-select system-form-field" data-name="report_type">
+    //         <select class="form-control system-form-control" name="report_type">
+    //             <option value="full">Full</option>
+    //             <option value="half">Semi Circle/Half</option>
+    //         </select>
+    //     </div>
+    // </div>
+</script>
+<script type="text/html" id="column-fields">
+    <div class="schema-detail">
+        <div class="form-text system-form-field" data-name="{METAFIELD}">
+            <input
+                autocomplete="{METAFIELD}"
+                class="form-control system-form-control"
+                name="{METAFIELD}"
+                type="text"
+                value="{VALUE}"
+            />
+        </div>
+        <input
+           class="suggestion-value-{METAFIELD}"
+           name="{METAFIELD}"
+           type="hidden"
+           value="{VALUE}"
+       />
+       <div
+           class="input-suggestion d-none"
+           data-do="suggestion-field"
+           data-format="\{\{name\}\}"
+           data-target-label='input[name="{METAFIELD}"]'
+           data-target-value="input.suggestion-value-{METAFIELD}"
+           data-url="/admin/system/schema/update/{SCHEMA}?&render=false"
+           data-is-schema-fields="{SCHEMA}"
+           data-value="\{\{name\}\}"
+       ></div>
+    </div>
+</script>
