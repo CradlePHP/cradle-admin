@@ -165,7 +165,7 @@ $this->on('system-model-pipeline-update', function ($request, $response) {
  * @param Request $request
  * @param Response $response
  */
-$this->on('prepare-report-chart', function ($request, $response) {
+$this->on('report-chart-prepare', function ($request, $response) {
     //----------------------------//
     // 1. Get Data
     $data = $request->getStage();
@@ -275,16 +275,16 @@ $this->on('prepare-report-chart', function ($request, $response) {
     switch ($report['report_chart']) {
         case 'line':
         case 'area':
-            $this->trigger('prepare-line-chart', $payload['request'], $payload['response']);
+            $this->trigger('line-chart-prepare', $payload['request'], $payload['response']);
             break;
 
         case 'bar':
-            $this->trigger('prepare-bar-chart', $payload['request'], $payload['response']);
+            $this->trigger('bar-chart-prepare', $payload['request'], $payload['response']);
             break;
 
         case 'pie':
         case 'doughnut':
-            $this->trigger('prepare-circular-chart', $payload['request'], $payload['response']);
+            $this->trigger('circular-chart-prepare', $payload['request'], $payload['response']);
             break;
 
         default:
@@ -363,7 +363,7 @@ $this->on('prepare-report-chart', function ($request, $response) {
  * @param Request $request
  * @param Response $response
  */
-$this->on('prepare-line-chart', function ($request, $response) {
+$this->on('line-chart-prepare', function ($request, $response) {
     //----------------------------//
     // 1. Get Data
     $data = $request->getStage();
@@ -465,7 +465,7 @@ $this->on('prepare-line-chart', function ($request, $response) {
  * @param Request $request
  * @param Response $response
  */
-$this->on('prepare-bar-chart', function ($request, $response) {
+$this->on('bar-chart-prepare', function ($request, $response) {
     //----------------------------//
     // 1. Get Data
     $data = $request->getStage();
@@ -564,7 +564,7 @@ $this->on('prepare-bar-chart', function ($request, $response) {
  * @param Request $request
  * @param Response $response
  */
-$this->on('prepare-circular-chart', function ($request, $response) {
+$this->on('circular-chart-prepare', function ($request, $response) {
     //----------------------------//
     // 1. Get Data
     $data = $request->getStage();
