@@ -20,8 +20,8 @@
         "php-coveralls/php-coveralls": "~2.1.0"
     },
     "require": {
-        "cradlephp/framework": "~2.2.0",
-        "cradlephp/cradle-csrf": "~2.2.0",
-        "cradlephp/handlebars": "~2.2.0"
+        "cradlephp/framework": "~2.3.0",
+        "cradlephp/cradle-csrf": "~2.3.0",
+        "cradlephp/handlebars": "~2.3.0"
     }
 }
