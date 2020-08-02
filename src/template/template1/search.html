@@ -1,0 +1,42 @@
+<h3 class="panel-title">
+  <i class="fas fa-gift fa-fw"></i>
+  {{_ title}}
+</h3>
+<div class="panel-body panel-search-table">
+  {{#if rows.length}}
+    <div class="search-actions mb-3">
+      {{> template1_search_bulk}}
+      {{> template1_search_form}}
+      {{> template1_search_links}}
+    </div>
+    {{> template1_search_tabs}}
+    <form class="table-form table-scroll">
+      <table class="table table-striped">
+        <thead class="thead-light">
+          {{> template1_search_head}}
+        </thead>
+        <tbody>
+          {{#each rows}}
+            {{> template1_search_row}}
+          {{/each}}
+        </tbody>
+      </table>
+    </form>
+    <ul class="pagination">
+      {{#pager total range}}
+        <li class="page-item{{#if active}} active{{/if}}">
+          <a class="page-link" href="?{{href}}">{{page}}</a>
+        </li>
+      {{/pager}}
+    </ul>
+  {{else}}
+    <div class="search-actions">
+      {{> template1_search_links}}
+    </div>
+    {{> template1_search_tabs}}
+    <div class="alert alert-info mt-4">
+      <i class="fas fa-info-circle"></i>
+      {{_ 'No results found.'}}
+    </div>
+  {{/if}}
+</div>

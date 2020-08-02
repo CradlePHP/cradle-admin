@@ -1,0 +1,69 @@
+<aside class="panel-sidebar-left">
+  <header class="panel-head">
+    <button class="sidebar-hide" data-do="add-class" data-name="no-sidebar-left" data-on="click"
+      data-selector="section.app-panel" type="button">
+      <i class="fas fa-chevron-left"></i>
+    </button>
+    <a class="panel-title" href="/">
+      {{#request 'session' 'settings'}}
+        <img width="36" src="{{theme_company_logo_square}}" />
+        {{theme_company_label}} {{platform_name}}
+      {{else}}
+        <img width="36" src="{{settings 'cdn'}}/images/logo/pollen8-logo.png" />
+        {{platform_name}}
+      {{/request}}
+    </a>
+  </header>
+
+  <ul class="nav flex-column">
+    {{#each menu}}
+      {{#unless submenu.length}}
+        <li class="nav-item{{#if active}} active{{/if}}">
+          <a class="nav-link" href="{{path}}">
+            <i class="fa fa-fas {{icon}}"></i>
+            <span>{{_ label}}</span>
+          </a>
+        </li>
+      {{else}}
+        <li class="nav-item">
+          <a class="nav-link" data-toggle="collapse" href="#{{path}}">
+            <i class="fa fa-fas {{icon}}"></i>
+            <span>
+              {{#if active}}
+                <strong>{{_ label}}</strong>
+              {{else}}
+                {{_ label}}
+              {{/if}}
+            </span>
+          </a>
+          <div id="{{path}}" class="nav-sub{{#unless active}} collapse{{/unless}}">
+            <ul class="nav flex-column">
+              {{#each submenu}}
+                {{#if modal}}
+                  <li class="nav-item{{#if active}} active{{/if}}">
+                    <a
+                      class="nav-link"
+                      href="javascript:void(0)"
+                      data-do="modal-link"
+                      data-template="{{modal}}"
+                    >
+                      <i class="fa fa-fas {{icon}}"></i>
+                      <span>{{_ label}}</span>
+                    </a>
+                  </li>
+                {{else}}
+                  <li class="nav-item{{#if active}} active{{/if}}">
+                    <a class="nav-link" href="{{path}}">
+                      <i class="fa fa-fas {{icon}}"></i>
+                      <span>{{_ label}}</span>
+                    </a>
+                  </li>
+                {{/if}}
+              {{/each}}
+            </ul>
+          </div>
+        </li>
+      {{/unless}}
+    {{/each}}
+  </ul>
+</aside>
