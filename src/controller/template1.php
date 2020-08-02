@@ -9,8 +9,10 @@
 $this('http')->get('/admin/template1/search', function ($request, $response) {
   //----------------------------//
   // 1. Prepare body
-  $data['title'] = $this('lang')->get('Template1 Search');
+  $data['title'] = $this('lang')->translate('Template1 Search');
 
+  $data['range'] = 50;
+  $data['total'] = 10000;
   for ($i = 0; $i < 20; $i++) {
     $data['rows'][] = [
       'template1_id' => 1,

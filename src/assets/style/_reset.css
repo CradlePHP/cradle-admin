@@ -1,0 +1,11 @@
+/* Global - Classes
+------------------------------*/
+
+html, body {
+  color: #232323;
+  font-family: 'Open Sans', Arial, sans-serif;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: normal;
+  height: 100%;
+}

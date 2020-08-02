@@ -5,13 +5,8 @@
       <i class="fas fa-chevron-left"></i>
     </button>
     <a class="panel-title" href="/">
-      {{#request 'session' 'settings'}}
-        <img width="36" src="{{theme_company_logo_square}}" />
-        {{theme_company_label}} {{platform_name}}
-      {{else}}
-        <img width="36" src="{{settings 'cdn'}}/images/logo/pollen8-logo.png" />
-        {{platform_name}}
-      {{/request}}
+      <img width="36" src="{{settings 'cdn'}}/images/cradle/logo-square.png" />
+      {{config 'settings' 'name'}}
     </a>
   </header>
 

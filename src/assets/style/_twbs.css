@@ -1,0 +1,146 @@
+/* Bootstrap
+------------------------------*/
+
+.alert {
+  border-radius: 0 !important;
+}
+
+.bg-white {
+  background-color: #FFFFFF !important;
+  border-color: #FFFFFF !important;
+}
+
+.btn {
+  border-radius: 0;
+}
+
+.btn-block {
+  display: block;
+  width: 100%;
+}
+
+.btn-success,
+.btn-warning,
+.btn-danger {
+  color: #FFFFFF !important;
+}
+
+.btn-primary,
+.btn-primary:link,
+.btn-primary:hover,
+.btn-primary:active,
+.btn-primary:visited {
+  color: #FFFFFF;
+}
+
+.btn-outline-primary,
+.btn-outline-primary:link,
+.btn-outline-primary:hover,
+.btn-outline-primary:active,
+.btn-outline-primary:visited {
+  background-color: #FFFFFF;
+}
+
+.btn-outline-primary.active,
+.btn-outline-primary.active:link,
+.btn-outline-primary.active:hover,
+.btn-outline-primary.active:active,
+.btn-outline-primary.active:visited {
+  color: #FFFFFF;
+}
+
+.btn-secondary,
+.btn-secondary:link,
+.btn-secondary:hover,
+.btn-secondary:active,
+.btn-secondary:visited  {
+  color: #FFFFFF;
+}
+
+.btn-outline-secondary,
+.btn-outline-secondary:link,
+.btn-outline-secondary:hover,
+.btn-outline-secondary:active,
+.btn-outline-secondary:visited {
+  background-color: #FFFFFF;
+}
+
+.btn-outline-secondary.active,
+.btn-outline-secondary.active:link,
+.btn-outline-secondary.active:hover,
+.btn-outline-secondary.active:active,
+.btn-outline-secondary.active:visited {
+  color: #FFFFFF;
+}
+
+.h-auto {
+  height: auto !important;
+}
+
+.h-100 {
+  height: 100% !important;
+}
+
+.w-auto {
+  width: auto !important;
+}
+
+.w-100 {
+  width: 100% !important;
+}
+
+.has-error {
+  color: #D15B47 !important;
+  border-color: #B74635 !important;
+}
+
+.has-error label,
+.has-error input,
+.has-error select,
+.has-error textarea {
+  color: #D15B47 !important;
+  border-color: #B74635 !important;
+}
+
+.input-group-text {
+  border-radius: 0;
+}
+
+.input-group .form-control {
+  border-radius: 0 !important;
+}
+
+.progress-label-left {
+  color: #343434;
+  font-size: .75rem;
+  text-transform: uppercase;
+}
+
+.progress-label-right {
+  color: #343434;
+  float: right;
+  font-size: .75rem;
+  text-transform: uppercase;
+}
+
+.nav-pills .nav-link {
+  border-radius: 0;
+}
+
+.table input {
+  padding: 0;
+}
+
+.table-striped tbody tr:nth-of-type(even) td {
+  background-color: #FFFFFF;
+}
+
+.page-item:first-child .page-link {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.page-item:last-child .page-link {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}

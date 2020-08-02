@@ -1,0 +1,111 @@
+/* Theme
+------------------------------*/
+
+.btn-primary,
+.btn-primary:link,
+.btn-primary:hover,
+.btn-primary:active,
+.btn-primary:visited {
+  background-color: #42505C;
+  border-color: #42505C;
+}
+
+.btn-outline-primary,
+.btn-outline-primary:link,
+.btn-outline-primary:hover,
+.btn-outline-primary:active,
+.btn-outline-primary:visited {
+  border-color: #42505C;
+  color: #42505C;
+}
+
+.btn-outline-primary.active,
+.btn-outline-primary.active:link,
+.btn-outline-primary.active:hover,
+.btn-outline-primary.active:active,
+.btn-outline-primary.active:visited {
+  background-color: #42505C !important;
+}
+
+.text-primary {
+  color: #42505C !important;
+}
+
+.app-panel .panel-sidebar-left .panel-head,
+.app-panel .panel-sidebar-left .nav-item:hover > .nav-link,
+.app-panel .panel-sidebar-left .nav-item-sub:hover,
+.app-panel .panel-sidebar-left .nav-item.active,
+.app-panel .panel-sidebar-left .nav-item-sub.active  {
+  background-color: #3B4754 !important;
+}
+
+.table-striped tbody tr:nth-of-type(odd) td,
+.table-striped tbody tr:nth-of-type(odd) th,
+.app-panel .panel-main {
+  background-color: #EFF2F6;
+}
+
+.app-panel .panel-sidebar-left .nav-link > i:first-child,
+.app-panel .panel-sidebar-left .nav-cat > i:first-child,
+.app-panel .panel-sidebar-left .nav-link-sub > i:first-child,
+.app-panel .panel-sidebar-left .nav-item.active .nav-link > i:first-child {
+  color: #E2E6E9;
+}
+
+.tag-field .tag,
+.app-panel .panel-main .panel-title,
+.app-panel .panel-sidebar-left .nav-item.active::before,
+.app-panel .panel-sidebar-left .nav-item-sub.active::before {
+  background-color: #E2E6E9 !important;
+}
+
+.app-panel,
+.app-panel .panel-main .panel-head .nav-link {
+  color: #42505C;
+}
+
+.app-panel .panel-sidebar-left {
+  background-color: #42505C;
+}
+
+.text-secondary {
+  color: #3D54FF !important;
+}
+
+a,
+a:link,
+a:hover,
+a:active,
+a:visited {
+  color: #4DA8DE;
+}
+
+.btn-secondary,
+.btn-secondary:link,
+.btn-secondary:hover,
+.btn-secondary:active,
+.btn-secondary:visited,
+.page-item.active .page-link,
+.nav-pills .nav-link.active {
+  background-color: #4DA8DE;
+  border-color: #4DA8DE;
+}
+
+.btn-outline-secondary,
+.btn-outline-secondary:link,
+.btn-outline-secondary:hover,
+.btn-outline-secondary:active,
+.btn-outline-secondary:visited {
+  border-color: #4DA8DE;
+  color: #4DA8DE;
+}
+
+.btn-outline-secondary.active,
+.btn-outline-secondary.active:link,
+.btn-outline-secondary.active:hover,
+.btn-outline-secondary.active:active,
+.btn-outline-secondary.active:visited,
+.switch.switch-6 input:checked + span::before,
+.app-panel .panel-mobile-screen .panel-head {
+  background-color: #4DA8DE !important;
+}
