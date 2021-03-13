@@ -1,0 +1,72 @@
+{{#if validation.options.general.length}}
+  <optgroup label="General Validation">
+    {{#each validation.options.general}}
+      <option
+        value="{{@key}}"
+        {{#when ../../method '===' @key}}selected{{/when}}
+      >
+        {{label}}
+      </option>
+    {{/each}}
+  </optgroup>
+{{/if}}
+{{#if validation.options.string.length}}
+  <optgroup label="String Validation">
+    {{#each validation.options.string}}
+      <option
+        value="{{@key}}"
+        {{#when ../../method '===' @key}}selected{{/when}}
+      >
+        {{label}}
+      </option>
+    {{/each}}
+  </optgroup>
+{{/if}}
+{{#if validation.options.number.length}}
+  <optgroup label="Number Validation">
+    {{#each validation.options.number}}
+      <option
+        value="{{@key}}"
+        {{#when ../../method '===' @key}}selected{{/when}}
+      >
+        {{label}}
+      </option>
+    {{/each}}
+  </optgroup>
+{{/if}}
+{{#if validation.options.date.length}}
+  <optgroup label="Date Validation">
+    {{#each validation.options.date}}
+      <option
+        value="{{@key}}"
+        {{#when ../../method '===' @key}}selected{{/when}}
+      >
+        {{label}}
+      </option>
+    {{/each}}
+  </optgroup>
+{{/if}}
+{{#if validation.options.type.length}}
+  <optgroup label="Type Validation">
+    {{#each validation.options.type}}
+      <option
+        value="{{@key}}"
+        {{#when ../../method '===' @key}}selected{{/when}}
+      >
+        {{label}}
+      </option>
+    {{/each}}
+  </optgroup>
+{{/if}}
+{{#if validation.options.custom.length}}
+  <optgroup label="_________">
+    {{#each validation.options.custom}}
+      <option
+        value="{{@key}}"
+        {{#when ../../method '===' @key}}selected{{/when}}
+      >
+        {{label}}
+      </option>
+    {{/each}}
+  </optgroup>
+{{/if}}

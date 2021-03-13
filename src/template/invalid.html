@@ -1,35 +1,30 @@
-<style>
-.modal-inline {
-    display: block;
-    position: relative;
-    top: auto;
-    right: auto;
-    bottom: auto;
-    left: auto;
-    z-index: 1041;
-}
-body, .page-home body {
-  background-color: #93CDDB;
-}
-</style>
-
-<div class="modal modal-inline" tabindex="-1" role="dialog">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title text-danger">Invalid Request</h5>
-            </div>
-            <div class="modal-body">
-                <p>
-                    The application interacting with us has sent us an invalid request.
-                    Please notify the application of this error.
-                </p>
-                {{#if message}}
-                    <p>
-                        {{message}}
-                    </p>
-                {{/if}}
-            </div>
-        </div>
-    </div>
-</div>
+<!-- START: Head -->
+<header class="view-head">
+  <button
+    class="sidebar-hide"
+    data-do="panel-mobile-back"
+    data-on="click"
+    type="button"
+  >
+    <i class="fas fa-chevron-left"></i>
+  </button>
+  <h6 class="view-title">{{_ 'Invalid Request'}}</h6>
+</header>
+<!-- END: Head -->
+<!-- START: Body -->
+<section class="view-body">
+  <div class="m-3 alert alert-danger">
+    <i class="fas fa-exclamation-triangle"></i>
+    {{message}}
+    {{#if validation.length}}
+      <ul>
+        {{#each validation}}
+          {{#is_scalar this}}
+            <li><strong>{{@key}}</strong> - {{this}}</li>
+          {{/is_scalar}}
+        {{/each}}
+      </ul>
+    {{/if}}
+  </div>
+</section>
+<!-- END: Body -->

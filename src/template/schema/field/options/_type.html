@@ -1,0 +1,342 @@
+{{#if config.field.options.general.length}}
+  {{#each config.field.options.general}}
+    <option
+      data-default="{{default}}"
+      data-format="{{join formats '|'}}"
+      data-index="{{join indexes '|'}}"
+      data-fieldset="{{join fieldsets '|'}}"
+      {{#when force.filterable '==' 1}}
+        data-filterable="1"
+      {{/when}}
+      {{#when force.filterable '==' 0}}
+        data-filterable="0"
+      {{/when}}
+      {{#when force.searchable '==' 1}}
+        data-searchable="1"
+      {{/when}}
+      {{#when force.searchable '==' 0}}
+        data-searchable="0"
+      {{/when}}
+      {{#when force.sortable '==' 1}}
+        data-sortable="1"
+      {{/when}}
+      {{#when force.sortable '==' 0}}
+        data-sortable="0"
+      {{/when}}
+      {{#if force.name.length}}
+        data-name="{{force.name}}"
+      {{/if}}
+      {{#if force.label.length}}
+        data-label="{{force.label}}"
+      {{/if}}
+      {{#unless validation}}
+        data-validation="0"
+      {{/unless}}
+      value="{{@key}}"
+      {{#when ../field.type '===' @key}}selected{{/when}}
+    >
+      {{label}}
+    </option>
+  {{/each}}
+{{/if}}
+{{#if config.field.options.string.length}}
+  <optgroup label="String Fields">
+    {{#each config.field.options.string}}
+      <option
+        data-default="{{default}}"
+        data-format="{{join formats '|'}}"
+        data-index="{{join indexes '|'}}"
+        data-fieldset="{{join fieldsets '|'}}"
+        {{#when force.filterable '==' 1}}
+          data-filterable="1"
+        {{/when}}
+        {{#when force.filterable '==' 0}}
+          data-filterable="0"
+        {{/when}}
+        {{#when force.searchable '==' 1}}
+          data-searchable="1"
+        {{/when}}
+        {{#when force.searchable '==' 0}}
+          data-searchable="0"
+        {{/when}}
+        {{#when force.sortable '==' 1}}
+          data-sortable="1"
+        {{/when}}
+        {{#when force.sortable '==' 0}}
+          data-sortable="0"
+        {{/when}}
+        {{#if force.name.length}}
+          data-name="{{force.name}}"
+        {{/if}}
+        {{#if force.label.length}}
+          data-label="{{force.label}}"
+        {{/if}}
+        {{#unless validation}}
+          data-validation="0"
+        {{/unless}}
+        value="{{@key}}"
+        {{#when ../field.type '===' @key}}selected{{/when}}
+      >
+        {{label}}
+      </option>
+    {{/each}}
+  </optgroup>
+{{/if}}
+{{#if config.field.options.number.length}}
+  <optgroup label="Number Fields">
+    {{#each config.field.options.number}}
+      <option
+        data-default="{{default}}"
+        data-format="{{join formats '|'}}"
+        data-index="{{join indexes '|'}}"
+        data-fieldset="{{join fieldsets '|'}}"
+        {{#when force.filterable '==' 1}}
+          data-filterable="1"
+        {{/when}}
+        {{#when force.filterable '==' 0}}
+          data-filterable="0"
+        {{/when}}
+        {{#when force.searchable '==' 1}}
+          data-searchable="1"
+        {{/when}}
+        {{#when force.searchable '==' 0}}
+          data-searchable="0"
+        {{/when}}
+        {{#when force.sortable '==' 1}}
+          data-sortable="1"
+        {{/when}}
+        {{#when force.sortable '==' 0}}
+          data-sortable="0"
+        {{/when}}
+        {{#if force.name.length}}
+          data-name="{{force.name}}"
+        {{/if}}
+        {{#if force.label.length}}
+          data-label="{{force.label}}"
+        {{/if}}
+        {{#unless validation}}
+          data-validation="0"
+        {{/unless}}
+        value="{{@key}}"
+        {{#when ../field.type '===' @key}}selected{{/when}}
+      >
+        {{label}}
+      </option>
+    {{/each}}
+  </optgroup>
+{{/if}}
+{{#if config.field.options.date.length}}
+  <optgroup label="Date Fields">
+    {{#each config.field.options.date}}
+      <option
+        data-default="{{default}}"
+        data-format="{{join formats '|'}}"
+        data-index="{{join indexes '|'}}"
+        data-fieldset="{{join fieldsets '|'}}"
+        {{#when force.filterable '==' 1}}
+          data-filterable="1"
+        {{/when}}
+        {{#when force.filterable '==' 0}}
+          data-filterable="0"
+        {{/when}}
+        {{#when force.searchable '==' 1}}
+          data-searchable="1"
+        {{/when}}
+        {{#when force.searchable '==' 0}}
+          data-searchable="0"
+        {{/when}}
+        {{#when force.sortable '==' 1}}
+          data-sortable="1"
+        {{/when}}
+        {{#when force.sortable '==' 0}}
+          data-sortable="0"
+        {{/when}}
+        {{#if force.name.length}}
+          data-name="{{force.name}}"
+        {{/if}}
+        {{#if force.label.length}}
+          data-label="{{force.label}}"
+        {{/if}}
+        {{#unless validation}}
+          data-validation="0"
+        {{/unless}}
+        value="{{@key}}"
+        {{#when ../field.type '===' @key}}selected{{/when}}
+      >
+        {{label}}
+      </option>
+    {{/each}}
+  </optgroup>
+{{/if}}
+{{#if config.field.options.option.length}}
+  <optgroup label="Option Fields">
+    {{#each config.field.options.option}}
+      <option
+        data-default="{{default}}"
+        data-format="{{join formats '|'}}"
+        data-index="{{join indexes '|'}}"
+        data-fieldset="{{join fieldsets '|'}}"
+        {{#when force.filterable '==' 1}}
+          data-filterable="1"
+        {{/when}}
+        {{#when force.filterable '==' 0}}
+          data-filterable="0"
+        {{/when}}
+        {{#when force.searchable '==' 1}}
+          data-searchable="1"
+        {{/when}}
+        {{#when force.searchable '==' 0}}
+          data-searchable="0"
+        {{/when}}
+        {{#when force.sortable '==' 1}}
+          data-sortable="1"
+        {{/when}}
+        {{#when force.sortable '==' 0}}
+          data-sortable="0"
+        {{/when}}
+        {{#if force.name.length}}
+          data-name="{{force.name}}"
+        {{/if}}
+        {{#if force.label.length}}
+          data-label="{{force.label}}"
+        {{/if}}
+        {{#unless validation}}
+          data-validation="0"
+        {{/unless}}
+        value="{{@key}}"
+        {{#when ../field.type '===' @key}}selected{{/when}}
+      >
+        {{label}}
+      </option>
+    {{/each}}
+  </optgroup>
+{{/if}}
+{{#if config.field.options.file.length}}
+  <optgroup label="File Fields">
+    {{#each config.field.options.file}}
+      <option
+        data-default="{{default}}"
+        data-format="{{join formats '|'}}"
+        data-index="{{join indexes '|'}}"
+        data-fieldset="{{join fieldsets '|'}}"
+        {{#when force.filterable '==' 1}}
+          data-filterable="1"
+        {{/when}}
+        {{#when force.filterable '==' 0}}
+          data-filterable="0"
+        {{/when}}
+        {{#when force.searchable '==' 1}}
+          data-searchable="1"
+        {{/when}}
+        {{#when force.searchable '==' 0}}
+          data-searchable="0"
+        {{/when}}
+        {{#when force.sortable '==' 1}}
+          data-sortable="1"
+        {{/when}}
+        {{#when force.sortable '==' 0}}
+          data-sortable="0"
+        {{/when}}
+        {{#if force.name.length}}
+          data-name="{{force.name}}"
+        {{/if}}
+        {{#if force.label.length}}
+          data-label="{{force.label}}"
+        {{/if}}
+        {{#unless validation}}
+          data-validation="0"
+        {{/unless}}
+        value="{{@key}}"
+        {{#when ../field.type '===' @key}}selected{{/when}}
+      >
+        {{label}}
+      </option>
+    {{/each}}
+  </optgroup>
+{{/if}}
+{{#if config.field.options.json.length}}
+  <optgroup label="JSON Fields">
+    {{#each config.field.options.json}}
+      <option
+        data-default="{{default}}"
+        data-format="{{join formats '|'}}"
+        data-index="{{join indexes '|'}}"
+        data-fieldset="{{join fieldsets '|'}}"
+        {{#when force.filterable '==' 1}}
+          data-filterable="1"
+        {{/when}}
+        {{#when force.filterable '==' 0}}
+          data-filterable="0"
+        {{/when}}
+        {{#when force.searchable '==' 1}}
+          data-searchable="1"
+        {{/when}}
+        {{#when force.searchable '==' 0}}
+          data-searchable="0"
+        {{/when}}
+        {{#when force.sortable '==' 1}}
+          data-sortable="1"
+        {{/when}}
+        {{#when force.sortable '==' 0}}
+          data-sortable="0"
+        {{/when}}
+        {{#if force.name.length}}
+          data-name="{{force.name}}"
+        {{/if}}
+        {{#if force.label.length}}
+          data-label="{{force.label}}"
+        {{/if}}
+        {{#unless validation}}
+          data-validation="0"
+        {{/unless}}
+        value="{{@key}}"
+        {{#when ../field.type '===' @key}}selected{{/when}}
+      >
+        {{label}}
+      </option>
+    {{/each}}
+  </optgroup>
+{{/if}}
+{{#if config.field.options.custom.length}}
+  <optgroup label="_________">
+    {{#each config.field.options.custom}}
+      <option
+        data-default="{{default}}"
+        data-format="{{join formats '|'}}"
+        data-index="{{join indexes '|'}}"
+        data-fieldset="{{join fieldsets '|'}}"
+        {{#when force.filterable '==' 1}}
+          data-filterable="1"
+        {{/when}}
+        {{#when force.filterable '==' 0}}
+          data-filterable="0"
+        {{/when}}
+        {{#when force.searchable '==' 1}}
+          data-searchable="1"
+        {{/when}}
+        {{#when force.searchable '==' 0}}
+          data-searchable="0"
+        {{/when}}
+        {{#when force.sortable '==' 1}}
+          data-sortable="1"
+        {{/when}}
+        {{#when force.sortable '==' 0}}
+          data-sortable="0"
+        {{/when}}
+        {{#if force.name.length}}
+          data-name="{{force.name}}"
+        {{/if}}
+        {{#if force.label.length}}
+          data-label="{{force.label}}"
+        {{/if}}
+        {{#unless validation}}
+          data-validation="0"
+        {{/unless}}
+        value="{{@key}}"
+        {{#when ../field.type '===' @key}}selected{{/when}}
+      >
+        {{label}}
+      </option>
+    {{/each}}
+  </optgroup>
+{{/if}}

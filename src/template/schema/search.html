@@ -1,23 +1,31 @@
+<style>
+  {{> asset_style}}
+</style>
 <h3 class="panel-title">
-  <i class="fas fa-gift fa-fw"></i>
+  <span class="font-weight-normal">
+    <i class="fas fa-home fa-fw"></i>
+    <a href="/admin">{{_ 'Admin'}}</a>
+  </span>
+
+  <i class="fas fa-chevron-right fa-fw text-gray"></i>
+
+  <i class="fas fa-database fa-fw"></i>
   {{_ title}}
 </h3>
-<div class="panel-body panel-search-table">
+<div class="panel-body search-table">
   {{#if rows.length}}
     <div class="search-actions mb-3">
-      {{> template1_search_bulk}}
-      {{> template1_search_form}}
-      {{> template1_search_links}}
+      {{> search_links}}
     </div>
-    {{> template1_search_tabs}}
+    {{> search_tabs}}
     <form class="table-form table-scroll">
       <table class="table table-striped">
         <thead class="thead-light">
-          {{> template1_search_head}}
+          {{> search_head}}
         </thead>
         <tbody>
           {{#each rows}}
-            {{> template1_search_row}}
+            {{> search_row}}
           {{/each}}
         </tbody>
       </table>
@@ -31,12 +39,18 @@
     </ul>
   {{else}}
     <div class="search-actions">
-      {{> template1_search_links}}
+      {{> search_links}}
     </div>
-    {{> template1_search_tabs}}
+    {{> search_tabs}}
     <div class="alert alert-info mt-4">
       <i class="fas fa-info-circle"></i>
       {{_ 'No results found.'}}
     </div>
   {{/if}}
 </div>
+
+{{> templates}}
+
+<script type="text/javascript">
+  {{> asset_script}}
+</script>

@@ -1,0 +1,62 @@
+/* Layout - Auth Form
+-------------------------------- */
+
+.layout-auth-form {
+  align-items: center;
+  background-color: #7CD3E8;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: center;
+  text-align: center;
+}
+
+.layout-auth-form .card {
+  margin-top: 20px;
+  max-width: 600px;
+  width: 100%;
+}
+
+.layout-auth-form .card .card-title {
+  font-size: 26px;
+  font-weight: 600;
+  letter-spacing: .4px;
+  padding-bottom: 15px;
+  padding-top: 20px;
+  text-transform: uppercase;
+}
+
+.layout-auth-form .input-group-text {
+  border-radius: 0;
+  padding: 0 15px;
+}
+
+.layout-auth-form .form-control {
+  height: 50px;
+}
+
+.layout-auth-form .btn-submit {
+  padding-bottom: 10px;
+  padding-top: 10px;
+}
+
+.layout-auth-form .or-text {
+  position: relative;
+}
+
+.layout-auth-form .or-text::before {
+    border: 1px solid #8c8c8c;
+    display: block;
+    content: ' ';
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 11px;
+}
+
+.layout-auth-form .or-text span {
+  background: #FFFFFF;
+  display: inline-block;
+  padding: 0 10px;
+  position: relative;
+}

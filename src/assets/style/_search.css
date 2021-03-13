@@ -1,0 +1,153 @@
+/* Component - Search Table
+------------------------------*/
+
+.search-table .table-scroll {
+  overflow: auto;
+  flex-grow: 1;
+}
+
+.search-table .table-scroll .table {
+  position: relative;
+}
+
+.search-table .table-scroll .table .freeze-left {
+  position: -webkit-sticky;
+  position: sticky;
+  left: 0;
+  z-index: 1;
+}
+
+.search-table .table-scroll .table .freeze-left-2 {
+  position: -webkit-sticky;
+  position: sticky;
+  left: 42px;
+  z-index: 1;
+}
+
+.search-table .table-scroll .table .freeze-right {
+  position: -webkit-sticky;
+  position: sticky;
+  right: 0;
+  z-index: 1;
+}
+
+.search-table .table-scroll .table .freeze-top {
+  border-top: 0;
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  z-index: 2;
+}
+
+.search-table .table-scroll .table .freeze-top.freeze-left,
+.search-table .table-scroll .table .freeze-top.freeze-left-2,
+.search-table .table-scroll .table .freeze-top.freeze-right {
+  z-index: 3;
+}
+
+.search-table .table-scroll td[wrap],
+.search-table .table-scroll td[wrap-1],
+.search-table .table-scroll td[wrap-2],
+.search-table .table-scroll td[wrap-3],
+.search-table .table-scroll td[wrap-4],
+.search-table .table-scroll td[wrap-5] {
+  width: 1px;
+}
+
+.search-table .table-scroll td[wrap]::after,
+.search-table .table-scroll td[wrap-1]::after,
+.search-table .table-scroll td[wrap-2]::after,
+.search-table .table-scroll td[wrap-3]::after,
+.search-table .table-scroll td[wrap-4]::after,
+.search-table .table-scroll td[wrap-5]::after {
+  content: "";
+  display: block;
+  height: 1px;
+  overflow: hidden;
+  visibility: hidden;
+}
+
+.search-table .table-scroll td[wrap]::after,
+.search-table .table-scroll td[wrap-1]::after {
+  width: 100px;
+}
+
+.search-table .table-scroll td[wrap-2]::after {
+  width: 200px;
+}
+
+.search-table .table-scroll td[wrap-3]::after {
+  width: 300px;
+}
+
+.search-table .table-scroll td[wrap-4]::after {
+  width: 400px;
+}
+
+.search-table .table-scroll td[wrap-5]::after {
+  width: 500px;
+}
+
+.search-table .table .checkall {
+  position: relative;
+}
+
+.search-table .search-actions {
+  display: flex;
+  flex-wrap: nowrap;
+}
+
+.search-table .search-actions .search-form {
+  flex: 1;
+}
+
+.search-table .search-actions .search-links {
+  flex: 1;
+  text-align: right;
+}
+
+.search-table .search-actions .input-group-prepend button {
+  border: 1px solid #ced4da;
+}
+
+.search-table .pagination {
+  margin-top: 20px;
+}
+
+@media (max-width: 600px) {
+  .search-table .search-actions {
+    flex-direction: column;
+  }
+
+  .search-table .search-links {
+    text-align: center !important;
+  }
+
+  .search-table .search-links .import-export {
+    margin-bottom: 10px;
+    width: 100%;
+  }
+
+  .search-table .search-links button {
+    margin: 0px !important;
+    width: 100%;
+  }
+
+  .search-table .search-links a {
+    display: block;
+    margin: 0px !important;
+    width: 100%;
+  }
+
+  .search-table form {
+    margin-bottom: 10px;
+  }
+
+  .search-table .bulk-form {
+    margin-bottom: 10px;
+  }
+
+  .search-table .bulk-form button {
+    width: 100%;
+  }
+}

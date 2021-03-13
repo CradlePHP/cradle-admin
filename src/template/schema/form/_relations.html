@@ -1,0 +1,106 @@
+<table class="table table-relations">
+  <tbody data-name-format="relations[{INDEX}]">
+    {{#each item.relations}}
+      <tr data-index="{{@index}}">
+        <td>
+          <strong
+            class="relation-singular"
+            data-default="??"
+            data-do="copy-to-text"
+            data-trigger="input.schema-singular"
+          >
+            {{../item.singular}}
+          </strong>
+        </td>
+        <td><i class="fas fa-arrow-right text-muted"></i></td>
+        <td>
+          {{#if disable}}
+            {{#when many '==' 0}}
+              <input class="form-control" type="text" value="1:0" disabled />
+            {{/when}}
+            {{#when many '==' 1}}
+              <input class="form-control" type="text" value="1:1" disabled />
+            {{/when}}
+            {{#when many '==' 2}}
+              <input class="form-control" type="text" value="1:N" disabled />
+            {{/when}}
+            {{#when many '==' 3}}
+              <input class="form-control" type="text" value="N:N" disabled />
+            {{/when}}
+            <input type="hidden" name="relations[{{@index}}][many]" value="{{many}}" />
+          {{else}}
+            <select
+              class="form-control relation-many"
+              name="relations[{{@index}}][many]"
+            >
+              {{#when many '==' 0}}
+                <option value="0" selected>1:0</option>
+              {{else}}
+                <option value="0">1:0</option>
+              {{/when}}
+              {{#when many '==' 1}}
+                <option value="1" selected>1:1</option>
+              {{else}}
+                <option value="1">1:1</option>
+              {{/when}}
+              {{#when many '==' 2}}
+                <option value="2" selected>1:N</option>
+              {{else}}
+                <option value="2">1:N</option>
+              {{/when}}
+              {{#when many '==' 3}}
+                <option value="3" selected>N:N</option>
+              {{else}}
+                <option value="3">N:N</option>
+              {{/when}}
+            </select>
+          {{/if}}
+        </td>
+        <td><i class="fas fa-arrow-right text-muted"></i></td>
+        <td>
+          {{#if disable}}
+            <input
+              class="form-control"
+              disabled="disabled"
+              type="text"
+              value="{{name}}"
+            />
+            <input type="hidden" name="relations[{{@index}}][name]" value="{{name}}" />
+          {{else}}
+            <input
+              class="form-control relation-name"
+              name="relations[{{@index}}][name]"
+              placeholder="{{_ 'Enter Schema Keyword'}}"
+              type="text"
+              value="{{name}}"
+            />
+          {{/if}}
+        </td>
+        <td>
+          {{#if disable}}
+            <input type="hidden" name="relations[{{@index}}][disable]" value="1" />
+            <i class="fas fa-lock"></i>
+          {{else}}
+            <a
+              class="text-danger"
+              data-do="schema-relation-remove"
+              data-on="click"
+              href="javascript:void(0)"
+            >
+              <i class="fas fa-times"></i>
+            </a>
+          {{/if}}
+        </td>
+      </tr>
+    {{/each}}
+  </tbody>
+</table>
+<button
+  class="btn btn-block btn-outline-secondary mt-3"
+  data-do="schema-relation-add"
+  data-on="click"
+  type="button"
+>
+  <i class="fas fa-plus"></i>
+  {{_ 'Add Relation'}}
+</button>

@@ -217,18 +217,4 @@
 
     }, timeout);
   });
-
-  $.extend({
-    notify: function(message, type, timeout) {
-      if(type === 'danger') {
-        type = 'error';
-      }
-
-      var toast = toastr[type](message, type[0].toUpperCase() + type.substr(1), {
-        timeOut: timeout
-      });
-
-      return toast;
-    }
-  });
 })();

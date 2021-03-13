@@ -1,36 +1,43 @@
-/* Mobile Form
+/* Component - Mobile Form
 ------------------------------*/
 
-.mobile-form .form-group {
+.form-mobile .form-group {
   border-bottom: 1px solid #D3D3D3;
   display: flex;
   margin-top: 10px;
   padding: 0 5px;
 }
 
-.mobile-form .form-group.no-flex {
+.form-mobile .form-group.no-flex {
   border-width: 0;
   display: block;
 }
 
-.mobile-form .row {
+.form-mobile .row {
   padding: 0 5px;
 }
 
-.mobile-form textarea:focus, .mobile-form input:focus, .mobile-form select:focus {
+.form-mobile .row .form-group {
+  overflow: hidden;
+  padding: 0;
+}
+
+.form-mobile textarea:focus,
+.form-mobile input:focus,
+.form-mobile select:focus {
   border-color: inherit;
   box-shadow: none;
 }
 
-.mobile-form select {
+.form-mobile select {
   direction: rtl;
 }
 
-.mobile-form select option {
+.form-mobile select option {
   direction: ltr;
 }
 
-.mobile-form .control-label {
+.form-mobile .control-label {
   color: #717171;
   font-weight: 600;
   margin-bottom: 0;
@@ -39,57 +46,63 @@
   white-space: nowrap;
 }
 
-.mobile-form .form-field {
+.form-mobile .form-field {
   flex: 1;
 }
 
-.mobile-form .form-control {
+.form-mobile .form-control {
   background: #FFFFFF;
   border-radius: 0;
   border-width: 0;
   text-align: right;
 }
 
-.mobile-form .form-group.no-flex .form-control {
+.form-mobile .form-group.no-flex .form-control {
   border-width: 1px;
   text-align: left;
 }
 
-.mobile-form .input-group-text {
+.form-mobile.setup-form .form-group.no-flex .form-control {
+  border-width: 0;
+  text-align: right;
+}
+
+.form-mobile .input-group-text {
   border-radius: 0;
 }
 
-.mobile-form .input-group-text.transparent {
+.form-mobile .input-group-text.transparent {
   background-color: transparent;
   border-width: 0;
 }
 
-.mobile-form .md-editor, .mobile-form .md-toolbar {
+.form-mobile .md-editor,
+.form-mobile .md-toolbar {
   border-left-width: 0;
   border-radius: 0;
   border-right-width: 0;
 }
 
-.mobile-form .file-field {
+.form-mobile .file-field {
   border: 0;
 }
 
-.mobile-form .file-field thead {
+.form-mobile .file-field thead {
   display: none;
 }
 
-.mobile-form .file-field .file-field-name {
+.form-mobile .file-field .file-field-name {
   max-width: 30ch;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
-.mobile-form .file-field input.form-control {
+.form-mobile .file-field input.form-control {
   direction: ltr;
   text-align: left;
 }
 
-.mobile-form .form-body {
+.form-mobile .form-body {
   background-color: #FFFFFF;
   bottom: 50px;
   left: 0;
@@ -99,7 +112,7 @@
   right: 0;
 }
 
-.mobile-form .form-foot {
+.form-mobile .form-foot {
   background-color: #FFFFFF;
   bottom: 0;
   left: 0;
@@ -108,91 +121,102 @@
   right: 0;
 }
 
-.mobile-form .help-text {
+.form-mobile .help-text {
   display: block;
   margin-top: -1rem;
   padding-left: 5px;
   padding-right: 5px;
 }
 
-.mobile-form .tag-field {
+.form-mobile .tag-field {
   border: 0;
   box-shadow: none;
 }
 
-.mobile-form .tag-field .tag {
+.form-mobile .tag-field .tag {
+  background-color: #E1E1E8;
   border-radius: 0;
 }
 
-.mobile-form .tag-field .tag input[type="text"] {
+.form-mobile .tag-field .tag input[type="text"] {
   color: #717171;
 }
 
-.mobile-form .tag-field .tag input[type="text"]::-webkit-input-placeholder {
+.form-mobile .tag-field .tag input[type="text"]::-webkit-input-placeholder {
   color: #919191;
 }
 
-.mobile-form .tag-field .tag input[type="text"]::-moz-placeholder {
+.form-mobile .tag-field .tag input[type="text"]::-moz-placeholder {
   color: #919191;
 }
 
-.mobile-form .tag-field .tag input[type="text"]:-ms-input-placeholder {
+.form-mobile .tag-field .tag input[type="text"]:-ms-input-placeholder {
   color: #919191;
 }
 
-.mobile-form .tag-field .tag input[type="text"]input:-moz-placeholder {
+.form-mobile .tag-field .tag input[type="text"]input:-moz-placeholder {
   color: #919191;
 }
 
-.mobile-form .tag-field .tag .remove {
+.form-mobile .tag-field .tag .remove {
   color: #3B3A53;
 }
 
-.mobile-form .select2-container {
+.form-mobile .switch.switch-6 input:checked+span::before {
+  background-color: #3B86FF;
+}
+
+.form-mobile .select2-container {
   margin-bottom: 2px;
   margin-top: 3px;
   text-align: right;
   width: 100% !important;
 }
 
-.mobile-form .select2-container--default .select2-selection--single,
-.mobile-form .select2-container--default .select2-selection--multiple {
+.form-mobile .select2-container--default .select2-selection--single, .form-mobile .select2-container--default .select2-selection--multiple {
   border-width: 0 !important;
 }
 
-.mobile-form .select-tree-field {
+.form-mobile .select-tree-field {
   border-bottom: 1px solid #D3D3D3;
   margin: 20px 0 10px;
 }
 
-.mobile-form .select-tree-field .select-tree-display {
+.form-mobile .select-tree-field .select-tree-display {
   padding: 0;
 }
 
-.mobile-form .select-tree-field .select-tree-display-label {
+.form-mobile .select-tree-field .select-tree-display-label {
   align-items: flex-start;
   display: flex;
   flex-wrap: nowrap;
   justify-content: flex-start;
 }
 
-.mobile-form .select-tree-field .select-tree-display-label span {
+.form-mobile .select-tree-field .select-tree-display-label span {
   flex: 1;
 }
 
-.mobile-form .select-tree-field .select-tree-display-label .fa-chevron-down,
-.mobile-form .select-tree-field .select-tree-display-label .fa-times {
+.form-mobile .select-tree-field .select-tree-display-label .fa-chevron-down,
+.form-mobile .select-tree-field .select-tree-display-label .fa-times {
   margin-top: 4px;
 }
 
-/* Tab Form
-------------------------------*/
-
-.tab-form .form-body {
-  background-color: #F2F2F2;
+.form-mobile .textlist-field .field-row {
+  border-bottom: 1px solid #D3D3D3;
 }
 
-.tab-form .form-body .main-fields {
-  background-color: #FFFFFF;
-  padding: 1px 0;
+.form-mobile .textlist-field .field-row .remove {
+  background-color: transparent;
+  border: 0;
+  color: #999999 !important;
+  font-size: 12px;
+}
+
+.form-mobile .textlist-field .field-row .form-control {
+  border-width: 0;
+}
+
+.form-mobile .textlist-field .field-row .remove:hover {
+  text-decoration: none;
 }

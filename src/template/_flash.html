@@ -1,0 +1,17 @@
+{{#if page.flash}}
+  <div id="toast-container" class="toast-bottom-left" data-do="notify" data-timeout="10000">
+    <div class="toast toast-{{page.flash.type}}" aria-live="polite">
+      <div class="toast-title">{{capital page.flash.type}}</div>
+      <div class="toast-message">
+        {{page.flash.message}}
+        {{#if page.flash.list}}
+          <ul>
+            {{#each page.flash.list}}
+              <li>{{this}}</li>
+            {{/each}}
+          </ul>
+        {{/if}}
+      </div>
+    </div>
+  </div>
+{{/if}}

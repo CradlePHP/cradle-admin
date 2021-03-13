@@ -1,0 +1,185 @@
+<form
+  {{#when mode '===' 'create'}}
+    action="/admin/spa/system/schema/create"
+  {{else}}
+    action="/admin/spa/system/schema/update/{{item.name}}"
+  {{/when}}
+  autocomplete="off"
+  class="schema-form"
+  data-do="schema-form"
+  data-on="submit"
+  data-after="reload"
+  data-name="{{item.name}}"
+  method="post"
+>
+  <!-- START: Head -->
+  <header class="view-head">
+    <button
+      class="sidebar-hide"
+      data-do="panel-mobile-back"
+      data-on="click"
+      type="button"
+    >
+      <i class="fas fa-chevron-left"></i>
+    </button>
+    <h6 class="view-title">
+      {{#if item.icon.length}}
+        <i class="{{item.icon}} d-inline-block mr-2"></i>
+      {{/if}}
+      {{#when mode '===' 'create'}}
+        {{_ 'Add Schema'}}
+      {{else}}
+        {{_ 'Update %s Schema' item.name}}
+      {{/when}}
+    </h6>
+  </header>
+  <!-- END: Head -->
+  <!-- START: Body -->
+  <section class="view-body no-scroll with-foot-2 schema-detail">
+    <!-- START: Tabs -->
+    <ul class="nav nav-tabs" role="tablist">
+      <li class="nav-item">
+        <a
+          class="nav-link active"
+          data-toggle="tab"
+          href="#schema-form-content"
+          role="tab"
+        >
+          {{_ 'Content'}}
+        </a>
+      </li>
+      <li class="nav-item">
+        <a
+          class="nav-link"
+          data-toggle="tab"
+          href="#schema-form-fields"
+          role="tab"
+        >
+          {{_ 'Fields'}}
+        </a>
+      </li>
+      <li class="nav-item">
+        <a
+          class="nav-link"
+          data-toggle="tab"
+          href="#schema-form-relations"
+          role="tab"
+        >
+          {{_ 'Relations'}}
+        </a>
+      </li>
+    </ul>
+    <!-- END: Tabs -->
+    <!-- START: Panes -->
+    <div class="tab-content m-2">
+      <!-- START: Content Pane -->
+      <div
+        class="tab-pane fade active show"
+        id="schema-form-content"
+        role="tabpanel"
+      >
+        {{> form_content}}
+      </div>
+      <!-- END: Content Pane -->
+      <!-- START: Fields Pane -->
+      <div
+        class="tab-pane fade"
+        id="schema-form-fields"
+        role="tabpanel"
+      >
+        {{> form_fields}}
+      </div>
+      <!-- END: Fields Pane -->
+      <!-- START: Relations Pane -->
+      <div
+        class="tab-pane fade"
+        id="schema-form-relations"
+        role="tabpanel"
+      >
+        {{> form_relations}}
+      </div>
+      <!-- END: Relations Pane -->
+    </div>
+    <!-- END: Panes -->
+  </section>
+  <!-- END: Body -->
+  <!-- START: Foot -->
+  <footer class="view-foot">
+    <button class="btn btn-primary btn-block">
+      <i class="fas fa-check"></i> {{_ 'Publish'}}
+    </button>
+
+    <div class="row mt-1">
+      <div class="col">
+        <button
+          class="btn btn-outline-secondary btn-block text-small"
+          data-do="panel-mobile-forward"
+          data-on="click"
+          data-template="/admin/spa/system/schema/create/{{item.name}}"
+          type="button"
+        >
+          <i class="fas fa-copy"></i> {{_ 'Copy'}}
+        </button>
+      </div>
+
+      <div class="col">
+        <button
+          class="btn btn-outline-danger btn-block text-small"
+          data-do="panel-mobile-forward"
+          data-on="click"
+          data-template="/admin/spa/system/schema/remove/{{item.name}}"
+          type="button"
+        >
+          <i class="fas fa-times"></i> {{_ 'Remove'}}
+        </button>
+      </div>
+    </div>
+  </footer>
+  <!-- END: Foot -->
+</form>
+
+<script id="relation-row-template" type="text/x-template">
+  <tr data-index="{INDEX}">
+    <td>
+      <strong
+        class="relation-singular"
+        data-default="??"
+        data-do="copy-to-text"
+        data-trigger="input.schema-singular"
+      >
+        {SINGULAR}
+      </strong>
+    </td>
+    <td><i class="fas fa-arrow-right text-muted"></i></td>
+    <td>
+        <select
+          class="form-control relation-many"
+          name="relations[{INDEX}][many]"
+        >
+          <option value="0">1:0</option>
+          <option value="1">1:1</option>
+          <option value="2">1:N</option>
+          <option value="3">N:N</option>
+        </select>
+    </td>
+    <td><i class="fas fa-arrow-right text-muted"></i></td>
+    <td>
+      <input
+        class="form-control relation-name"
+        name="relations[{INDEX}][name]"
+        placeholder="{{_ 'Enter Schema Keyword'}}"
+        type="text"
+      />
+    </td>
+    <td>
+      <a
+        class="text-danger"
+        data-do="schema-relation-remove"
+        data-on="click"
+        href="javascript:void(0)"
+      >
+        <i class="fas fa-times"></i>
+      </a>
+    </td>
+  </tr>
+</script>

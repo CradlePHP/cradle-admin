@@ -1,8 +1,10 @@
 jQuery(function($) {
+  {{> script_fields}}
   {{> script_form}}
   {{> script_search}}
   {{> script_app}}
   {{> script_misc}}
+  {{> script_jquery}}
 
   /**
    * Initialize

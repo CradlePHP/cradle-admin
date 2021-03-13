@@ -1,0 +1,129 @@
+<div class="bg-white p-2">
+  <!-- START: Singular -->
+  <div class="form-group mt-3 mb-3">
+    <label class="control-label">{{_ 'Singular Name'}}</label>
+    <div class="form-field mb-1">
+      <input
+        class="form-control schema-singular"
+        name="singular"
+        placeholder="{{_ 'Enter the singular name'}}"
+        value="{{item.singular}}"
+        type="text"
+        required
+      />
+    </div>
+  </div>
+  <!-- END: Singular -->
+  <!-- START: Plural -->
+  <div class="form-group mb-3">
+    <label class="control-label">{{_ 'Plural Name'}}</label>
+    <div class="form-field mb-1">
+      <input
+        class="form-control schema-plural"
+        name="plural"
+        placeholder="{{_ 'Enter the plural name'}}"
+        value="{{item.plural}}"
+        type="text"
+        required
+      />
+    </div>
+  </div>
+  <!-- END: Plural -->
+  <!-- START: Name -->
+  <div class="form-group mb-3">
+    <label class="control-label">{{_ 'Keyword'}}</label>
+    <div class="form-field mb-1">
+      {{#if item.disable}}
+        <input
+          class="form-control"
+          disabled="disabled"
+          type="text"
+          value="{{item.name}}"
+        />
+        <input type="hidden" name="name" value="{{item.name}}" />
+      {{else}}
+        <input
+          class="form-control schema-name"
+          data-do="slugger"
+          data-source="input.schema-singular"
+          data-upper="0"
+          data-space="_"
+          name="name"
+          value="{{item.name}}"
+          placeholder="{{_ 'Enter a unique keyword'}}"
+          type="text"
+          required
+        />
+      {{/if}}
+    </div>
+  </div>
+  <!-- END: Name -->
+  <!-- START: Group -->
+  <div class="form-group mb-3">
+    <label class="control-label">{{_ 'Group'}}</label>
+    <div class="form-field mb-1">
+      <input
+        class="form-control schema-group"
+        name="group"
+        placeholder="{{_ 'eg. E-Commerce'}}"
+        value="{{item.group}}"
+        type="text"
+      />
+    </div>
+  </div>
+  <!-- END: Group -->
+  <!-- START: Icon -->
+  <div class="form-group mb-3">
+    <label class="control-label">{{_ 'Icon'}}</label>
+    <div class="form-field mb-1">
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <div class="input-group-text">
+            {{#if item.icon}}
+              <i class="{{item.icon}}"></i>
+            {{else}}
+              <i class="fas fa-question fa-fw"></i>
+            {{/if}}
+          </div>
+        </div>
+        <input
+          autocomplete="off"
+          class="form-control"
+          data-do="icon-field"
+          name="icon"
+          placeholder="fas fa-question"
+          type="text"
+          value="{{item.icon}}"
+        />
+      </div>
+    </div>
+  </div>
+  <!-- END: Icon -->
+  <!-- START: Detail -->
+  <div class="form-group mb-3">
+    <label class="control-label">{{_ 'Description'}}</label>
+    <div class="form-field mb-1">
+      <textarea
+        class="form-control schema-detail"
+        name="detail"
+        placeholder="{{_ 'What does this schema do?'}}"
+        rows="3"
+      >{{{item.detail}}}</textarea>
+    </div>
+  </div>
+  <!-- END: Detail -->
+  <!-- START: Suggestion -->
+  <div class="form-group mb-3">
+    <label class="control-label">{{_ 'Suggestion'}}</label>
+    <div class="form-field mb-1">
+      <input
+        class="form-control schema-suggestion {{#if errors.suggestion}}is-invalid{{/if}}"
+        name="suggestion"
+        value="{{item.suggestion}}"
+        placeholder="{\{keyword_field}} - {\{keyword_field}}"
+        type="text"
+      />
+    </div>
+  </div>
+  <!-- END: Suggestion -->
+</div>

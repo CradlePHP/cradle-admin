@@ -1,0 +1,59 @@
+/* 404 page
+-------------------------------- */
+
+.page-404 body {
+  background: #93CDDB !important;
+}
+
+.page-404 .page-404-wrapper {
+  margin: 100px auto 0;
+  width: 500px;
+}
+
+.page-404 .page-404-wrapper h5 {
+  color: #3A4350;
+  font-size: 45px;
+  font-weight: 600;
+}
+
+.page-404 .page-404-wrapper p {
+  color: #FFFFFF;
+  font-size: 25px;
+  font-weight: 300;
+  margin: 30px 0;
+}
+
+.page-404 .page-404-wrapper .message-404 span {
+  color: #FFFFFF;
+  font-size: 90px;
+}
+
+/* 500 page
+-------------------------------- */
+
+.page-500 body {
+  background: #93CDDB !important;
+}
+
+.page-500 .page-500-wrapper {
+  margin: 100px auto 0;
+  width: 500px;
+}
+
+.page-500 .page-500-wrapper h5 {
+  color: #3A4350;
+  font-size: 45px;
+  font-weight: 600;
+}
+
+.page-500 .page-500-wrapper p {
+  color: #FFFFFF;
+  font-size: 25px;
+  font-weight: 300;
+  margin: 30px 0;
+}
+
+.page-500 .page-500-wrapper .message-500 span {
+  color: #FFFFFF;
+  font-size: 90px;
+}

@@ -1,6 +1,21 @@
 {{> style_reset}}
+
 {{> style_twbs}}
-{{> style_theme}}
-{{> style_field}}
+
+{{> style_components}}
+
+{{> style_fields}}
+
 {{> style_form}}
+
+{{> style_search}}
+
 {{> style_layout}}
+
+{{> style_view}}
+
+{{> style_auth}}
+
+{{> style_error}}
+
+{{> style_theme}}

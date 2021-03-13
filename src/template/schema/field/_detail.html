@@ -1,0 +1,22 @@
+<div class="form-group form-group-detail">
+  <label class="control-label">{{_ 'Detail Format'}}</label>
+  <div>
+    <select
+      class="field-detail form-control"
+      data-do="field-format"
+      data-name="detail"
+      data-on="change"
+      name="detail[format]"
+    >
+      {{> field_options_format detail}}
+    </select>
+
+    {{#if detail.config.fieldset.length}}
+      <div class="fieldset-format mt-2">
+        {{#each detail.config.fieldset~}}
+          {{{this}}}
+        {{~/each~}}
+      </div>
+    {{/if}}
+  </div>
+</div>

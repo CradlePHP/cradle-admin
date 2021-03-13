@@ -1,6 +1,21 @@
 <!DOCTYPE html>
 <html lang="en" class="page-blank {{page.class}}" data-cdn="{{settings 'cdn'}}">
   <head>
+    {{#services 'analytics-main'}}
+      {{#if token}}
+        {{#when 'token' '!=' '<TOKEN>'}}
+          <!-- Global site tag (gtag.js) - Google Analytics (GA recommends inserting in this area) -->
+          <script async src="https://www.googletagmanager.com/gtag/js?id={{token}}"></script>
+          <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+
+            gtag('config', '{{token}}');
+          </script>
+        {{/when}}
+      {{/if}}
+    {{/services}}
     <meta charset="utf-8" />
     <title>{{page.title}}</title>
 
@@ -19,34 +34,16 @@
     <link href="{{settings 'cdn'}}/components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <link href="{{settings 'cdn'}}/components/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css" />
     <link href="{{settings 'cdn'}}/components/open-sans-fontface/open-sans.css" rel="stylesheet" type="text/css" />
-    <link href="{{settings 'cdn'}}/styles/www.css" rel="stylesheet" type="text/css" />
+    <link href="{{settings 'cdn'}}/styles/app.css" rel="stylesheet" type="text/css" />
 
     <script src="{{settings 'cdn'}}/components/jquery/dist/jquery.min.js" type="text/javascript"></script>
     <script src="{{settings 'cdn'}}/components/bootstrap/dist/js/bootstrap.bundle.min.js" type="text/javascript"></script>
     <script src="{{settings 'cdn'}}/components/yarn-acquire/acquire.js" type="text/javascript"></script>
-    <script src="{{settings 'cdn'}}/scripts/www.js" type="text/javascript"></script>
+    <script src="{{settings 'cdn'}}/scripts/app.js" type="text/javascript"></script>
   </head>
 
   <body>
-    <div class="flex-frame">
-      {{{content}}}
-    </div>
-    {{#if page.flash}}
-      <div id="toast-container" class="toast-bottom-right" data-do="notify" data-timeout="10000">
-        <div class="toast toast-{{page.flash.type}}" aria-live="polite">
-          <div class="toast-title">{{capital page.flash.type}}</div>
-          <div class="toast-message">
-            {{page.flash.message}}
-            {{#if page.flash.list}}
-              <ul>
-                {{#each page.flash.list}}
-                  <li>{{this}}</li>
-                {{/each}}
-              </ul>
-            {{/if}}
-          </div>
-        </div>
-      </div>
-    {{/if}}
+    {{{content}}}
+    {{> flash}}
   </body>
 </html>

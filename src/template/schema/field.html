@@ -1,0 +1,133 @@
+<form
+  method="post"
+  action="/admin/spa/system/schema/field/save"
+  data-after="back"
+  data-do="field-form"
+  {{#when mode '===' 'update'}}
+    data-name="{{name}}"
+  {{/when}}
+  data-on="submit"
+  data-response="html"
+>
+  <!-- START: Head -->
+  <header class="view-head">
+    <button
+      class="sidebar-hide"
+      data-do="panel-mobile-back"
+      data-on="click"
+      type="button"
+    >
+      <i class="fas fa-chevron-left"></i>
+    </button>
+    <h6 class="view-title">
+      {{#when mode '===' 'create'}}
+        {{_ 'Add Field'}}
+      {{/when}}
+      {{#when mode '===' 'copy'}}
+        {{_ 'Copy Field'}}
+      {{/when}}
+      {{#when mode '===' 'update'}}
+        {{_ 'Update Field'}}
+      {{/when}}
+    </h6>
+  </header>
+  <!-- END: Head -->
+  <!-- START: Body -->
+  <section class="view-body with-foot-1 schema-detail bg-white">
+    <div class="p-2">
+      <div class="form-group form-group-label">
+        <label class="control-label">{{_ 'Label'}}</label>
+        <div>
+          <input
+            class="field-label form-control required"
+            name="label"
+            placeholder="Field Title"
+            type="text"
+            value="{{label}}"
+          />
+        </div>
+      </div>
+      <div class="form-group form-group-name">
+        <label class="control-label">{{_ 'Keyword'}}</label>
+        <div>
+          <input
+            class="field-name form-control required"
+            data-do="slugger"
+            data-source="input[name='label']"
+            data-upper="0"
+            data-space="_"
+            name="name"
+            placeholder="{{_ 'Enter a unique keyword'}}"
+            type="text"
+            value="{{name}}"
+          />
+        </div>
+      </div>
+      {{> field_type}}
+      {{> field_validation}}
+      {{> field_list}}
+      {{> field_detail}}
+      <div class="form-group form-group-default">
+        <label class="control-label">{{_ 'Default'}}</label>
+        <div>
+          <input
+            class="field-default form-control"
+            placeholder="{{_ 'Default Value'}}"
+            name="default"
+            type="text"
+            value="{{default}}"
+          />
+        </div>
+      </div>
+      <div class="form-group form-group-indexes">
+        <div>
+          <label class="checkbox checkbox-2">
+            <input
+              class="field-searchable"
+              name="searchable"
+              type="checkbox"
+              value="1"
+              {{#if searchable}} checked{{/if}}
+            />
+            <span>{{_ 'Searchable'}}</span>
+          </label>
+          <br />
+          <label class="checkbox checkbox-2">
+            <input
+              class="field-filterable"
+              name="filterable"
+              type="checkbox"
+              value="1"
+              {{#if filterable}} checked{{/if}}
+            />
+            <span>{{_ 'Filterable'}}</span>
+          </label>
+          <br />
+          <label class="checkbox checkbox-2">
+            <input
+              class="field-sortable"
+              name="sortable"
+              type="checkbox"
+              value="1"
+              {{#if sortable}} checked{{/if}}
+            />
+            <span>{{_ 'Sortable'}}</span>
+          </label>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- END: Body -->
+  <!-- START: Foot -->
+  <footer class="view-foot">
+    <button
+      class="btn btn-secondary btn-block"
+      data-do="panel-mobile-bqck"
+      data-on="click"
+    >
+      <i class="fas fa-check"></i> {{_ 'Save'}}
+    </button>
+  </footer>
+  <!-- END: Foot -->
+</form>
+{{> field_templates}}

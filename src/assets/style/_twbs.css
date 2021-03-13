@@ -14,63 +14,25 @@
   border-radius: 0;
 }
 
+.btn-large {
+  padding: 10px 15px;
+}
+
 .btn-block {
   display: block;
   width: 100%;
 }
 
+.btn-info,
 .btn-success,
 .btn-warning,
 .btn-danger {
   color: #FFFFFF !important;
 }
 
-.btn-primary,
-.btn-primary:link,
-.btn-primary:hover,
-.btn-primary:active,
-.btn-primary:visited {
-  color: #FFFFFF;
-}
-
-.btn-outline-primary,
-.btn-outline-primary:link,
-.btn-outline-primary:hover,
-.btn-outline-primary:active,
-.btn-outline-primary:visited {
-  background-color: #FFFFFF;
-}
-
-.btn-outline-primary.active,
-.btn-outline-primary.active:link,
-.btn-outline-primary.active:hover,
-.btn-outline-primary.active:active,
-.btn-outline-primary.active:visited {
-  color: #FFFFFF;
-}
-
-.btn-secondary,
-.btn-secondary:link,
-.btn-secondary:hover,
-.btn-secondary:active,
-.btn-secondary:visited  {
-  color: #FFFFFF;
-}
-
-.btn-outline-secondary,
-.btn-outline-secondary:link,
-.btn-outline-secondary:hover,
-.btn-outline-secondary:active,
-.btn-outline-secondary:visited {
-  background-color: #FFFFFF;
-}
-
-.btn-outline-secondary.active,
-.btn-outline-secondary.active:link,
-.btn-outline-secondary.active:hover,
-.btn-outline-secondary.active:active,
-.btn-outline-secondary.active:visited {
-  color: #FFFFFF;
+.card {
+  border-radius: 0;
+  padding: 50px 30px;
 }
 
 .h-auto {
@@ -87,6 +49,11 @@
 
 .w-100 {
   width: 100% !important;
+}
+
+.form-control {
+  border-radius: 0;
+  height: auto;
 }
 
 .has-error {
@@ -110,29 +77,18 @@
   border-radius: 0 !important;
 }
 
-.progress-label-left {
-  color: #343434;
-  font-size: .75rem;
-  text-transform: uppercase;
-}
-
-.progress-label-right {
-  color: #343434;
-  float: right;
-  font-size: .75rem;
-  text-transform: uppercase;
-}
-
-.nav-pills .nav-link {
+.modal-content {
   border-radius: 0;
 }
 
-.table input {
-  padding: 0;
+.modal-footer {
+  border-top: 0;
 }
 
-.table-striped tbody tr:nth-of-type(even) td {
-  background-color: #FFFFFF;
+.nav-tabs .nav-link,
+.nav-pills .nav-link {
+  border-radius: 0;
+  padding: 15px 20px;
 }
 
 .page-item:first-child .page-link {
@@ -143,4 +99,22 @@
 .page-item:last-child .page-link {
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
+}
+
+.table input {
+  padding: 0;
+}
+
+.table td,
+.table th {
+  background-color: #FFFFFF;
+  padding: 20px 10px;
+}
+
+.table thead th {
+  background-color: #FAFAFA;
+}
+
+.text-gray {
+  color: #AAAAAA;
 }
