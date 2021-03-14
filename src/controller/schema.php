@@ -7,9 +7,9 @@
  */
 
 use Cradle\Package\System\Schema;
-use Cradle\Package\System\Fieldset\Field\FieldHandler;
-use Cradle\Package\System\Fieldset\Format\FormatHandler;
-use Cradle\Package\System\Fieldset\Validation\ValidationHandler;
+use Cradle\Package\System\Field\FieldRegistry;
+use Cradle\Package\System\Format\FormatterRegistry;
+use Cradle\Package\System\Validation\ValidatorRegistry;
 
 /* Create Routes
 -------------------------------- */
@@ -156,9 +156,9 @@ $this('http')->post('/admin/spa/system/schema/field', function($request, $respon
   }
 
   $fieldsets = [
-    'field' => FieldHandler::getFields(),
-    'format' => FormatHandler::getFormatters(),
-    'validation' => ValidationHandler::getValidators()
+    'field' => FieldRegistry::getFields(),
+    'format' => FormatterRegistry::getFormatters(),
+    'validation' => ValidatorRegistry::getValidators()
   ];
 
   //for each fieldset
@@ -187,7 +187,7 @@ $this('http')->post('/admin/spa/system/schema/field', function($request, $respon
   $type = $request->getStage('field', 'type');
   if ($type && $type !== 'none') {
     //make a field given the type
-    $field = FieldHandler::makeField($type);
+    $field = FieldRegistry::makeField($type);
     if ($field) {
       //set the field config
       $config = $field::toConfigArray();
@@ -215,7 +215,7 @@ $this('http')->post('/admin/spa/system/schema/field', function($request, $respon
   $format = $request->getStage('list', 'format');
   if ($format && $format !== 'none') {
     //make a formatter given the format
-    $formatter = FormatHandler::makeFormatter($format);
+    $formatter = FormatterRegistry::makeFormatter($format);
     if ($formatter) {
       //set the list config
       $config = $formatter::toConfigArray();
@@ -243,7 +243,7 @@ $this('http')->post('/admin/spa/system/schema/field', function($request, $respon
   $format = $request->getStage('detail', 'format');
   if ($format && $format !== 'none') {
     //make a formatter given the format
-    $formatter = FormatHandler::makeFormatter($format);
+    $formatter = FormatterRegistry::makeFormatter($format);
     if ($formatter) {
       //set the detail config
       $config = $formatter::toConfigArray();
@@ -272,7 +272,7 @@ $this('http')->post('/admin/spa/system/schema/field', function($request, $respon
     //for each validation
     foreach ($request->getStage('validation') as $i => $validation) {
       //make a validator given the validation
-      $validator = ValidationHandler::makeValidator($validation['method']);
+      $validator = ValidatorRegistry::makeValidator($validation['method']);
       if ($validator) {
         //set the validation config
         $config = $validator::toConfigArray();
