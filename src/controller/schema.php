@@ -11,6 +11,94 @@ use Cradle\Package\System\Field\FieldRegistry;
 use Cradle\Package\System\Format\FormatterRegistry;
 use Cradle\Package\System\Validation\ValidatorRegistry;
 
+/* Search/Bulk Routes
+-------------------------------- */
+
+/**
+ * Render schema search page
+ *
+ * @param Request $request
+ * @param Response $response
+ */
+$this('http')->get('/admin/system/schema/search', function ($request, $response) {
+  //----------------------------//
+  // 1. Prepare Data
+  if (!$request->hasStage()) {
+    $request->setStage('filter', 'active', 1);
+  }
+
+  //trigger job
+  $this('event')->emit('system-schema-search', $request, $response);
+
+  //if we only want the raw data
+  if ($request->getStage('render') === 'false') {
+    return;
+  }
+
+  //form the data
+  $data = array_merge(
+    //we need to case for things like
+    //filter and sort on the template
+    $request->getStage(),
+    //this is from the search event
+    $response->getResults()
+  );
+
+  //organize by groups
+  $data['groups'] = [];
+  if (isset($data['rows']) && is_array($data['rows'])) {
+    foreach ($data['rows'] as $row) {
+      $group = 'Custom';
+      if (isset($row['group']) && trim($row['group'])) {
+      $group = $row['group'];
+      }
+
+      $data['groups'][$group][] = $row;
+    }
+  }
+
+  ksort($data['groups']);
+
+  //----------------------------//
+  // 2. Render Template
+  $class = 'page-admin-system-schema-search page-admin';
+  $data['title'] = $this('lang')->translate('Schemas');
+
+  $template = dirname(__DIR__) . '/template/schema';
+  if (is_dir($response->getPage('template_root'))) {
+    $template = $response->getPage('template_root');
+  }
+
+  $fieldScript = dirname(__DIR__) . '/template/field/assets/_script.js';
+
+  $body = $this('handlebars')
+    ->setTemplateFolder($template)
+    ->registerPartialFromFolder('asset_style', 'css')
+    ->registerPartialFromFolder('asset_script', 'js')
+    ->registerPartialFromFolder('asset_script_form', 'js')
+    ->registerPartialFromFolder('asset_script_relation', 'js')
+    ->registerPartialFromFolder('search_head')
+    ->registerPartialFromFolder('search_links')
+    ->registerPartialFromFolder('search_row')
+    ->registerPartialFromFolder('search_tabs')
+    ->registerPartialFromFile('field_script', $fieldScript)
+    ->renderFromFolder('search', $data);
+
+  //if we only want the body
+  if ($request->getStage('render') === 'body') {
+    return;
+  }
+
+  //set content
+  $response
+    ->setPage('title', $data['title'])
+    ->setPage('class', $class)
+    ->setContent($body);
+
+  //render page
+  $this('admin')->render($request, $response);
+});
+
 /* Create Routes
 -------------------------------- */
 
@@ -25,6 +113,13 @@ $this('http')->get('/admin/spa/system/schema/create', function($request, $respon
   // 1. Prepare Data
   $data['mode'] = 'create';
   $data['item'] = $request->getStage();
+  $data['uuid'] = uniqid();
+
+  if (isset($data['item']['fields']) && is_array($data['item']['fields'])) {
+    foreach ($data['item']['fields'] as $i => $field) {
+      $data['item']['fields'][$i]['root'] = $data['item']['name'];
+    }
+  }
 
   //----------------------------//
   // 2. Render Template
@@ -38,7 +133,7 @@ $this('http')->get('/admin/spa/system/schema/create', function($request, $respon
     ->registerPartialFromFolder('form_content')
     ->registerPartialFromFolder('form_fields')
     ->registerPartialFromFolder('form_relations')
-    ->registerPartialFromFolder('field_row')
+    ->registerPartialFromFolder('form_row')
     ->renderFromFolder('form', $data);
 
   //set content
@@ -139,168 +234,9 @@ $this('http')->post('/admin/spa/system/schema/create', function ($request, $resp
  * @param *Response $response
  */
 $this('http')->post('/admin/spa/system/schema/field', function($request, $response) {
-  //----------------------------//
-  // 1. Prepare Data
-  //if there's a copy
-  if ($request->getStage('copy')) {
-    //set mode to copy
-    $request->setStage('mode', 'copy');
-  //if there's stage data
-  } else if ($request->hasStage()) {
-    //set mode to update
-    $request->setStage('mode', 'update');
-  //when in doubt
-  } else {
-    //set mode to create
-    $request->setStage('mode', 'create');
-  }
-
-  $fieldsets = [
-    'field' => FieldRegistry::getFields(),
-    'format' => FormatterRegistry::getFormatters(),
-    'validation' => ValidatorRegistry::getValidators()
-  ];
-
-  //for each fieldset
-  foreach ($fieldsets as $name => $fieldset) {
-    //for each registered fieldset
-    foreach($fieldset as $option) {
-      //set it as an option in the $name dropdown
-      $config = $option::toConfigArray();
-      $request->setStage(
-        'config', $name, 'options', $option::TYPE, $option::NAME, $config
-      );
-
-      //foreach additional fieldset configuration
-      foreach ($option::getConfigFieldset() as $i => $field) {
-        //add the fieldset configuration
-        $id = sprintf('fieldset-%s-%s', $name, $option::NAME);
-        $template = $field->render();
-        $request->setStage(
-          'config', $name, 'fieldsets', $id, 'templates', $i, $template
-        );
-      }
-    }
-  }
-
-  //generate config and fieldset for field type
-  $type = $request->getStage('field', 'type');
-  if ($type && $type !== 'none') {
-    //make a field given the type
-    $field = FieldRegistry::makeField($type);
-    if ($field) {
-      //set the field config
-      $config = $field::toConfigArray();
-      $request->setStage('field', 'config', $config);
-      //foreach additional fieldset configuration
-      foreach ($field::getConfigFieldset() as $i => $field) {
-        //fix the field name
-        $name = str_replace('{NAME}', 'field', $field->getName());
-        //set the name
-        $field->setName($name);
-        //find the value path
-        $path = str_replace('][', '.', $name);
-        $path = str_replace(['[', ']'], '', $path);
-        //should look like field,parameters,0
-        $path = explode('.', $path);
-        //render the template
-        $template = $field->render($request->getStage(...$path));
-        //add the fieldset configuration
-        $request->setStage('field', 'config', 'fieldset', $i, $template);
-      }
-    }
-  }
-
-  //generate config and fieldset for list format
-  $format = $request->getStage('list', 'format');
-  if ($format && $format !== 'none') {
-    //make a formatter given the format
-    $formatter = FormatterRegistry::makeFormatter($format);
-    if ($formatter) {
-      //set the list config
-      $config = $formatter::toConfigArray();
-      $request->setStage('list', 'config', $config);
-      //foreach additional fieldset configuration
-      foreach ($formatter::getConfigFieldset() as $i => $field) {
-        //fix the format name
-        $name = str_replace('{NAME}', 'list', $field->getName());
-        //set the name
-        $field->setName($name);
-        //find the value path
-        $path = str_replace('][', '.', $name);
-        $path = str_replace(['[', ']'], '', $path);
-        //should look like list,parameters,0
-        $path = explode('.', $path);
-        //render the template
-        $template = $field->render($request->getStage(...$path));
-        //add the fieldset configuration
-        $request->setStage('list', 'config', 'fieldset', $i, $template);
-      }
-    }
-  }
-
-  //generate config and fieldset for detail format
-  $format = $request->getStage('detail', 'format');
-  if ($format && $format !== 'none') {
-    //make a formatter given the format
-    $formatter = FormatterRegistry::makeFormatter($format);
-    if ($formatter) {
-      //set the detail config
-      $config = $formatter::toConfigArray();
-      $request->setStage('detail', 'config', $config);
-      //foreach additional fieldset configuration
-      foreach ($formatter::getConfigFieldset() as $i => $field) {
-        //fix the format name
-        $name = str_replace('{NAME}', 'detail', $field->getName());
-        //set the name
-        $field->setName($name);
-        //find the value path
-        $path = str_replace('][', '.', $name);
-        $path = str_replace(['[', ']'], '', $path);
-        //should look like list,parameters,0
-        $path = explode('.', $path);
-        //render the template
-        $template = $field->render($request->getStage(...$path));
-        //add the fieldset configuration
-        $request->setStage('detail', 'config', 'fieldset', $i, $template);
-      }
-    }
-  }
-
-  //if there is validation
-  if (is_array($request->getStage('validation'))) {
-    //for each validation
-    foreach ($request->getStage('validation') as $i => $validation) {
-      //make a validator given the validation
-      $validator = ValidatorRegistry::makeValidator($validation['method']);
-      if ($validator) {
-        //set the validation config
-        $config = $validator::toConfigArray();
-        $request->setStage('validation', $i, 'config', $config);
-        //foreach additional fieldset configuration
-        foreach ($validator::getConfigFieldset() as $j => $field) {
-          //fix the validation name
-          $name = sprintf('validation[%s]', $i);
-          $name = str_replace('{NAME}', $name, $field->getName());
-          //set the name
-          $field->setName($name);
-          //find the value path
-          $path = str_replace('][', '.', $name);
-          $path = str_replace(['[', ']'], '', $path);
-          //should look like list,parameters,0
-          $path = explode('.', $path);
-          //render the template
-          $template = $field->render($request->getStage(...$path));
-          //add the fieldset configuration
-          $request->setStage(
-            'validation', $i, 'config', 'fieldset', $j, $template
-          );
-        }
-      }
-    }
-  }
-
-  $data = $request->getStage();
+  $request->setStage('render', 'false');
+  $this('http')->routeTo('post', '/admin/spa/system/field', $request, $response);
+  $data = $response->getResults();
 
   //----------------------------//
   // 2. Render Template
@@ -309,16 +245,42 @@ $this('http')->post('/admin/spa/system/schema/field', function($request, $respon
     $template = $response->getPage('template_root');
   }
 
+  $field = dirname(__DIR__) . '/template/field';
+
   $body = $this('handlebars')
     ->setTemplateFolder($template)
-    ->registerPartialFromFolder('field_detail')
-    ->registerPartialFromFolder('field_list')
-    ->registerPartialFromFolder('field_type')
-    ->registerPartialFromFolder('field_templates')
-    ->registerPartialFromFolder('field_validation')
-    ->registerPartialFromFolder('field_options_format')
-    ->registerPartialFromFolder('field_options_type')
-    ->registerPartialFromFolder('field_options_validation')
+    ->registerPartialFromFile(
+      'form_detail',
+      sprintf('%s/form/_detail.html', $field)
+    )
+    ->registerPartialFromFile(
+      'form_list',
+      sprintf('%s/form/_list.html', $field)
+    )
+    ->registerPartialFromFile(
+      'form_type',
+      sprintf('%s/form/_type.html', $field)
+    )
+    ->registerPartialFromFile(
+      'form_templates',
+      sprintf('%s/form/_templates.html', $field)
+    )
+    ->registerPartialFromFile(
+      'form_validation',
+      sprintf('%s/form/_validation.html', $field)
+    )
+    ->registerPartialFromFile(
+      'options_format',
+      sprintf('%s/options/_format.html', $field)
+    )
+    ->registerPartialFromFile(
+      'options_type',
+      sprintf('%s/options/_type.html', $field)
+    )
+    ->registerPartialFromFile(
+      'options_validation',
+      sprintf('%s/options/_validation.html', $field)
+    )
     ->renderFromFolder('field', $data);
 
   //set content
@@ -335,22 +297,18 @@ $this('http')->post('/admin/spa/system/schema/field/save', function($request, $r
   //----------------------------//
   // 1. Prepare Data
   $data = $request->getStage();
-
-  //----------------------------//
-  // 2. Process Data
-  $response->setResults($data);
   $data['this'] = $data;
 
   //----------------------------//
-  // 3. Render Template
-  $template = dirname(__DIR__) . '/template/schema';
+  // 2. Process Data
+  $template = dirname(__DIR__) . '/template/fieldset';
   if (is_dir($response->getPage('template_root'))) {
     $template = $response->getPage('template_root');
   }
 
   $body = $this('handlebars')
     ->setTemplateFolder($template)
-    ->renderFromFolder('field/_row', $data);
+    ->renderFromFolder('form/_row', $data);
 
   //set content
   $response->setContent($body);
@@ -815,87 +773,6 @@ $this('http')->post('/admin/spa/system/schema/restore/:name', function($request,
   );
 });
 
-/* Search/Bulk Routes
--------------------------------- */
-
-/**
- * Render schema search page
- *
- * @param Request $request
- * @param Response $response
- */
-$this('http')->get('/admin/system/schema/search', function ($request, $response) {
-  //----------------------------//
-  // 1. Prepare Data
-  if (!$request->hasStage()) {
-    $request->setStage('filter', 'active', 1);
-  }
-
-  //trigger job
-  $this('event')->emit('system-schema-search', $request, $response);
-
-  //if we only want the raw data
-  if ($request->getStage('render') === 'false') {
-    return;
-  }
-
-  //form the data
-  $data = array_merge(
-    //we need to case for things like
-    //filter and sort on the template
-    $request->getStage(),
-    //this is from the search event
-    $response->getResults()
-  );
-
-  //organize by groups
-  $data['groups'] = [];
-  if (isset($data['rows']) && is_array($data['rows'])) {
-    foreach ($data['rows'] as $row) {
-      $group = 'Custom';
-      if (isset($row['group']) && trim($row['group'])) {
-      $group = $row['group'];
-      }
-
-      $data['groups'][$group][] = $row;
-    }
-  }
-
-  ksort($data['groups']);
-
-  //----------------------------//
-  // 2. Render Template
-  $class = 'page-admin-system-schema-search page-admin';
-  $data['title'] = $this('lang')->translate('Schemas');
-
-  $template = dirname(__DIR__) . '/template/schema';
-  if (is_dir($response->getPage('template_root'))) {
-    $template = $response->getPage('template_root');
-  }
-
-  $body = $this('handlebars')
-    ->setTemplateFolder($template)
-    ->registerPartialFromFolder('asset_style', 'css')
-    ->registerPartialFromFolder('asset_script', 'js')
-    ->registerPartialFromFolder('asset_script_field', 'js')
-    ->registerPartialFromFolder('asset_script_form', 'js')
-    ->registerPartialFromFolder('asset_script_relation', 'js')
-    ->registerPartialFromFolder('search_head')
-    ->registerPartialFromFolder('search_links')
-    ->registerPartialFromFolder('search_row')
-    ->registerPartialFromFolder('search_tabs')
-    ->renderFromFolder('search', $data);
-
-  //set content
-  $response
-    ->setPage('title', $data['title'])
-    ->setPage('class', $class)
-    ->setContent($body);
-
-  //render page
-  $this('admin')->render($request, $response);
-});
-
 /* Update Routes
 -------------------------------- */
 
@@ -923,10 +800,12 @@ $this('http')->get('/admin/spa/system/schema/update/:name', function($request, $
 
   $data['mode'] = 'update';
   $data['item'] = $response->getResults();
+  $data['uuid'] = uniqid();
 
-  //if we only want the raw data
-  if ($request->getStage('render') === 'false') {
-    return;
+  if (isset($data['item']['fields']) && is_array($data['item']['fields'])) {
+    foreach ($data['item']['fields'] as $i => $field) {
+      $data['item']['fields'][$i]['root'] = $data['item']['name'];
+    }
   }
 
   //----------------------------//
@@ -941,7 +820,7 @@ $this('http')->get('/admin/spa/system/schema/update/:name', function($request, $
     ->registerPartialFromFolder('form_content')
     ->registerPartialFromFolder('form_fields')
     ->registerPartialFromFolder('form_relations')
-    ->registerPartialFromFolder('field_row')
+    ->registerPartialFromFolder('form_row')
     ->renderFromFolder('form', $data);
 
   //set content

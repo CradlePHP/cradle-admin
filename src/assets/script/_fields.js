@@ -81,11 +81,20 @@
             }
           }
 
+          var templateValue = value;
+          if (templateValue.indexOf('{\{') !== 0) {
+            templateValue = '{\{'+ templateValue +'}}';
+          }
+
           var row = Handlebars.compile(template.replace('{VALUE}', label))(item);
-          item = { label: label, value: item[value] };
+
+          var data = {
+            label: label,
+            value: Handlebars.compile(templateValue)(item)
+          };
 
           row = $(row).click(function() {
-            callback(item);
+            callback(data);
           });
 
           container.append(row);
@@ -1437,7 +1446,7 @@
 
       slug = slug.replace(/\-/g, space);
 
-      $(target).val(slug);
+      $(target).val(slug).trigger('change');
     });
   });
 
@@ -1446,7 +1455,7 @@
    */
   $(window).on('mask-field-init', function(e, target) {
     $.require(
-      'components/inputmask/dist/min/jquery.inputmask.bundle.min.js',
+      'components/inputmask/dist/jquery.inputmask.min.js',
       function() {
         var format = $(target).attr('data-format');
         $(target).inputmask(format);

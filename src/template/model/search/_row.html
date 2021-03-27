@@ -1,0 +1,38 @@
+<tr>
+  <td class="table-bulk-checkbox freeze-left">
+    <label class="checkbox checkbox-1">
+      <input
+        type="checkbox"
+        name="{{../schema.primary}}[]"
+        value="{{primary}}"
+      />
+      <span></span>
+    </label>
+  </td>
+  <td class="freeze-left-2">{{primary}}</td>
+  {{#each ../relations}}
+    <td nowrap>
+      <a
+        data-do="panel-mobile-open"
+        data-on="click"
+        data-template="/admin/spa/system/model/{{name}}/detail/{{scope ../this primary}}"
+        href="javascript:void(0)"
+      >
+        {{{suggestion name ../this}}}
+      </a>
+    </td>
+  {{/each}}
+  {{#each ../columns}}
+    <td nowrap>{{{format ../../schema.name @key ../this 'list'}}}</td>
+  {{/each}}
+  <td class="freeze-right text-center" nowrap>
+    <a
+      data-do="panel-mobile-open"
+      data-on="click"
+      data-template="/admin/spa/system/model/{{../schema.name}}/detail/{{primary}}"
+      href="javascript:void(0)"
+    >
+      <i class="fas fa-fw fa-eye"></i>
+    </a>
+  </td>
+</tr>

@@ -1,0 +1,62 @@
+<tr id="field-{{name}}" data-name="{{name}}">
+  <td class="drag-handle">
+    <i class="fas fa-arrows-alt-v"></i>
+    <script id="field-{{name}}-data" class="field-data" type="text/json">{{{jsonify this}}}</script>
+  </td>
+  <td>
+    <a
+      data-do="panel-mobile-forward"
+      data-on="click"
+      data-method="post"
+      data-template="/admin/spa/system/schema/field"
+      data-payload-selector="#field-{{name}}-data"
+      href="javascript:void(0)"
+    >{{label}}</a>
+    <br />
+    <span class="field-name"></span>
+    <br />
+    <a
+      data-do="panel-mobile-forward"
+      data-on="click"
+      data-method="post"
+      data-template="/admin/spa/system/schema/field?copy=1"
+      data-payload-selector="#field-{{name}}-data"
+      href="javascript:void(0)"
+    ><i class="fas fa-fw fa-copy"></i></a>
+    <a
+      href="javascript:void(0)"
+      class="text-danger"
+      data-do="field-remove"
+      data-on="click"
+    ><i class="fas fa-fw fa-times"></i></a>
+  </td>
+  <td>
+    <table border="0" cellpadding="0" cellspacing="0">
+      <tbody>
+        <tr>
+          <th class="p-0 pr-2 border-0">{{_ 'Field'}}</th>
+          <td class="p-0 border-0">{{field.type}}</td>
+        </tr>
+        <tr>
+          <th class="p-0 pr-2 border-0">{{_ 'List'}}</th>
+          <td class="p-0 border-0">{{list.format}}</td>
+        </tr>
+        <tr>
+          <th class="p-0 pr-2 border-0">{{_ 'Detail'}}</th>
+          <td class="p-0 border-0">{{detail.format}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </td>
+  <td>
+    {{#if searchable}}
+      <div>{{_ 'Searchable'}}</div>
+    {{/if}}
+    {{#if filterable}}
+      <div>{{_ 'Filterable'}}</div>
+    {{/if}}
+    {{#if sortable}}
+      <div>{{_ 'Sortable'}}</div>
+    {{/if}}
+  </td>
+</tr>

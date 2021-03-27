@@ -1,6 +1,6 @@
 <form
   method="post"
-  action="/admin/spa/system/schema/field/save"
+  action="/admin/spa/system/fieldset/field/save"
   data-after="back"
   data-do="field-form"
   {{#when mode '===' 'update'}}
@@ -33,7 +33,7 @@
   </header>
   <!-- END: Head -->
   <!-- START: Body -->
-  <section class="view-body with-foot-1 schema-detail bg-white">
+  <section class="view-body with-foot-1 fieldset-detail bg-white">
     <div class="p-2">
       <div class="form-group form-group-label">
         <label class="control-label">{{_ 'Label'}}</label>
@@ -77,42 +77,6 @@
             type="text"
             value="{{default}}"
           />
-        </div>
-      </div>
-      <div class="form-group form-group-indexes">
-        <div>
-          <label class="checkbox checkbox-2">
-            <input
-              class="field-searchable"
-              name="searchable"
-              type="checkbox"
-              value="1"
-              {{#if searchable}}checked{{/if}}
-            />
-            <span>{{_ 'Searchable'}}</span>
-          </label>
-          <br />
-          <label class="checkbox checkbox-2">
-            <input
-              class="field-filterable"
-              name="filterable"
-              type="checkbox"
-              value="1"
-              {{#if filterable}}checked{{/if}}
-            />
-            <span>{{_ 'Filterable'}}</span>
-          </label>
-          <br />
-          <label class="checkbox checkbox-2">
-            <input
-              class="field-sortable"
-              name="sortable"
-              type="checkbox"
-              value="1"
-              {{#if sortable}}checked{{/if}}
-            />
-            <span>{{_ 'Sortable'}}</span>
-          </label>
         </div>
       </div>
     </div>

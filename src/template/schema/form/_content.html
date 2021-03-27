@@ -1,4 +1,4 @@
-<div class="bg-white p-2">
+<div class="bg-white py-2">
   <!-- START: Singular -->
   <div class="form-group mt-3 mb-3">
     <label class="control-label">{{_ 'Singular Name'}}</label>
@@ -40,10 +40,15 @@
           type="text"
           value="{{item.name}}"
         />
-        <input type="hidden" name="name" value="{{item.name}}" />
+        <input
+          class="fieldset-name"
+          type="hidden"
+          name="name"
+          value="{{item.name}}"
+        />
       {{else}}
         <input
-          class="form-control schema-name"
+          class="form-control fieldset-name"
           data-do="slugger"
           data-source="input.schema-singular"
           data-upper="0"
@@ -75,10 +80,20 @@
   <!-- START: Icon -->
   <div class="form-group mb-3">
     <label class="control-label">{{_ 'Icon'}}</label>
-    <div class="form-field mb-1">
+    <div class="form-field">
       <div class="input-group">
-        <div class="input-group-prepend">
-          <div class="input-group-text">
+        <input
+          autocomplete="off"
+          class="form-control"
+          data-do="icon-field"
+          data-target-parent="1"
+          name="icon"
+          placeholder="fas fa-question"
+          type="text"
+          value="{{item.icon}}"
+        />
+        <div class="input-group-append input-preview">
+          <div class="input-group-text border-0 p-3">
             {{#if item.icon}}
               <i class="{{item.icon}}"></i>
             {{else}}
@@ -86,22 +101,13 @@
             {{/if}}
           </div>
         </div>
-        <input
-          autocomplete="off"
-          class="form-control"
-          data-do="icon-field"
-          name="icon"
-          placeholder="fas fa-question"
-          type="text"
-          value="{{item.icon}}"
-        />
       </div>
     </div>
   </div>
   <!-- END: Icon -->
   <!-- START: Detail -->
-  <div class="form-group mb-3">
-    <label class="control-label">{{_ 'Description'}}</label>
+  <div class="form-group mb-3 no-flex">
+    <label class="control-label mb-2">{{_ 'Description'}}</label>
     <div class="form-field mb-1">
       <textarea
         class="form-control schema-detail"

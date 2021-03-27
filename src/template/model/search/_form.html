@@ -1,0 +1,19 @@
+<form method="get" class="search-form input-group mb-3">
+  <div class="input-group-prepend">
+    <button
+      class="btn btn-large btn-outline-secondary"
+      type="button"
+      data-do="panel-mobile-open"
+      data-on="click"
+      data-template="/admin/spa/system/model/{{schema.name}}/search/filters"
+    >
+        <i class="fas fa-filter"></i>
+    </button>
+  </div>
+  <input type="text" class="form-control" name="q" value="{{q}}" />
+  <div class="input-group-append">
+    <button class="btn btn-large btn-primary" type="submit">
+      <i class="fas fa-search"></i>
+    </button>
+  </div>
+</form>

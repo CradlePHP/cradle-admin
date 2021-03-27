@@ -8,18 +8,18 @@
       data-do="panel-mobile-forward"
       data-on="click"
       data-method="post"
-      data-template="/admin/spa/system/schema/field"
+      data-template="/admin/spa/system/fieldset/field"
       data-payload-selector="#field-{{name}}-data"
       href="javascript:void(0)"
     >{{label}}</a>
     <br />
-    <span class="field-name">{{../item.name}}_{{name}}</span>
+    <span class="field-name"></span>
     <br />
     <a
       data-do="panel-mobile-forward"
       data-on="click"
       data-method="post"
-      data-template="/admin/spa/system/schema/field?copy=1"
+      data-template="/admin/spa/system/fieldset/field?copy=1"
       data-payload-selector="#field-{{name}}-data"
       href="javascript:void(0)"
     ><i class="fas fa-fw fa-copy"></i></a>
@@ -47,16 +47,5 @@
         </tr>
       </tbody>
     </table>
-  </td>
-  <td>
-    {{#if searchable}}
-      <div>{{_ 'Searchable'}}</div>
-    {{/if}}
-    {{#if filterable}}
-      <div>{{_ 'Filterable'}}</div>
-    {{/if}}
-    {{#if sortable}}
-      <div>{{_ 'Sortable'}}</div>
-    {{/if}}
   </td>
 </tr>

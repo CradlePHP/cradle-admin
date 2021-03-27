@@ -1,0 +1,26 @@
+<div class="bulk-form d-none mb-3">
+  <button
+    class="btn btn-large btn-danger"
+    data-do="panel-mobile-open"
+    data-on="click"
+    data-template="/admin/spa/system/model/{{schema.name}}/bulk/remove"
+    data-form="form.table-form"
+    type="button"
+  >
+    <i class="fas fa-fw fa-trash-alt"></i>
+    {{_ 'Remove'}}
+  </button>
+  {{#if schema.restorable}}
+    <button
+      class="btn btn-large btn-secondary"
+      data-do="panel-mobile-open"
+      data-on="click"
+      data-template="/admin/spa/system/model/{{schema.name}}/bulk/restore"
+      data-form="form.table-form"
+      type="button"
+    >
+      <i class="fas fa-fw fa-trash-restore-alt"></i>
+      {{_ 'Restore'}}
+    </button>
+  {{/if}}
+</div>

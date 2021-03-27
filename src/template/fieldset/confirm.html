@@ -1,0 +1,43 @@
+<!-- START: Head -->
+<header class="view-head">
+  <button
+    class="sidebar-hide"
+    data-do="panel-mobile-back"
+    data-on="click"
+    type="button"
+  >
+    <i class="fas fa-chevron-left"></i>
+  </button>
+  <h6 class="view-title">{{title}}</h6>
+</header>
+<!-- END: Head -->
+<!-- START: Body -->
+<section class="view-body no-scroll">
+  <div class="jumbotron m-2">
+    <p class="lead">{{message}}</p>
+    <hr class="my-4" />
+    <form
+      action="{{action}}"
+      data-do="panel-form"
+      data-on="submit"
+      data-after="reload"
+      method="post"
+    >
+      <button class="btn btn-primary btn-large">
+        <i class="fas fa-check"></i>
+        {{_ 'Confirmed'}}
+      </button>
+      <a
+        class="btn btn-outline-secondary btn-large"
+        data-do="panel-mobile-back"
+        data-on="click"
+        href="javascript:void(0)"
+        role="button"
+      >
+        <i class="fas fa-times"></i>
+        {{_ 'Cancel'}}
+      </a>
+    </form>
+  </div>
+</section>
+<!-- END: Body -->

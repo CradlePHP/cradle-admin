@@ -2,13 +2,13 @@
   <label class="control-label">{{_ 'List Format'}}</label>
   <div>
     <select
-      class="form-control"
+      class="field-list form-control"
       data-do="field-format"
       data-name="list"
       data-on="change"
       name="list[format]"
     >
-      {{> field_options_format list}}
+      {{> options_format list}}
     </select>
 
     {{#if list.config.fieldset.length}}

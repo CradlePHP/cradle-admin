@@ -8,9 +8,54 @@
   padding: 0 5px;
 }
 
+.form-mobile .form-group-code,
+.form-mobile .form-group-textarea,
+.form-mobile .form-group-markdown,
+.form-mobile .form-group-wysiwyg,
+.form-mobile .form-group-fieldset,
 .form-mobile .form-group.no-flex {
   border-width: 0;
   display: block;
+}
+
+.form-mobile .form-group-code > .form-field,
+.form-mobile .form-group-textarea > .form-field,
+.form-mobile .form-group-markdown > .form-field,
+.form-mobile .form-group-wysiwyg > .form-field {
+  border: 1px solid #CED4DA;
+}
+
+.form-mobile .form-group-code .form-control,
+.form-mobile .form-group-textarea .form-control,
+.form-mobile .form-group-markdown .form-control,
+.form-mobile .form-group-wysiwyg .form-control {
+  text-align: left;
+}
+
+.form-mobile .form-group-fieldset {
+  margin: 0;
+  padding: 0;
+}
+
+.form-mobile .form-group-fieldset .fieldset-row {
+  background-color: #FFFFFF;
+  border: 1px solid #CED4DA;
+  margin-bottom: 20px;
+  padding: 0 10px 10px;
+}
+
+.form-mobile .form-group-fieldset .fieldset-row[data-multiple] {
+  padding: 25px 10px 10px;
+}
+
+.form-mobile .form-group-fieldset .fieldset-row .fieldset-remove {
+  float: right;
+  margin-right: 5px;
+  margin-top: -15px;
+}
+
+.form-mobile .form-group-fieldset > .control-label {
+  margin-bottom: 5px;
 }
 
 .form-mobile .row {

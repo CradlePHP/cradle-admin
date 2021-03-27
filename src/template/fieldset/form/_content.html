@@ -1,0 +1,66 @@
+<div class="bg-white py-2">
+  <!-- START: Singular -->
+  <div class="form-group mt-3 mb-3">
+    <label class="control-label">{{_ 'Singular Name'}}</label>
+    <div class="form-field mb-1">
+      <input
+        class="form-control fieldset-singular"
+        name="singular"
+        placeholder="{{_ 'Enter the singular name'}}"
+        value="{{item.singular}}"
+        type="text"
+        required
+      />
+    </div>
+  </div>
+  <!-- END: Singular -->
+  <!-- START: Plural -->
+  <div class="form-group mb-3">
+    <label class="control-label">{{_ 'Plural Name'}}</label>
+    <div class="form-field mb-1">
+      <input
+        class="form-control fieldset-plural"
+        name="plural"
+        placeholder="{{_ 'Enter the plural name'}}"
+        value="{{item.plural}}"
+        type="text"
+        required
+      />
+    </div>
+  </div>
+  <!-- END: Plural -->
+  <!-- START: Name -->
+  <div class="form-group mb-3">
+    <label class="control-label">{{_ 'Keyword'}}</label>
+    <div class="form-field mb-1">
+      {{#if item.disable}}
+        <input
+          class="form-control"
+          disabled="disabled"
+          type="text"
+          value="{{item.name}}"
+        />
+        <input
+          class="fieldset-name"
+          type="hidden"
+          name="name"
+          value="{{item.name}}"
+        />
+      {{else}}
+        <input
+          class="form-control fieldset-name"
+          data-do="slugger"
+          data-source="input.fieldset-singular"
+          data-upper="0"
+          data-space="_"
+          name="name"
+          value="{{item.name}}"
+          placeholder="{{_ 'Enter a unique keyword'}}"
+          type="text"
+          required
+        />
+      {{/if}}
+    </div>
+  </div>
+  <!-- END: Name -->
+</div>

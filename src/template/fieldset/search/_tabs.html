@@ -1,0 +1,18 @@
+<ul class="nav nav-pills border-bottom pb-2 pt-2 mb-4" role="tablist">
+  <li class="nav-item">
+    <a
+      class="nav-link{{#if filter.active}} active{{/if}}"
+      href="?{{query 'filter.active'}}"
+    >
+      {{_ 'Active'}}
+    </a>
+  </li>
+  <li class="nav-item">
+    <a
+      class="nav-link{{#unless filter.active}} active{{/unless}}"
+      href="?{{query 'filter.active'}}&filter[active]=0"
+    >
+      {{_ 'Inactive'}}
+    </a>
+  </li>
+</ul>

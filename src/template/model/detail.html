@@ -1,0 +1,121 @@
+<!-- START: Head -->
+<header class="view-head">
+  <button
+    class="sidebar-hide"
+    data-do="panel-mobile-back"
+    data-on="click"
+    type="button"
+  >
+    <i class="fas fa-chevron-left"></i>
+  </button>
+  <h6 class="view-title">
+    <i class="{{schema.icon}} d-inline-block mr-2"></i>
+    {{item.suggestion}}
+  </h6>
+</header>
+<!-- END: Head -->
+<!-- START: Body -->
+<section class="view-body no-scroll with-foot-2 schema-detail">
+  {{#if relations.length}}
+    <table class="table">
+      <tbody>
+        {{#each relations}}
+          {{#when many '==' 1}}
+            <tr>
+              <th>{{singular}}</th>
+              <td>
+                <a
+                  data-do="panel-mobile-forward"
+                  data-on="click"
+                  data-template="/admin/spa/system/model/{{name}}/detail/{{primary}}"
+                  href="javascript:void(0)"
+                >
+                  {{{suggestion name ../item}}}
+                </a>
+              </td>
+            </tr>
+          {{/when}}
+        {{/each}}
+      </tbody>
+    </table>
+  {{/if}}
+  <!-- START: Tabs -->
+  <ul class="nav nav-tabs{{#if relations.length}} gutter-top{{/if}}" role="tablist">
+    <li class="nav-item">
+      <a
+        class="nav-link active"
+        data-toggle="tab"
+        href="#model-{{schema.name}}-info-{{uuid}}"
+        role="tab"
+      >
+        {{_ 'Information'}}
+      </a>
+    </li>
+  </ul>
+  <!-- END: Tabs -->
+  <!-- START: Panes -->
+  <div class="tab-content m-2">
+    <!-- START: Information Pane -->
+    <div
+      class="tab-pane fade active show"
+      id="model-{{schema.name}}-info-{{uuid}}"
+      role="tabpanel"
+    >
+      <table class="table">
+        <tbody>
+          {{#each schema.fields}}
+            {{#format ../schema.name @key ../item 'detail'}}
+              <tr>
+                <th>{{label}}</th>
+                <td>{{{control}}}</td>
+              </tr>
+            {{/format}}
+          {{/each}}
+        </tbody>
+      </table>
+    </div>
+    <!-- END: Information Pane -->
+  </div>
+  <!-- END: Panes -->
+
+</section>
+<!-- END: Body -->
+<!-- START: Foot -->
+<footer class="view-foot">
+  <button
+    class="btn btn-primary btn-block text-small"
+    data-do="panel-mobile-forward"
+    data-on="click"
+    data-template="/admin/spa/system/model/{{schema.name}}/update/{{primary}}"
+    type="button"
+  >
+    <i class="fas fa-edit"></i> {{_ 'Update'}}
+  </button>
+
+  <div class="row mt-1">
+    <div class="col">
+      <button
+        class="btn btn-outline-secondary btn-block text-small"
+        data-do="panel-mobile-forward"
+        data-on="click"
+        data-template="/admin/spa/system/model/{{schema.name}}/create/{{primary}}"
+        type="button"
+      >
+        <i class="fas fa-copy"></i> {{_ 'Copy'}}
+      </button>
+    </div>
+
+    <div class="col">
+      <button
+        class="btn btn-outline-danger btn-block text-small"
+        data-do="panel-mobile-forward"
+        data-on="click"
+        data-template="/admin/spa/system/schema/{{schema.name}}/remove/{{primary}}"
+        type="button"
+      >
+        <i class="fas fa-times"></i> {{_ 'Remove'}}
+      </button>
+    </div>
+  </div>
+</footer>
+<!-- END: Foot -->

@@ -20,7 +20,7 @@
 .search-table .table-scroll .table .freeze-left-2 {
   position: -webkit-sticky;
   position: sticky;
-  left: 42px;
+  left: 41px;
   z-index: 1;
 }
 
@@ -92,33 +92,11 @@
   position: relative;
 }
 
-.search-table .search-actions {
-  display: flex;
-  flex-wrap: nowrap;
-}
-
-.search-table .search-actions .search-form {
-  flex: 1;
-}
-
-.search-table .search-actions .search-links {
-  flex: 1;
-  text-align: right;
-}
-
-.search-table .search-actions .input-group-prepend button {
-  border: 1px solid #ced4da;
-}
-
 .search-table .pagination {
   margin-top: 20px;
 }
 
 @media (max-width: 600px) {
-  .search-table .search-actions {
-    flex-direction: column;
-  }
-
   .search-table .search-links {
     text-align: center !important;
   }

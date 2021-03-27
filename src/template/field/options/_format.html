@@ -1,0 +1,82 @@
+{{#if ../config.format.options.general.length}}
+  {{#each ../config.format.options.general}}
+    <option
+      value="{{@key}}"
+      {{#when ../format '===' @key}}selected{{/when}}
+    >
+      {{label}}
+    </option>
+  {{/each}}
+{{/if}}
+{{#if ../config.format.options.string.length}}
+  <optgroup class="filter-group-string" label="String Filters">
+    {{#each ../config.format.options.string}}
+      <option
+        value="{{@key}}"
+        {{#when ../format '===' @key}}selected{{/when}}
+      >
+        {{label}}
+      </option>
+    {{/each}}
+  </optgroup>
+{{/if}}
+{{#if ../config.format.options.number.length}}
+  <optgroup class="filter-group-number" label="Number Filters">
+    {{#each ../config.format.options.number}}
+      <option
+        value="{{@key}}"
+        {{#when ../format '===' @key}}selected{{/when}}
+      >
+        {{label}}
+      </option>
+    {{/each}}
+  </optgroup>
+{{/if}}
+{{#if ../config.format.options.date.length}}
+  <optgroup class="filter-group-date" label="Date Filters">
+    {{#each ../config.format.options.date}}
+      <option
+        value="{{@key}}"
+        {{#when ../format '===' @key}}selected{{/when}}
+      >
+        {{label}}
+      </option>
+    {{/each}}
+  </optgroup>
+{{/if}}
+{{#if ../config.format.options.html.length}}
+  <optgroup class="filter-group-html" label="HTML Filters">
+    {{#each ../config.format.options.html}}
+      <option
+        value="{{@key}}"
+        {{#when ../format '===' @key}}selected{{/when}}
+      >
+        {{label}}
+      </option>
+    {{/each}}
+  </optgroup>
+{{/if}}
+{{#if ../config.format.options.json.length}}
+  <optgroup class="filter-group-json" label="JSON Filters">
+    {{#each ../config.format.options.json}}
+      <option
+        value="{{@key}}"
+        {{#when ../format '===' @key}}selected{{/when}}
+      >
+        {{label}}
+      </option>
+    {{/each}}
+  </optgroup>
+{{/if}}
+{{#if ../config.format.options.custom.length}}
+  <optgroup class="filter-group-custom" label="_________">
+    {{#each ../config.format.options.custom}}
+      <option
+        value="{{@key}}"
+        {{#when ../format '===' @key}}selected{{/when}}
+      >
+        {{label}}
+      </option>
+    {{/each}}
+  </optgroup>
+{{/if}}

@@ -1,0 +1,149 @@
+<form
+  class="form-mobile"
+  data-do="panel-form"
+  data-on="submit"
+  {{#when action '===' 'update'}}
+    action="/admin/spa/system/model/{{schema.name}}/update/{{primary}}"
+    data-after="reback"
+  {{else}}
+    action="/admin/spa/system/model/{{schema.name}}/create"
+    data-after="reload"
+  {{/when}}
+>
+  <!-- START: Head -->
+  <header class="view-head">
+    <button
+      class="sidebar-hide"
+      data-do="panel-mobile-back"
+      data-on="click"
+      type="button"
+    >
+      <i class="fas fa-chevron-left"></i>
+    </button>
+    <h6 class="view-title">
+      <i class="{{schema.icon}} d-inline-block mr-2"></i>
+      {{#when action '===' 'update'}}
+        {{_ 'Update %s' schema.singular}}
+      {{else}}
+        {{_ 'Add %s' schema.singular}}
+      {{/when}}
+    </h6>
+  </header>
+  <!-- END: Head -->
+  <!-- START: Body -->
+  <section class="view-body with-foot-1 schema-detail">
+    {{#if schema.fieldsets.length}}
+      <!-- START: Tabs -->
+      <ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+          <a
+            class="nav-link active"
+            data-toggle="tab"
+            href="#model-form-information-{{uuid}}"
+            role="tab"
+          >
+            {{_ 'Information'}}
+          </a>
+        </li>
+        {{#each schema.fieldsets}}
+          <li class="nav-item">
+            <a
+              class="nav-link"
+              data-toggle="tab"
+              href="#model-form-{{fieldset.name}}-{{uuid}}"
+              role="tab"
+            >
+              {{#when parameters.1 '===' 'hash[]'}}
+                {{fieldset.plural}}
+              {{else}}
+                {{fieldset.singular}}
+              {{/when}}
+            </a>
+          </li>
+        {{/each}}
+      </ul>
+      <!-- END: Tabs -->
+    {{/if}}
+    <!-- START: Panes -->
+    <div class="tab-content{{#if schema.fieldsets.length}} m-2{{/if}}">
+      <!-- START: Content Pane -->
+      <div
+        class="tab-pane fade active show"
+        id="model-form-information-{{uuid}}"
+        role="tabpanel"
+      >
+        <div class="bg-white py-1">
+          {{#each relations}}
+            <div class="form-group">
+              <label class="control-label">{{singular}}</label>
+              <div class="form-field">
+                <input
+                  autocomplete="off"
+                  class="form-control suggestion-label-{{name}} system-form-control"
+                  name="__{{name}}"
+                  placeholder="{{_ 'Enter %s' singular}}"
+                  type="text"
+                  value="{{suggested}}"
+                />
+                <input
+                  class="suggestion-value-{{name}}"
+                  name="{{primary2}}"
+                  type="hidden"
+                  value="{{scope ../item primary2}}"
+                />
+                <div
+                  class="input-suggestion d-none"
+                  data-do="suggestion-field"
+                  data-format="{{./suggestion}}"
+                  data-target-label="input.suggestion-label-{{name}}"
+                  data-target-value="input.suggestion-value-{{name}}"
+                  data-url="/admin/system/model/{{name}}/search?q={QUERY}&render=false"
+                  data-value="{{name}}.{{primary}}"
+                ></div>
+              </div>
+            </div>
+          {{/each}}
+          {{#each schema.fields}}
+            {{#when field.type '!==' 'fieldset'}}
+              {{#field ../schema.name @key ../item}}
+                <div class="form-group form-group-{{type}}">
+                  <label class="control-label">{{label}}</label>
+                  <div class="form-field">
+                    {{{control}}}
+                  </div>
+                </div>
+              {{/field}}
+            {{/when}}
+          {{/each}}
+        </div>
+      </div>
+      <!-- END: Content Pane -->
+      {{#each schema.fieldsets}}
+        <!-- START: Fields Pane -->
+        <div
+          class="tab-pane fade"
+          id="model-form-{{fieldset.name}}-{{uuid}}"
+          role="tabpanel"
+        >
+          {{#field ../schema.name @key ../item}}
+            <div class="form-group form-group-{{type}}">
+              <div class="form-field">
+                {{{control}}}
+              </div>
+            </div>
+          {{/field}}
+        </div>
+        <!-- END: Fields Pane -->
+      {{/each}}
+    </div>
+    <!-- END: Panes -->
+  </section>
+  <!-- END: Body -->
+  <!-- START: Foot -->
+  <footer class="view-foot">
+    <button class="btn btn-primary btn-block text-small">
+      <i class="fas fa-edit"></i> {{_ 'Submit'}}
+    </button>
+  </footer>
+  <!-- END: Foot -->
+</form>

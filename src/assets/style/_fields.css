@@ -129,7 +129,7 @@
   vertical-align: middle;
 }
 
-.radio input:checked+span::before {
+.radio input:checked + span::before {
   display: inline-block;
   content: "\f111";
   background-color: #F5F8FC;
@@ -138,11 +138,11 @@
   font-weight: 900;
 }
 
-.radio input:hover+span::before, .radio span:hover::before {
+.radio input:hover + span::before, .radio span:hover::before {
   border-color: #FF893C;
 }
 
-.radio input:active+span::before, .radio input:checked:active+span::before {
+.radio input:active + span::before, .radio input:checked:active+span::before {
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05), inset 0px 1px 3px rgba(0, 0, 0, 0.1);
 }
 
@@ -150,7 +150,7 @@
   box-shadow: none;
 }
 
-.radio.radio-2 input:checked+span::before {
+.radio.radio-2 input:checked + span::before {
   background-color: #f9A021;
   border-color: #f9A021;
   color: #FFFFFF;
@@ -158,7 +158,9 @@
   font-weight: 900;
 }
 
-.radio input:disabled+span::before, .radio input[disabled]+span::before, .radio input.disabled+span::before {
+.radio input:disabled + span::before,
+.radio input[disabled] + span::before,
+.radio input.disabled + span::before {
   background-color: #DDDDDD !important;
   border-color: #CCCCCC !important;
   box-shadow: none !important;

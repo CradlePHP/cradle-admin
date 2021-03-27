@@ -98,6 +98,7 @@
 
         const screen = $('<section>').addClass('view-mobile').html(html);
 
+        var template = screens[index].data('template');
         if (template) {
           screen.attr('data-template', template).data('template', template);
         }

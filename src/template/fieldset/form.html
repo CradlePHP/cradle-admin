@@ -1,15 +1,14 @@
 <form
   {{#when mode '===' 'create'}}
-    action="/admin/spa/system/schema/create"
+    action="/admin/spa/system/fieldset/create"
   {{else}}
-    action="/admin/spa/system/schema/update/{{item.name}}"
+    action="/admin/spa/system/fieldset/update/{{item.name}}"
   {{/when}}
   autocomplete="off"
-  class="schema-form form-mobile"
-  data-do="schema-form"
+  class="fieldset-form form-mobile"
+  data-do="fieldset-form"
   data-on="submit"
   data-after="reload"
-  data-name="{{item.name}}"
   method="post"
 >
   <!-- START: Head -->
@@ -27,22 +26,22 @@
         <i class="{{item.icon}} d-inline-block mr-2"></i>
       {{/if}}
       {{#when mode '===' 'create'}}
-        {{_ 'Add Schema'}}
+        {{_ 'Add Fieldset'}}
       {{else}}
-        {{_ 'Update %s Schema' item.name}}
+        {{_ 'Update %s Fieldset' item.name}}
       {{/when}}
     </h6>
   </header>
   <!-- END: Head -->
   <!-- START: Body -->
-  <section class="view-body no-scroll with-foot-2 schema-detail">
+  <section class="view-body no-scroll with-foot-2 fieldset-detail">
     <!-- START: Tabs -->
     <ul class="nav nav-tabs" role="tablist">
       <li class="nav-item">
         <a
           class="nav-link active"
           data-toggle="tab"
-          href="#schema-form-content-{{uuid}}"
+          href="#fieldset-form-content-{{uuid}}"
           role="tab"
         >
           {{_ 'Content'}}
@@ -52,20 +51,10 @@
         <a
           class="nav-link"
           data-toggle="tab"
-          href="#schema-form-fields-{{uuid}}"
+          href="#fieldset-form-fields-{{uuid}}"
           role="tab"
         >
           {{_ 'Fields'}}
-        </a>
-      </li>
-      <li class="nav-item">
-        <a
-          class="nav-link"
-          data-toggle="tab"
-          href="#schema-form-relations-{{uuid}}"
-          role="tab"
-        >
-          {{_ 'Relations'}}
         </a>
       </li>
     </ul>
@@ -75,7 +64,7 @@
       <!-- START: Content Pane -->
       <div
         class="tab-pane fade active show"
-        id="schema-form-content-{{uuid}}"
+        id="fieldset-form-content-{{uuid}}"
         role="tabpanel"
       >
         {{> form_content}}
@@ -84,21 +73,12 @@
       <!-- START: Fields Pane -->
       <div
         class="tab-pane fade"
-        id="schema-form-fields-{{uuid}}"
+        id="fieldset-form-fields-{{uuid}}"
         role="tabpanel"
       >
         {{> form_fields}}
       </div>
       <!-- END: Fields Pane -->
-      <!-- START: Relations Pane -->
-      <div
-        class="tab-pane fade"
-        id="schema-form-relations-{{uuid}}"
-        role="tabpanel"
-      >
-        {{> form_relations}}
-      </div>
-      <!-- END: Relations Pane -->
     </div>
     <!-- END: Panes -->
   </section>
@@ -115,7 +95,7 @@
           class="btn btn-outline-secondary btn-block text-small"
           data-do="panel-mobile-forward"
           data-on="click"
-          data-template="/admin/spa/system/schema/create/{{item.name}}"
+          data-template="/admin/spa/system/fieldset/create/{{item.name}}"
           type="button"
         >
           <i class="fas fa-copy"></i> {{_ 'Copy'}}
@@ -127,7 +107,7 @@
           class="btn btn-outline-danger btn-block text-small"
           data-do="panel-mobile-forward"
           data-on="click"
-          data-template="/admin/spa/system/schema/remove/{{item.name}}"
+          data-template="/admin/spa/system/fieldset/remove/{{item.name}}"
           type="button"
         >
           <i class="fas fa-times"></i> {{_ 'Remove'}}
@@ -140,50 +120,4 @@
 
 <script id="field-row-template" type="text/x-template">
   {{>> form_row}}
-</script>
-
-<script id="relation-row-template" type="text/x-template">
-  <tr data-index="{INDEX}">
-    <td>
-      <strong
-        class="relation-singular"
-        data-default="??"
-        data-do="copy-to-text"
-        data-trigger="input.schema-singular"
-      >
-        {SINGULAR}
-      </strong>
-    </td>
-    <td><i class="fas fa-arrow-right text-muted"></i></td>
-    <td>
-        <select
-          class="form-control relation-many"
-          name="relations[{INDEX}][many]"
-        >
-          <option value="0">1:0</option>
-          <option value="1">1:1</option>
-          <option value="2">1:N</option>
-          <option value="3">N:N</option>
-        </select>
-    </td>
-    <td><i class="fas fa-arrow-right text-muted"></i></td>
-    <td>
-      <input
-        class="form-control relation-name"
-        name="relations[{INDEX}][name]"
-        placeholder="{{_ 'Enter Schema Keyword'}}"
-        type="text"
-      />
-    </td>
-    <td>
-      <a
-        class="text-danger"
-        data-do="schema-relation-remove"
-        data-on="click"
-        href="javascript:void(0)"
-      >
-        <i class="fas fa-times"></i>
-      </a>
-    </td>
-  </tr>
 </script>

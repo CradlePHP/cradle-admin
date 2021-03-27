@@ -1,0 +1,35 @@
+<tr>
+  <th class="table-bulk-checkbox freeze-top freeze-left">
+    <label class="checkbox checkbox-1">
+      <input
+        data-do="table-checkall"
+        type="checkbox"
+      />
+      <span></span>
+    </label>
+  </th>
+  <th class="freeze-top freeze-left-2">
+    <a href="?{{sorturl 'order' primary}}">
+      ID
+      {{{sortcaret 'order' primary}}}
+    </a>
+  </th>
+  {{#each relations}}
+    <th class="freeze-top" nowrap>{{singular}}</th>
+  {{/each}}
+  {{#each columns}}
+    {{#if sortable}}
+      <th class="freeze-top" nowrap>
+        <a href="?{{sorturl 'order' name}}">
+          {{label}}
+          {{{sortcaret 'order' name}}}
+        </a>
+      </th>
+    {{else}}
+      <th class="freeze-top" nowrap>{{label}}</th>
+    {{/if}}
+  {{/each}}
+  <th class="freeze-top freeze-right text-center">
+    {{_ 'Action'}}
+  </th>
+</tr>

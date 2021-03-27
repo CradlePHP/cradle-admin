@@ -69,3 +69,21 @@ $(window).on('schema-form-submit', function(e, target) {
 
   return false;
 });
+
+// fieldset - slugger
+$(window).on('slugger-init', function(e, target) {
+  if (!$(target).hasClass('fieldset-name')) {
+    return;
+  }
+
+  $(target).change(function(e) {
+    setTimeout(function() {
+      var fieldsetName = $(target).val();
+      //update every row
+      $('table.table-fields tbody tr').each(function() {
+        var fieldName = $(this).data('name');
+        $('span.field-name', this).text(`${fieldsetName}_${fieldName}`);
+      });
+    });
+  }).trigger('change');
+});
